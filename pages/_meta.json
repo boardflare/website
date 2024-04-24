@@ -1,0 +1,37 @@
+{
+  "index": {
+    "title": "Home",
+    "display": "hidden",
+    "theme": {
+      "breadcrumb": false,
+      "timestamp": false,
+      "sidebar": true,
+      "toc": false
+    }
+  },
+  "tools": {
+    "title": "Tools",
+    "type": "page",
+    "theme": {
+      "breadcrumb": false,
+      "timestamp": false,
+      "sidebar": true,
+      "toc": true
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "display": "hidden",
+    "type": "page",
+    "theme": {
+      "breadcrumb": false
+    }
+  },
+  "company": {
+    "title": "About",
+    "type": "page",
+    "theme": {
+      "breadcrumb": false
+    }
+  }
+}

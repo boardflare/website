@@ -1,0 +1,30 @@
+---
+title: Home
+---
+import Image from 'next/image'
+import Link from 'next/link';
+
+<div>
+    <div className="text-8xl font-bold text-center tracking-tight text-blue-900 mt-16 mb-16">
+        <h1 className="flex flex-col items-center">
+            <span>Spreadsheet AI</span>
+            <span className="text-gray-500 text-6xl">using local models</span>
+        </h1>
+    </div>
+    <div className="flex justify-center space-x-20 mb-20" >
+        <Image src="/images/Microsoft_Office_Excel.svg" alt="Excel logo" width={160} height={160} />
+        {/* <span className="text-9xl">🙂</span> */}
+        {/* <Image src="/images/csv.svg" alt="CSV icon" width={112} height={112} /> */}
+        <Image src="/images/Google_Sheets_logo.svg" alt="Google Sheets logo" width={112} height={112} />
+    </div>
+</div>
+
+<p className="text-lg">AI tools for Microsoft Excel and Google Sheets the run models locally in the browser, not the cloud.  You never share your data, and get unlimited local processing at no extra cost.</p>
+
+<div className="flex justify-center mt-10">
+    <Link href="/tools/text/sentiment-analysis">
+        <button className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">
+            Go to Tools
+        </button>
+    </Link>
+</div>
