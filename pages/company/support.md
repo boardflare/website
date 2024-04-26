@@ -4,6 +4,5 @@ title: Support
 
 # Support
 
-Please feel free to contact us with any questions or concerns you may have. We are here to help and will respond to your inquiry as soon as possible.
+Please [email us](mailto:support@boardflare.com) with any questions or concerns you may have.  We will do our best to respond promptly when we're done skiing or mountain biking 😁.
 
-[Email Us](mailto:support@boardflare.com)

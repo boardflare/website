@@ -9,8 +9,8 @@
       "toc": false
     }
   },
-  "tools": {
-    "title": "Tools",
+  "tasks": {
+    "title": "Tasks",
     "type": "page",
     "theme": {
       "breadcrumb": false,
