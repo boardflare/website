@@ -1,8 +1,8 @@
 ---
-title: Sentiment Analysis Tools
+title: Sentiment Analysis
 ---
 
-# Sentiment Analysis Tools
+# Sentiment Analysis
 
 ## Overview
 
@@ -19,7 +19,7 @@ Sentiment analysis classifies text as having positive or negative overall sentim
 ## Tools
 
 The following tools are available:
-- [Sentiment Analysis Add-in for Excel](/tools/text/sentiment/excel)
+- [Sentiment Analysis for Excel](/tools/text/sentiment/excel)
 - [Sentiment Analysis for Google Sheets](/tools/text/sentiment/sheets)
 - [Sentiment Analyiss Online Tool](/tools/text/sentiment/online)
 

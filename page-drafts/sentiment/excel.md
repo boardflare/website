@@ -1,8 +1,8 @@
 ---
-title: Sentiment Analysis Add-in for Excel
+title: Sentiment Analysis for Excel
 ---
 
-# Sentiment Analysis Add-in for Excel
+# Sentiment Analysis for Excel
 
 This app is in the AppSource review process currently. **The link below is a placeholder only.**
 

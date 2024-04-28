@@ -5,33 +5,33 @@ import Image from 'next/image'
 import Link from 'next/link';
 
 <div>
-    <div className="text-8xl font-bold text-center tracking-tight text-blue-900 mt-16 mb-16">
+    <div className="text-6xl font-bold text-center tracking-tight text-blue-900 mt-16 mb-12">
         <h1 className="flex flex-col items-center">
-            <span>Spreadsheet AI</span>
-            <span className="text-gray-500 text-6xl">using local models</span>
+            <span>Spreadsheet ML</span>
+            <span className="text-gray-500 text-5xl">using local models</span>
         </h1>
     </div>
-    <div className="flex justify-center space-x-20 mb-20" >
-        <Image src="/images/Microsoft_Office_Excel.svg" alt="Excel logo" width={160} height={160} />
-        {/* <span className="text-9xl">🙂</span> */}
-        {/* <Image src="/images/csv.svg" alt="CSV icon" width={112} height={112} /> */}
-        <Image src="/images/Google_Sheets_logo.svg" alt="Google Sheets logo" width={112} height={112} />
+    <div className="flex justify-center space-x-10 mb-12" >
+        <Image src="/images/Microsoft_Office_Excel.svg" alt="Excel logo" width={120} height={120} />
+        <span className="text-6xl flex items-center justify-center">🤗</span>
+        {/* <Image src="/images/csv.svg" alt="CSV icon" width={84} height={84} /> */}
+        <Image src="/images/Google_Sheets_logo.svg" alt="Google Sheets logo" width={84} height={84} />
     </div>
 </div>
 
-<div class="flex justify-center">
-    <ul className="list-disc text-3xl">
-        <li>AI tools for Microsoft Excel and Google Sheets.</li>
-        <li>Models run locally in the browser, not the cloud.</li>
-        <li>Your data never leaves your spreadsheet.</li>
-        <li>Unlimited local processing with no API fees.</li>
+<div className="flex justify-center">
+    <ul className="text-lg">
+        <li>✅Use models on [Hugging Face](https://huggingface.co/models?library=transformers.js&sort=trending) in Excel and Sheets.</li>
+        <li>💻Local inference using [Transformers.js](https://huggingface.co/docs/transformers.js/index) in spreadsheet.</li>
+        <li>🔒No cloud privacy concerns, unlimited free inference.</li>
+        <li>🚀Sentiment analysis, more NLP tasks coming soon.</li>
     </ul>
 </div>
 
 <div className="flex justify-center mt-10">
-    <Link href="/tools/text/sentiment/overview">
+    <Link href="/tasks/nlp/sentiment">
         <button className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">
-            Go to Tools
+            Get Started
         </button>
     </Link>
 </div>
