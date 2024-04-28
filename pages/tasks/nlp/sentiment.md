@@ -32,7 +32,7 @@ title: Sentiment Analysis
 - Click "Analyze", and a new sheet is added to your workbook to hold the results.
 analysis will run in your spreadsheet.
 - If this is the first use, it will take some additional time for the model to download from [Hugging Face](https://huggingface.co/).  Subsequent uses will be faster, as the model will be cached in your browser storage, including for Excel desktop (which uses a browser engine for the addin).
-- As analysis progresses, the results will stream into the new sheet as they are processed.
+- As analysis progresses, the results will appear in the new sheet.
 - You can click cancel at any time to stop the analysis and start over.
 
 A hypothetical example of the results output is as follows:
@@ -78,14 +78,12 @@ The sentiment analysis models currently available are shown in the table below:
 
 1.2 - 2024-04-27 (planned)
 - Added Excel extension.
-- Added Reviews (1-5 starts) multi-lingual sentiment model.
-- Added ability to split sentences using [WinkNLP](https://winkjs.org/wink-nlp/).
-- Improved progress monitoring using web worker.
+- Added Product Reviews multi-lingual sentiment model.
+- Ability to split sentences using [WinkNLP](https://winkjs.org/wink-nlp/).
 
 1.1 - 2024-04-11
-- Ability to select sentiment model.
-- Added Tweets and Finance News sentiment models to existing Reviews model.
-- Updated UI.
+- Ability to select different sentiment models.
+- Added Twitter Messages and Finance News sentiment models to existing Movie Reviews model.
 
 1.0 - 2024-03-29
 - First version published to Google Workspace Marketplace.
