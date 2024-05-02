@@ -5,15 +5,15 @@ import Image from 'next/image'
 import Link from 'next/link';
 
 <div>
-    <div className="text-6xl font-bold text-center tracking-tight text-blue-900 mt-16 mb-12">
+    <div className="text-5xl font-bold text-center tracking-tight text-blue-900 mt-16 mb-12">
         <h1 className="flex flex-col items-center">
-            <span>Spreadsheet ML</span>
-            <span className="text-gray-500 text-5xl">using local models</span>
+            <span>Machine Learning</span>
+            <span className="text-gray-500 text-4xl">in a Spreadsheet</span>
         </h1>
     </div>
-    <div className="flex justify-center space-x-10 mb-12" >
+    <div className="flex justify-center space-x-20 mb-12" >
         <Image src="/images/Microsoft_Office_Excel.svg" alt="Excel logo" width={120} height={120} />
-        <span className="text-6xl flex items-center justify-center">🤗</span>
+        {/* <span className="text-6xl flex items-center justify-center">🤗</span> */}
         {/* <Image src="/images/csv.svg" alt="CSV icon" width={84} height={84} /> */}
         <Image src="/images/Google_Sheets_logo.svg" alt="Google Sheets logo" width={84} height={84} />
     </div>
@@ -21,10 +21,12 @@ import Link from 'next/link';
 
 <div className="flex justify-center">
     <ul className="text-lg">
-        <li>✅Use models on [Hugging Face](https://huggingface.co/models?library=transformers.js&sort=trending) in Excel and Sheets.</li>
-        <li>💻Local inference using [Transformers.js](https://huggingface.co/docs/transformers.js/index) in spreadsheet.</li>
-        <li>🔒No cloud privacy concerns, unlimited free inference.</li>
-        <li>🚀Sentiment analysis, more NLP tasks coming soon.</li>
+        <li>💻Local model inference using [Transformers.js](https://huggingface.co/docs/transformers.js/index).</li>
+        <li>🔒No data is shared outside your spreadsheet.</li>
+        <li>✅Extensions available for [Excel](https://www.microsoft.com/en-ca/microsoft-365/excel) and [Sheets](https://www.google.ca/sheets/about/).</li>
+        <li>🤗Uses open source models on [Hugging Face](https://huggingface.co/models?library=transformers.js&sort=trending).</li>
+        <li>🆓Local processing = unlimited free usage.</li>
+        <li>🚀Sentiment analysis, more tasks coming soon.</li>
     </ul>
 </div>
 
