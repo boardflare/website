@@ -5,24 +5,30 @@ title: Sentiment Analysis
 # Sentiment Analysis
 
 ## Get started
-[Sentiment analysis](https://paperswithcode.com/task/sentiment-analysis) classifies text as having positive or negative overall sentiment, and is commonly used in customer support, market research, finance, etc.  Click on a button below to get started with the Excel or Sheets extension.
+[Sentiment analysis](https://paperswithcode.com/task/sentiment-analysis) classifies text as having positive or negative overall sentiment, and is commonly used in customer support, market research, finance, etc.  Click on a buttons below to get started with the Excel or Sheets extension.
 
-<div style="display: flex; justify-content: space-between;">
-    <a href="https://appsource.microsoft.com/en-us/product/office/WA200006918?tab=Overview">
-        <img 
-            src="/images/MS_AppSource.png" 
-            alt="AppSource"
-            style="padding-top: 10px; width: 200px;"
-        />
-    </a>
-    <a href="https://workspace.google.com/marketplace/app/sentiment_analysis_for_google_sheets/320314197906">
-        <img 
-            alt="Google Workspace Marketplace badge" 
-            src="https://workspace.google.com/static/img/marketplace/en/gwmBadge.svg"  
-            style="padding-top: 20px; width: 400px;"
-        />
-    </a>
-</div>
+### Excel
+
+<a href="https://appsource.microsoft.com/en-us/product/office/WA200006918?tab=Overview">
+    <img 
+        src="/images/MS_AppSource.png" 
+        alt="AppSource"
+        style="padding-top: 10px; width: 200px;"
+    />
+</a>
+
+### Sheets   
+
+<a href="https://workspace.google.com/marketplace/app/sentiment_analysis_for_google_sheets/320314197906">
+    <img 
+        alt="Google Workspace Marketplace badge" 
+        src="https://workspace.google.com/static/img/marketplace/en/gwmBadge.svg"  
+        style="padding-top: 20px; width: 400px;"
+    />
+</a>
+
+### Pricing
+Extensions are free for unlimited use of local models.  We plan to offer premium paid features in the future, but the core functionality will always be free.
 
 ## How it works
 
