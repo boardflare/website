@@ -4,11 +4,13 @@ title: Sentiment Analysis
 
 # Sentiment Analysis
 
+## Overview
+
 [Sentiment analysis](https://paperswithcode.com/task/sentiment-analysis) classifies text as having positive or negative overall sentiment, and is commonly used in customer support, market research, finance, etc.  Click on a buttons below to get started with the Excel or Sheets extension.
 
-## Get started
+Extensions are free for unlimited use.
 
-### Excel
+## Sentiment Analysis for Excel
 
 <a href="https://appsource.microsoft.com/en-us/product/office/WA200006918?tab=Overview">
     <img 
@@ -18,7 +20,7 @@ title: Sentiment Analysis
     />
 </a>
 
-### Sheets   
+## Sentiment Analysis for Sheets   
 
 <a href="https://workspace.google.com/marketplace/app/sentiment_analysis_for_google_sheets/320314197906">
     <img 
@@ -28,13 +30,10 @@ title: Sentiment Analysis
     />
 </a>
 
-## Pricing
-Extensions are free for unlimited use.  We plan to offer premium paid features in the future, but the core functionality will always be free.
-
 ## Instructions
 
 ### Basic Usage
-- Once installed, open the spreadsheet extension sidebar. In Excel, this will be an icon in the ribbon. In Google Sheets, this will be under the Extensions menu.
+- Once installed, open the spreadsheet extension sidebar. In Excel, this will be the 🙂 icon in the ribbon. In Google Sheets, this will be under the Extensions menu.
 - Select the range of cells containing the text you want to analyze. These must be in a single column.  There is no limit to the number of cells you can select.
 - Click "Analyze", and a new sheet is added to your workbook to hold the results.
 analysis will run in your spreadsheet.
