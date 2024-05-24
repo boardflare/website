@@ -55,6 +55,8 @@ The main limitation of the current version is that the algorithm works better lo
 
 Also, remember that the accuracy of fuzzy matching, like most things in machine learning, might be awesome in one situation and useless in another.🙂
 
+See <a href="https://www.boardflare.com/apps/excel/fuzzy-match">Fuzzy Match for Excel</a> on our website for more information.
+
 ## Installation
 
 The Fuzzy Match tool is available for Excel on Windows, Mac, and the web.  It is available on the Microsoft AppSource store at the link below, or can be installed directly from Excel.
