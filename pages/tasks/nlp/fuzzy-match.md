@@ -1,4 +1,4 @@
-# Fuzzy Match
+# Fuzzy Matching
 
 ## Overview
 
@@ -6,76 +6,13 @@ Fuzzy matching searches for text in the Search range (aka the "needles") in the 
 
 This is intended for finding similar words or short sequences of words (e.g. names of people, companies, products) within a given text, not for assessing the semantic similarity of an entire sentence or paragraph.  For example, searching for the word "Microsoft" in a list of companies, and finding "Microsoft Corporation" or "Microsoft Inc.".
 
-## Fuzzy Match for Excel
-
-Link below is a placeholder, the extension is not yet available in the Microsoft AppSource store.
-
-<a href="https://appsource.microsoft.com/en-us/product/office/WA200006918?tab=Overview">
-    <img 
-        src="/images/MS_AppSource.png" 
-        alt="AppSource"
-        style="padding-top: 10px; width: 200px;"
-    />
-</a>
-
-This app is free for unlimited use.
-
-### Basic Usage
-- Once installed, open sidebar by clicking on Fuzzy Match icon 🧮 in the Excel ribbon.
-- The tool compares two ranges of cells, but think of it like searching for each cell in the **Search** range (the "needles") in every cell in **Reference** range (the "haystack").  
-- The **Search** range should be the smaller of the two ranges, as the algorithm is more efficient working this way.
-- For example, if you are trying to see if a list of new customer leads are already in your CRM, the **Search** range would be the new leads (e.g. 25 cells), and the **Reference** range would be all the companies in your CRM (e.g. 5000 cells).
-- In the workbook, select a range of cells to use for the **Search** range, and click **Get Range** to load the values.  Note that once the data is loaded, it won't be refreshed until you click **Get Range** again.  So if you change the data in the cells, you will need to click **Get Range** again.
-
-![Excel Select Search Range](/images/excel-fuzzy-select-search.png)
-
-- Repeat the same process for the Reference range, which is the one that will be used to create potential Reference for the Search range.
-
-![Excel Select Reference Range](/images/excel-fuzzy-select-reference.png)
-
-- Only text cells in either range will be processed, others will be ignored.
-- Click **Analyze** to start the analysis.  A progress bar will be displayed in the sidebar to show the progress.  Only one analysis can be run at a time, the Analyze button will be disabled until the first analysis is complete.
-- The output will be generated in a new sheet.  The first column will be a copy of the Search range, with the header "Search values". The second column will contain Reference from the other range, with the header "Matches from Reference".  The third column is a similarity score.
-
-![Excel Results](/images/excel-fuzzy-output.png)
-
-- Click **Cancel** at any time to stop the processing.
-
-### Joining with XLOOKUP
-
-Once you have the output sheet with matches, you can use the [XLOOKUP function](https://support.microsoft.com/en-us/office/xlookup-function-b7fd680e-6d10-43e6-84f9-88eae8bf5929) to join your data.  For example, if you have a list of new leads and you want to see if they are already in your CRM, you can use XLOOKUP to find the company name in the CRM and return the company ID.  
-
-Here's a step-by-step example with formulas:
-
-1. **New Leads** sheet:  This is the sheet with the new leads you want to check against your CRM.  Let's say the new lead company name is in column A, column B should be the matching name from the CRM, and column C should contain the company ID from your CRM.
-
-2. **CRM** sheet: This is the sheet with all the companies in your CRM.  Let's say the company name is in column A, and the company ID is in column B.
-
-3. **Fuzzy Match Output** sheet: This is the sheet with the output from the Fuzzy Match tool.  The fuzzy match was done using column A of the New Leads sheet as the search range, and column A of the CRM sheet as the Reference range.  The output sheet has the Search values in column A (which came from column A in the New Leads sheet), the Matches from Reference are in column B, and the match similarity score is in column C.
-
-4. In the **New Leads** sheet, in column B, first find the matching company name from the Fuzzy Match Output sheet using the following formula
-
-```excel
-=XLOOKUP(A2, 'Fuzzy Match Output'!A:A, 'Fuzzy Match Output'!B:B)
-```
-
-This formula will find the matching company name from the CRM in the Fuzzy Match Output sheet.
-
-5. In column C, find the company ID from the CRM using the following formula
-
-```excel
-=XLOOKUP(B2, CRM!A:A, CRM!B:B)
-```
-
-This formula will find the company ID from the CRM sheet based on the matching company name found in step 4.
-
-6. Copy these formulas down for all the rows in the New Leads sheet.
-
-7. Now you have a list of new leads with the matching company ID from your CRM.
-
 ## Algorithms
 
 Fuzzy matching algorithms are designed to find approximate matches for a given search term or pattern. They are used when the matches do not have to be exact. There are several algorithms used in fuzzy matching, and here are a few commonly used ones:
+
+### Bitap
+
+The [Bitap algorithm](https://en.wikipedia.org/wiki/Bitap_algorithm), also known as the shift-or, shift-and, or Baeza-Yates-Gonnet algorithm, is a string-searching algorithm that allows for approximate matching of a pattern in a text. It is based on bitwise operations and dynamic programming, and it can be used to find the best approximate match for a given pattern in a text.
 
 ### Levenshtein Distance
 
@@ -129,7 +66,8 @@ Soundex is a phonetic algorithm for indexing names by sound, as pronounced in En
 
 These algorithms can be used individually or in combination, depending on the specific requirements of the fuzzy matching task.
 
-## Changelog
+## Datasets
+coming soon
 
-1.0.0 - 2024-05-17
-- Initial version for Excel.
+## Applications
+coming soon

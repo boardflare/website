@@ -13,10 +13,14 @@
     "title": "Tasks",
     "type": "page",
     "theme": {
-      "breadcrumb": false,
-      "timestamp": false,
-      "sidebar": true,
-      "toc": true
+      "breadcrumb": false
+    }
+  },
+  "apps": {
+    "title": "Apps",
+    "type": "page",
+    "theme": {
+      "breadcrumb": false
     }
   },
   "blog": {
