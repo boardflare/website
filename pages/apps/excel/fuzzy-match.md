@@ -13,8 +13,8 @@ Provides functions FUZZY.LOOKUP and FUZZY.MATCH which are similar to the native 
 <h3>FEATURES</h3>
 
 <ul>
-    <li>🎯Similar to XLOOKUP and XMATCH, easy to use.</li>
-    <li>🆓Unlimited free use, no need for a subscription.</li>
+    <li>🎯Similar to XLOOKUP and XMATCH.</li>
+    <li>🆓Unlimited free use.</li>
     <li>🔒No data is shared outside your spreadsheet.</li>
     <li>🚀Fast algorithm handles large datasets.</li>
     <li>✅Outputs lookup and match for quick comparison.</li>
@@ -68,6 +68,104 @@ The Fuzzy Match tool is available for Excel on Windows, Mac, and the web.  It is
         style="padding-top: 10px; width: 200px;"
     />
 </a>
+
+## Functions
+
+<div class="block">
+    <details>
+        <summary><b>=BOARDFLARE.FUZZY.MATCH</b></summary>
+        <table>
+            <tr>
+                <th>Inputs</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><b>lookup_value</b></td>
+                <td>text to search for in the lookup_array</td>
+            </tr>
+            <tr>
+                <td><b>lookup_array</b></td>
+                <td>range of text cells containing possible matches</td>
+            </tr>
+            <tr>
+                <td><b>threshold</b></td>
+                <td>minimum similarity: 0 (anything) - 1 (exact match), default is 0.4</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Outputs</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><b>Lookup</b></td>
+                <td>original lookup_value</td>
+            </tr>
+            <tr>
+                <td><b>Match</b></td>
+                <td>best match found in the lookup_array</td>
+            </tr>
+            <tr>
+                <td><b>Similarity</b></td>
+                <td>similarity between the Lookup and the Match</td>
+            </tr>
+            <tr>
+                <td><b>Row</b></td>
+                <td>Row number of the match in lookup_array</td>
+            </tr>
+        </table>
+    </details>
+</div>
+
+<div class="block">
+    <details>
+        <summary><b>=BOARDFLARE.FUZZY.LOOKUP</b></summary>
+        <table>
+            <tr>
+                <th>Inputs</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><b>lookup_value</b></td>
+                <td>text to search for in the lookup_array</td>
+            </tr>
+            <tr>
+                <td><b>lookup_array</b></td>
+                <td>range of text cells containing possible matches</td>
+            </tr>
+            <tr>
+                <td><b>return_array</b></td>
+                <td>additional columns to return with match</td>
+            </tr>
+            <tr>
+                <td><b>threshold</b></td>
+                <td>minimum similarity: 0 (anything) - 1 (exact match), default is 0.4</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Outputs</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><b>Lookup</b></td>
+                <td>original lookup_value</td>
+            </tr>
+            <tr>
+                <td><b>Match</b></td>
+                <td>best match found in the lookup_array</td>
+            </tr>
+            <tr>
+                <td><b>Similarity</b></td>
+                <td>similarity between the Lookup and the Match</td>
+            </tr>
+            <tr>
+                <td><b>Return Row</b></td>
+                <td>matching row in return_array</td>
+            </tr>
+        </table>
+    </details>
+</div>
 
 ## Algorithm
 
