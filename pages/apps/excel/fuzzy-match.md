@@ -25,7 +25,7 @@ Provides functions FUZZY.LOOKUP and FUZZY.MATCH which are similar to the native 
 <b>FUZZY.MATCH</b> (like XMATCH, with fuzzy matching)
 <ul>
     <li>➡️Inputs: lookup_value, lookup_array, [threshold]</li>
-    <li>⬅️Outputs: Lookup, Fuzzy Match, Similarity, and Row as custom data type</li>
+    <li>⬅️Outputs: Lookup, Match, Similarity, and Row as custom data type</li>
     <li>🔍Searches for the lookup_value in the lookup_array using fuzzy text matching.</li>
     <li>🎚️Threshold input lets you adjust how close the match must be.</li>
     <li>📅Output is match row in lookup_array, use with INDEX(), etc.</li>
@@ -34,7 +34,7 @@ Provides functions FUZZY.LOOKUP and FUZZY.MATCH which are similar to the native 
 <b>FUZZY.LOOKUP</b> (like XLOOKUP, with fuzzy matching)
 <ul>
     <li>➡️Inputs: lookup_value, lookup_array, return_array, [threshold]</li>
-    <li>⬅️Outputs: Lookup, Fuzzy Match, Similarity, and values from matching row in return_array</li>
+    <li>⬅️Outputs: Lookup, Match, Similarity, and values from matching row in return_array</li>
     <li>🔍Searches for the lookup_value in the lookup_array using fuzzy text matching.</li>
     <li>🎚️Threshold input lets you adjust how close the match must be.</li>
     <li>📅Output return_array retrieves selected columns from the matching row.</li>
