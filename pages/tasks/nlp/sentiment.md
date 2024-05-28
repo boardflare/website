@@ -41,3 +41,23 @@ The sentiment analysis models currently available are shown in the table below:
 - Finance: Monitor news articles for sentiment about a company or industry.
 - Education: Analyze student feedback to improve course content and delivery.
 - Healthcare: Analyze patient feedback to improve services and patient outcomes.
+
+## Cloud Options
+
+If you need to integrate sentiment analysis into a real-time workflow (e.g. analyze sentiment of support tickets for routing), you'll need to use an API which processes the text and returns the sentiment analysis results.
+
+The open source models we use in our tools are are downloaded from [Hugging Face](https://huggingface.co/models), which provides a large collection of pre-trained models for natural language processing tasks, including sentiment analysis. They also offer [Inference Endpoints](https://huggingface.co/docs/inference-endpoints/index) whereby the same models can be used via API.  This is a good option if you want to use the same models we use in our tools, but need to integrate them into your own applications.
+
+Here are some NLP API providers which offer sentiment analysis:
+
+- [MonkeyLearn](https://www.monkeylearn.com/)
+- [MeaningCloud](https://www.meaningcloud.com/)
+- [Rosette](https://www.rosette.com/)
+- [Lexalytics](https://www.lexalytics.com/)
+
+All the large cloud providers offer natural language processing API's, which include sentiment analysis.  Most of them offer a free tier for limited usage so they are easy to try out.
+
+- [Google Cloud Natural Language API](https://cloud.google.com/natural-language)
+- [IBM Watson](https://www.ibm.com/watson/services/natural-language-understanding/)
+- [Microsoft Azure Text Analytics API](https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/)
+- [Amazon Comprehend](https://aws.amazon.com/comprehend/)
