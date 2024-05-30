@@ -180,5 +180,10 @@ The tool is currently using the [Bitap algorithm](https://en.wikipedia.org/wiki/
 
 ## Changelog
 
-1.0.0 - 2024-05-15 (published to AppSource)
+Here are the release notes.
+
+[1.1](/manifests/fuzzy-match-v1-1.xml) - 2024-05-27 (current)
+- Switched to using custom functions, FUZZY.MATCH and FUZZY.LOOKUP.
+
+[1.0](/manifests/fuzzy-match-v1-0-0.xml) - 2024-05-15 (published to AppSource)
 - Initial version with task pane only.
