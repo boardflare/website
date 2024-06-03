@@ -22,7 +22,7 @@ There are several datasets available for training and evaluating machine transla
 
 There are several pre-trained models available for machine translation, most of which are based on the Transformer architecture. Some of the most popular ones include:
 
-- [Opus MT](https://huggingface.co/Helsinki-NLP): These models are trained for specific language pairs using the MarianMT architecture. See their [paper](https://arxiv.org/pdf/2212.01936). They are small enough to be run on a typical desktop CPU, consuming roughly 500 MB of RAM, and 100 MB of disk (encoder and decoder).  On a single thread of a mid-range CPU, with greedy decoding (beams = 1), they generate around 5-10 tokens per second.
+- [Opus MT](https://huggingface.co/Helsinki-NLP): These models are trained for specific language pairs using the MarianMT architecture. See their [paper](https://arxiv.org/pdf/2212.01936) and [GitHub repo](https://github.com/Helsinki-NLP/Opus-MT). They are small enough to be run on a typical desktop CPU, consuming roughly 500 MB of RAM, and 100 MB of disk (encoder and decoder).  On a single thread of a mid-range CPU, with greedy decoding (beams = 1), they generate around 5-10 tokens per second.
 
 - [Facebook M2M-100](https://huggingface.co/facebook/m2m100_418M): This model is trained on 100 languages and can translate between any pair of them. It is based on the mBART architecture.  The quantized 418M version is roughly 600 MB in size, consuming about 2 GB of RAM.  On a single thread of a mid-range CPU, with greedy decoding (beams = 1), it generates around 1-2 tokens per second.
 
