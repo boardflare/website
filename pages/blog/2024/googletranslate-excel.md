@@ -6,36 +6,34 @@ date: 2024-05-29
 # GOOGLETRANSLATE for Excel
 May 29, 2024
 
-In today's globalized world, the need for quick and accurate translation is more important than ever. This is especially true in the realm of data analysis, where understanding information across languages can provide key insights. Many Excel users have long been looking for a GOOGLETRANSLATE-like function to facilitate this process. 
+## GOOGLETRANSLATE
 
-We're excited to introduce Translate for Excel, a solution that brings the power of translation directly into your spreadsheet. 
+GOOGLETRANSLATE is a popular function in Google Sheets that allows users to translate text directly within their spreadsheets. It's a powerful tool for working with multilingual data and has become an essential feature for many users. It translates text from one language to another with a simple function syntax of GOOGLETRANSLATE(text, [source_language], [target_language]).
 
-## What is Translate for Excel?
+## Translate for Excel
 
-Translate for Excel is a function similar to GOOGLETRANSLATE, but designed specifically for Excel. It uses a machine learning model to translate text directly within your spreadsheet. This means your data never leaves your document, ensuring privacy and security. It is also free because it runs on your CPU, so there are no usage limits or fees.
+Translate for Excel is a function similar to GOOGLETRANSLATE, but for Excel. It uses a machine learning model to translate text directly within your spreadsheet. This means your data never leaves your document, ensuring privacy and security. Since it runs on your CPU, there are no usage limits or api fees.
 
 ## Key Features
 
 Translate for Excel offers several key features:
 
-- **Translation of several languages to English**: Currently, the function supports translation from Spanish, German, and French to English. We plan to expand this list in the future.
+- **Translation of 20 languages to or from English**: We plan to expand the languages supported and enable translation between any pair of languages.
 - **Unlimited free use**: There are no usage limits or fees.
-- **Local operation**: The function runs on your computer, so your data stays secure.
-- **High accuracy**: The function provides relatively high accuracy in translation.
-- **Background operation**: The function is slow (translating approximately one word per second), so it's designed to run in the background while you work on other tasks.
+- **Local operation**: The function runs on your computer, so your data remains secure.
 
 ## How to Use Translate for Excel
 
 Using Translate for Excel is simple. The function requires only the text you want to translate and the language code of the input text. Here's how you can use it:
 
 ```excel
-=BOARDFLARE.TRANSLATE(input_text, input_lang)
+=BOARDFLARE.TRANSLATE(text, source_language, target_language)
 ```
 
 For example, to translate a cell A1 from Spanish to English, you would use:
 
 ```excel
-=BOARDFLARE.TRANSLATE(A1, "es")
+=BOARDFLARE.TRANSLATE(A1, "es", "en"    )
 ```
 
 ## Installation

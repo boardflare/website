@@ -12,33 +12,26 @@ Provides functions FUZZY.LOOKUP and FUZZY.MATCH which are similar to the native 
 
 <h3>FEATURES</h3>
 
-<ul>
-    <li>🎯Similar to XLOOKUP and XMATCH.</li>
-    <li>🆓Unlimited free use.</li>
-    <li>🔒No data is shared outside your spreadsheet.</li>
-    <li>🚀Fast algorithm handles large datasets.</li>
-    <li>✅Outputs lookup and match for quick comparison.</li>
-</ul>
-
+🎯 Similar to XLOOKUP and XMATCH.<br>
+🆓 Unlimited free use.<br>
+🔒 No data is shared outside your spreadsheet.<br>
+🚀 Fast algorithm handles large datasets.<br>
+✅ Outputs lookup and match for quick comparison.<br>
 <h3>FUNCTIONS</h3>
 
-<b>FUZZY.MATCH</b> (like XMATCH, with fuzzy matching)
-<ul>
-    <li>➡️Inputs: lookup_value, lookup_array, [threshold]</li>
-    <li>⬅️Outputs: Lookup, Match, Similarity, and Row as custom data type</li>
-    <li>🔍Searches for the lookup_value in the lookup_array using fuzzy text matching.</li>
-    <li>🎚️Threshold input lets you adjust how close the match must be.</li>
-    <li>📅Output is match row in lookup_array, use with INDEX(), etc.</li>
-</ul>
+**FUZZY.MATCH** (like XMATCH, with fuzzy matching)<br>
+➡️ Inputs: lookup_value, lookup_array, [threshold]<br>
+⬅️ Outputs: Lookup, Match, Similarity, and Row as custom data type<br>
+🔍 Searches for the lookup_value in the lookup_array using fuzzy text matching.<br>
+🎚️ Threshold input lets you adjust how close the match must be.<br>
+📅 Output is match row in lookup_array, use with INDEX(), etc.<br>
 
-<b>FUZZY.LOOKUP</b> (like XLOOKUP, with fuzzy matching)
-<ul>
-    <li>➡️Inputs: lookup_value, lookup_array, return_array, [threshold]</li>
-    <li>⬅️Outputs: Lookup, Match, Similarity, and values from matching row in return_array</li>
-    <li>🔍Searches for the lookup_value in the lookup_array using fuzzy text matching.</li>
-    <li>🎚️Threshold input lets you adjust how close the match must be.</li>
-    <li>📅Output return_array retrieves selected columns from the matching row.</li>
-</ul>
+**FUZZY.LOOKUP** (like XLOOKUP, with fuzzy matching)<br>
+➡️ Inputs: lookup_value, lookup_array, return_array, [threshold]<br>
+⬅️ Outputs: Lookup, Match, Similarity, and values from matching row in return_array<br>
+🔍 Searches for the lookup_value in the lookup_array using fuzzy text matching.<br>
+🎚️ Threshold input lets you adjust how close the match must be.<br>
+📅 Output return_array retrieves selected columns from the matching row.<br>
 
 <h3>APPLICATIONS</h3>
 
@@ -182,8 +175,8 @@ The tool is currently using the [Bitap algorithm](https://en.wikipedia.org/wiki/
 
 Here are the release notes.
 
-[1.1](/manifests/fuzzy-match-v1-1.xml) - 2024-05-27 (current)
+1.1 - 2024-05-27 (current)
 - Switched to using custom functions, FUZZY.MATCH and FUZZY.LOOKUP.
 
-[1.0](/manifests/fuzzy-match-v1-0-0.xml) - 2024-05-15 (published to AppSource)
+1.0 - 2024-05-15
 - Initial version with task pane only.

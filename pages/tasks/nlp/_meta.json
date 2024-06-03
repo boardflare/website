@@ -1,5 +1,6 @@
 {
   "sentiment": "Sentiment Analysis",
   "fuzzy-match": "Fuzzy Matching",
-  "text-classification": "Text Classification"
+  "text-classification": "Text Classification",
+  "machine-translation": "Machine Translation"
 }
