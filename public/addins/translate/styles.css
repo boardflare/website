@@ -1,0 +1,88 @@
+body {
+    font-size: 14px;
+    background-color: white;
+}
+
+code {
+    color: darkgreen;
+}
+
+#progressBar {
+    width: 0%;
+    height: 20px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 20px;
+    color: white;
+}
+
+.branding-below {
+    bottom: 80px;
+    top: 0;
+}
+table {
+    border: 1px solid black;
+}
+
+summary,
+th,
+td {
+    padding: 3px;
+}
+
+#progress {
+    display: none;
+}
+
+#progressContainer {
+    width: 100%;
+    background-color: #f3f3f3;
+}
+
+.icon {
+    vertical-align: middle;
+    height: 1.25rem;
+}
+
+.sidebar span {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.referral-block {
+    display: none;
+}
+
+#referralForm label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#referralForm input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+#referralForm input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+#referralForm input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#accountDetails {
+    display: none;
+}

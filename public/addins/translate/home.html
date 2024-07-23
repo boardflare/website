@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Translate</title>
+    <base target="_top">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6GVMW0P9R"></script>
+    <script src="main.js" type="module"></script>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="sidebar branding-below">
+        <div class="block">
+            <div class="block">
+                Translate 20 languages to or from English with unlimited free use, or between any combination of 100
+                languages with Premium.
+            </div>
+            <div class="block">
+                <details>
+                    <summary>Instructions</summary>
+                    See <a
+                        href="https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EeDfU0BEJNtJtwY9DnyukOkBsC436WB7T430THeYaRGnmg?e=44N2Tj"
+                        target="_blank" rel="noopener">example workbook</a> and <a
+                        href="https://www.boardflare.com/apps/excel/translate" target="_blank"
+                        rel="noopener">website</a>
+                    for details.
+                    <p>=<code>BOARDFLARE.TRANSLATE (text, source_lang, target_lang, [model])</code></p>
+                    <code>text:</code> cell to translate, must be less than 1000 characters.
+                    <code>source_lang:</code> language of text, e.g. "fr" for French.
+                    <code>target_lang:</code> target language, e.g. "en" for English.
+                    <code>model:</code> optional, see <a href="https://www.boardflare.com/apps/excel/translate#models"
+                        target="_blank" rel="noopener">models</a> for details.
+                    <p>E.g., to translate French in cell A1 to English:
+                        <code>=BOARDFLARE.TRANSLATE(A1, "fr", "en")</code>
+                    </p>
+                    <p>The free local translation model requires either the source or target
+                        language be English "<code>en</code>", and the other language one of the following: </p>
+                    <div class="block" id="opusLanguages"></div>
+                </details>
+                <details>
+                    <summary>Premium</summary>
+                    <div class="block">
+                        <p>Translate any combination of 100 languages, and with higher quality. <a href="#"
+                                onclick="fallbackLogin(); return false;">Sign In</a> with a work/school account to try
+                            for free. Sorry, personal accounts are not supported. See <a
+                                href="https://www.boardflare.com/apps/pricing" target="_blank"
+                                rel="noopener">pricing</a> for details. If you have credits, translation will be done
+                            using the premium model, but you may opt to use the free model by setting model = "free" and
+                            it will not use credits.</p>
+                        </p>
+                        <p>Supported source and target languages:</p>
+                        <div class="block" id="m2mLanguages"></div>
+                    </div>
+                </details>
+                <details open>
+                    <summary>Progress</summary>
+                    <div class="block" style="display: flex; justify-content: space-between;">
+                        <button id="cancelButton" type="button">Cancel</button>
+                        <div id="taskCounts" style="text-align: right;"></div>
+                    </div>
+                    <div id="update"></div>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar bottom">
+        <span>
+            🛟Need help? Suggestions? <a id="supportLink" target="_blank" rel=noopener
+                href="https://www.boardflare.com/company/support">Contact us!</a>
+        </span>
+        <div class="footer-container">
+            <span class="gray">
+                <img src="./images/favicon.svg" alt="Boardflare Icon" class="icon">
+                BOARDFLARE
+            </span>
+            <span id="credits"></span>
+        </div>
+    </div>
+    <script src="languages.js"></script>
+    <script src="functions.js" type="module"></script>
+    <script src="../utils/addin-login.js"></script>
+</body>
+
+</html>

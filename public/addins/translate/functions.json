@@ -1,0 +1,42 @@
+{
+    "allowCustomDataForDataTypeAny": true,
+    "allowErrorForDataTypeAny": true,
+    "functions": [
+        {
+            "id": "TRANSLATE",
+            "name": "TRANSLATE",
+            "description": "Translate text to and from English.",
+            "helpUrl": "https://www.boardflare.com/apps/excel/translate",
+            "parameters": [
+                {
+                    "name": "text",
+                    "description": "text to translate",
+                    "type": "string",
+                    "dimensionality": "scalar"
+                },
+                {
+                    "name": "source_lang",
+                    "description": "language code of the text to translate",
+                    "type": "string",
+                    "dimensionality": "scalar"
+                },
+                {
+                    "name": "target_lang",
+                    "description": "language code to translate to",
+                    "type": "string",
+                    "dimensionality": "scalar"
+                },
+                {
+                    "name": "model",
+                    "description": "model to use for translation",
+                    "type": "string",
+                    "dimensionality": "scalar",
+                    "optional": true
+                }
+            ],
+            "result": {
+                "dimensionality": "scalar"
+            }
+        }
+    ]
+}

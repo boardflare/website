@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Popup Authentication</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module">
+        // Import MSAL.js module from CDN
+        import { PublicClientApplication } from "https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.17.0/+esm";
+
+        // Function to initialize and perform the authentication
+        async function initializeAndAuthenticate() {
+            const pca = new PublicClientApplication({
+                auth: {
+                    clientId: "51d40585-2b82-476a-a21a-ba81b599a9cd",
+                    authority: "https://login.microsoftonline.com/common",
+                    redirectUri: window.location.origin + "/auth/blank.html"
+                },
+                cache: {
+                    cacheLocation: 'localStorage' // Needed to avoid a "login required" error.
+                }
+            });
+
+            await pca.initialize();
+
+            try {
+                // Use loginPopup method for popup-based authentication
+                const response = await pca.loginPopup({
+                    scopes: ["openid", "profile"] // Specify the scopes you need
+                });
+                if (response) {
+                    console.log("Authentication successful", response);
+                    // Handle successful authentication here, e.g., display token or redirect
+                }
+            } catch (error) {
+                console.error("Authentication failed", error);
+                // Handle authentication errors here
+            }
+        }
+
+        // Wait for the DOM to be fully loaded before initializing authentication
+        document.addEventListener("DOMContentLoaded", () => {
+            initializeAndAuthenticate();
+        });
+    </script>
+</head>
+
+<body>
+    <p>Popup authentication in progress...</p>
+</body>
+
+</html>

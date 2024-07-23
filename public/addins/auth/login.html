@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Authentication</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script type="module">
+        import { PublicClientApplication } from "https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.17.0/+esm";
+
+        Office.onReady(async () => {
+            const hostname = window.location.hostname;
+            let clientId;
+            if (hostname === 'addins.boardflare.com') {
+                clientId = '7bced3a3-ad1b-48cb-b7fe-fb9e94c7ed54';
+            } else {
+                clientId = 'ea53f42f-cfd7-426a-947f-73a2ccb753f8';
+            }
+            const pca = new PublicClientApplication({
+                auth: {
+                    clientId: clientId, // Use the dynamically selected clientId
+                    authority: "https://login.microsoftonline.com/common",
+                    redirectUri: `${window.location.origin}/auth/login.html` // Must be registered as "spa" type.
+                },
+                cache: {
+                    cacheLocation: 'localStorage' // Needed to avoid a "login required" error.
+                }
+            });
+
+            await pca.initialize();
+
+            try {
+                // handleRedirectPromise should be invoked on every page load.
+                const response = await pca.handleRedirectPromise();
+                if (response) {
+                    Office.context.ui.messageParent(JSON.stringify({ status: 'success', msalResponse: response }));
+                } else {
+                    // A problem occurred, so invoke login.
+                    await pca.loginRedirect();
+                }
+            } catch (error) {
+                const errorData = {
+                    errorMessage: error.errorCode,
+                    message: error.errorMessage,
+                    errorCode: error.stack
+                };
+                Office.context.ui.messageParent(JSON.stringify({ status: 'error', errorData: errorData }));
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <p>Authentication in progress...</p>
+</body>
+
+</html>

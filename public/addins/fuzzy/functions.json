@@ -1,0 +1,72 @@
+{
+    "allowCustomDataForDataTypeAny": true,
+    "allowErrorForDataTypeAny": true,
+    "functions": [
+        {
+            "id": "FMATCH",
+            "name": "FUZZY.MATCH",
+            "description": "Finds the closest match to the lookup_value in the lookup_array and returns its row number.",
+            "helpUrl": "https://www.boardflare.com/apps/excel/fuzzy-match#functions",
+            "parameters": [
+                {
+                    "name": "lookup_value",
+                    "description": "text to search for in the lookup_array",
+                    "type": "string",
+                    "dimensionality": "scalar"
+                },
+                {
+                    "name": "lookup_array",
+                    "description": "range of text cells containing possible matches",
+                    "type": "string",
+                    "dimensionality": "matrix"
+                },
+                {
+                    "name": "threshold",
+                    "description": "minimum similarity: 0 (anything) - 1 (exact match)",
+                    "type": "number",
+                    "dimensionality": "scalar",
+                    "optional": true
+                }
+            ],
+            "result": {
+                "dimensionality": "scalar"
+            }
+        },
+        {
+            "id": "FLOOKUP",
+            "name": "FUZZY.LOOKUP",
+            "description": "Finds the closest match to the lookup_value in the lookup_array and returns row from return_array.",
+            "helpUrl": "https://www.boardflare.com/apps/excel/fuzzy-match#functions",
+            "parameters": [
+                {
+                    "name": "lookup_value",
+                    "description": "text to search for in the lookup_array",
+                    "type": "string",
+                    "dimensionality": "scalar"
+                },
+                {
+                    "name": "lookup_array",
+                    "description": "range of text cells containing possible matches",
+                    "type": "string",
+                    "dimensionality": "matrix"
+                },
+                {
+                    "name": "return_array",
+                    "description": "additional columns to return with match",
+                    "type": "string",
+                    "dimensionality": "matrix"
+                },
+                {
+                    "name": "threshold",
+                    "description": "minimum similarity: 0 (anything) - 1 (exact match)",
+                    "type": "number",
+                    "dimensionality": "scalar",
+                    "optional": true
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix"
+            }
+        }
+    ]
+}

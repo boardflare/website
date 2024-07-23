@@ -1,0 +1,41 @@
+body {
+    font-size: 14px;
+    background-color: white;
+}
+
+#progressBar {
+    width: 0%;
+    height: 20px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 20px;
+    color: white;
+}
+
+.branding-below {
+    bottom: 125px;
+    top: 0;
+}
+table {
+    border: 1px solid black;
+}
+
+summary,
+th,
+td {
+    padding: 3px;
+}
+
+#progress {
+    display: none;
+}
+
+#progressContainer {
+    width: 100%;
+    background-color: #f3f3f3;
+}
+
+.icon {
+    vertical-align: middle;
+    height: 1.25rem;
+}

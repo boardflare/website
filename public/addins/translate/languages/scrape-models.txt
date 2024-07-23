@@ -1,0 +1,648 @@
+
+Xenova/opus-mt-gem-gem
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-sv-en
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-tc-big-tr-en
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-en-ROMANCE
+Translation
+•
+Updated Mar 18
+•
+5
+•
+1
+
+Xenova/opus-mt-en-ru
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-fi-en
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-en-it
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-cs-en
+Translation
+•
+Updated Mar 18
+•
+6
+
+Xenova/opus-mt-en-es
+Translation
+•
+Updated Mar 18
+•
+12
+•
+1
+
+Xenova/opus-mt-en-fr
+Translation
+•
+Updated Mar 18
+•
+6
+•
+1
+
+Xenova/opus-mt-pl-en
+Translation
+•
+Updated Mar 18
+•
+4
+•
+1
+
+Xenova/opus-mt-it-en
+Translation
+•
+Updated Mar 18
+•
+6
+
+Xenova/opus-mt-nl-en
+Translation
+•
+Updated Mar 18
+•
+3
+
+Xenova/opus-mt-mul-en
+Translation
+•
+Updated Mar 18
+•
+5
+•
+1
+
+Xenova/opus-mt-en-de
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-ko-en
+Translation
+•
+Updated Mar 18
+•
+4
+
+Xenova/opus-mt-ar-en
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-ru-en
+Translation
+•
+Updated Mar 18
+•
+4
+
+Xenova/opus-mt-de-en
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-zh-en
+Translation
+•
+Updated Mar 18
+•
+4
+•
+1
+
+Xenova/opus-mt-es-en
+Translation
+•
+Updated Mar 18
+•
+3
+
+Xenova/opus-mt-fr-en
+Translation
+•
+Updated Mar 18
+•
+5
+•
+1
+
+Xenova/opus-mt-en-zh
+Translation
+•
+Updated Mar 18
+•
+8
+•
+1
+
+Xenova/nllb-200-distilled-600M
+Translation
+•
+Updated Mar 18
+•
+37
+•
+20
+
+Varosa/m2m100-onnx
+Translation
+•
+Updated Oct 10, 2023
+•
+3
+
+Varosa/mbart-large-onnx
+Translation
+•
+Updated Oct 9, 2023
+•
+2
+
+lazycodepersona/m2m100_418m
+Translation
+•
+Updated Sep 6, 2023
+•
+3
+
+julien-c/onnx-opus-mt-en-eo
+Translation
+•
+Updated Jun 29, 2023
+•
+5
+•
+1
+
+Xenova/opus-mt-uk-en
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-ru-uk
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-ru-fr
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-ru-es
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-ro-fr
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-jap-en
+Translation
+•
+Updated Mar 19
+•
+16
+
+Xenova/opus-mt-it-es
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-en-vi
+Translation
+•
+Updated Mar 19
+•
+5
+•
+1
+
+Xenova/m2m100_418M
+Translation
+•
+Updated Mar 19
+•
+13
+•
+4
+
+Xenova/opus-mt-en-fi
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-nl-fr
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-en-da
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-vi-en
+Translation
+•
+Updated Mar 19
+•
+4
+
+Xenova/opus-mt-th-en
+Translation
+•
+Updated Mar 19
+•
+6
+
+Xenova/opus-mt-en-ar
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-et-en
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-en-nl
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-hi-en
+Translation
+•
+Updated Mar 19
+•
+6
+
+Xenova/opus-mt-fi-de
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-gmw-gmw
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-ROMANCE-en
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-no-de
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-da-de
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-fr-de
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-ja-en
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-bat-en
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-id-en
+Translation
+•
+Updated Mar 18
+•
+5
+•
+1
+
+Xenova/opus-mt-tr-en
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-da-en
+Translation
+•
+Updated Mar 18
+•
+5
+
+Xenova/opus-mt-it-fr
+Translation
+•
+Updated Mar 18
+•
+5
+
+huuquyet/envit5-translation
+Translation
+•
+Updated Apr 21
+•
+3
+
+huuquyet/vinai-translate-vi2en-v2
+Translation
+•
+Updated Apr 21
+•
+2
+
+huuquyet/vinai-translate-en2vi-v2
+Translation
+•
+Updated Apr 21
+•
+2
+
+Xenova/mbart-large-50
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/mbart-large-50-many-to-one-mmt
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/mbart-large-50-many-to-many-mmt
+Translation
+•
+Updated Mar 19
+•
+4
+•
+3
+
+Xenova/opus-mt-en-cs
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-en-mul
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-en-jap
+Translation
+•
+Updated Mar 19
+•
+5
+
+Xenova/opus-mt-en-id
+Translation
+•
+Updated Mar 19
+•
+4
+•
+1
+
+Xenova/opus-mt-en-hu
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-en-hi
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-en-af
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-de-fr
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-de-es
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-af-en
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-hu-en
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-fr-ru
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-fr-ro
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-fr-es
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-es-ru
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-es-it
+Translation
+•
+Updated Mar 19
+•
+4
+•
+1
+
+Xenova/opus-mt-es-fr
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-es-de
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-en-xh
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-en-uk
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-en-sv
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-en-ro
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-xh-en
+Translation
+•
+Updated Mar 19
+•
+3
+
+Xenova/opus-mt-uk-ru
+Translation
+•
+Updated Mar 19
+•
+6

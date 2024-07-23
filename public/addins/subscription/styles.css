@@ -1,0 +1,97 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    /* Align items vertically */
+}
+
+.logo-container img {
+    height: 1.5rem;
+    /* Scale the logo */
+    margin-right: 10px;
+    /* Space between logo and text */
+}
+
+#subscriptionInfo {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 600px;
+    /* Set the width here */
+}
+
+#subscriptionInfo p {
+    margin: 10px 0;
+    color: #333;
+}
+
+#activateButton {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+    /* Added margin for spacing */
+}
+
+#activateButton:hover {
+    background-color: #0056b3;
+}
+
+#message {
+    text-align: left;
+    margin-top: 20px;
+    color: #333;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    /* Center the buttons horizontally */
+    gap: 10px;
+    /* Space between buttons */
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    /* Full width of the container */
+    border-collapse: collapse;
+    /* Collapse borders */
+}
+
+table,
+th,
+td {
+    border: 1px solid #ddd;
+    /* Light grey border */
+}
+
+th,
+td {
+    text-align: left;
+    /* Left-align text */
+    padding: 8px;
+    /* Padding inside cells */
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6GVMW0P9R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+    </script>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <style>
+        body {
+            font-size: 14px;
+            background-color: white;
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 20px;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+        }
+
+        .branding-below {
+            bottom: 150px;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar branding-below">
+        <div class="block">
+            <p>Analyzes sentiment of each selected text cell. See
+                <a href="https://www.boardflare.com/tasks/nlp/sentiment" target="_blank">website</a> for
+                details. Steps to use:
+            </p>
+            <ol>
+                <li>Select a range of text cells.</li>
+                <li>Click the Analyze button below.</li>
+            </ol>
+        </div>
+        <details class="block">
+            <summary style="padding-bottom: 10px;">Advanced options:</summary>
+            <div style="padding-left: 20px;">
+                <label for="modelSelect">Select <a href="https://www.boardflare.com/tasks/nlp/sentiment#models"
+                        target="_blank">model</a>: </label>
+                <select id="modelSelect"></select>
+                <div>
+                    <input type="checkbox" id="split">
+                    <label for="split">Split text into sentences</label>
+                </div>
+            </div>
+        </details>
+        <div class="block">
+            <button id="analyzeBtn" class="action">Analyze</button>
+            <button id="cancel">Cancel</button>
+        </div>
+        <div id="progress" class="block" style="display: none;">
+            <p>Progress:</p>
+            <div id="progressContainer" style="width: 100%; background-color: #f3f3f3;">
+                <div id="progressBar">0%</div>
+            </div>
+        </div>
+        <div class="block">
+            <div id="userNotice"></div>
+        </div>
+    </div>
+
+    <div class="sidebar bottom">
+        <div class="block">
+            <p>🛟Need help? <a id="supportLink" target="_blank">Email us!</a>
+        </div>
+        <p class="secondary">Analysis is done locally, so your data does not leave your spreadsheet. See our <a
+                href="https://www.boardflare.com/company/privacy" target="_blank">Privacy Policy</a> for details.
+        </p>
+        <span class="gray">
+            <img src="./images/favicon.svg" alt="Boardflare Icon" style="vertical-align: middle; height: 1.25rem;">
+            BOARDFLARE
+        </span>
+    </div>
+    <script src="excel.js"></script>
+    <script type="module" src="sidebar.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9DR1JJBTX1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+    </script>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <style>
+        body {
+            font-size: 14px;
+            background-color: white;
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 20px;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+        }
+
+        .branding-below {
+            bottom: 150px;
+            top: 0;
+        }
+
+        summary,
+        th,
+        td {
+            padding: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar branding-below">
+        <div class="block">
+            <p>
+                Select a range of cells for the <b>Text</b> you want to classify and click Get Range. Repeat the process
+                for the <b>Tags</b>. Click Analyze, and the results will be displayed in a new
+                worksheet.
+                See our <a href="https://www.boardflare.com/tasks/nlp/text-classification" target="_blank">website</a>
+                for
+                details.
+            </p>
+            <table class="block">
+                <tbody>
+                    <tr>
+                        <td title="Range of cells that contain the text data to classify."><b>Text</b></td>
+                        <td>
+                            <p id="textRange"></p>
+                        </td>
+                        <td><button id="getTextRange">Get Range</button></td>
+                    </tr>
+                    <tr>
+                        <td title="Range of cells that contain the tags to use for classification."><b>Tags</b></td>
+                        <td>
+                            <p id="labelRange"></p>
+                        </td>
+                        <td><button id="getLabelRange">Get Range</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="block">
+                <button id="analyzeBtn" class="action">Analyze</button>
+                <button id="cancel">Cancel</button>
+            </div>
+        </div>
+        <div id="progress" class="block" style="display: none;">
+            <p>Progress:</p>
+            <div id="progressContainer" style="width: 100%; background-color: #f3f3f3;">
+                <div id="progressBar">0%</div>
+            </div>
+        </div>
+        <div class="block">
+            <div id="userNotice"></div>
+        </div>
+    </div>
+    <div class="sidebar bottom">
+        <div class="block">
+            <p>🛟Need help? Suggestions? <a id="supportLink" target="_blank">Email us!</a>
+        </div>
+        <p class="secondary">Analysis is done locally, so your data does not leave your spreadsheet. See our <a
+                href="https://www.boardflare.com/company/privacy" target="_blank">Privacy Policy</a> for details.
+        </p>
+        <span class="gray">
+            <img src="./images/favicon.svg" alt="Boardflare Icon" style="vertical-align: middle; height: 1.25rem;">
+            BOARDFLARE
+        </span>
+    </div>
+    <script type="module" src="sidebar.js"></script>
+</body>
+
+</html>
