@@ -1,11 +1,13 @@
 import "@/styles/globals.css";
 import { GoogleAnalytics } from '@next/third-parties/google'
- 
+import { MsalProvider } from "@azure/msal-react";
+import { pca } from "@/utils/auth.js";
+
 export default function App({ Component, pageProps }) {
   return (
-    <>
+    <MsalProvider instance={pca}>
       <Component {...pageProps} />
       <GoogleAnalytics gaId="G-8XNNM225DV" />
-    </>
+    </MsalProvider>
   )
 }
