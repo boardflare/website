@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script>
+        Office.onReady(info => {
+            // Convert the 'info' object to a string to display it
+            const infoString = JSON.stringify(info, null, 2); // Beautify the JSON string
+            document.body.innerHTML = `<pre>${infoString}</pre>`;
+        });
+    </script>
+</head>
+
+<body>
+    Some content
+</body>
+
+</html>

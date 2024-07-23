@@ -4,32 +4,36 @@ title: Pricing
 
 # Pricing
 
-<h3>Unlimited Free Use</h3>
+## Basic Models: Unlimited Free Use
 
-Boardflare apps for Excel and Sheets provide unlimited free use of base machine learning models that run locally on your CPU.  These models are sufficient for many purposes, and no subscription, or even account regisration, is required to use them.  
+Boardflare apps for Excel and Sheets provide unlimited free use of basic machine learning models that run locally on your CPU.  These models are sufficient for many purposes, and no subscription, or even account regisration, is required to use them.  
 
-<h3>Subscription Plans</h3>
+## Premium Models
 
-More advanced models with additional capabilities require credits to use.  You are given an initial allotment of free credits to try the advanced models when you sign up.  We are also previewing subscription plans that provide additional credits for regular use.  These plans are as follows:
+Premium models with additional capabilities consume credits and are currently available for Microsoft work/school account holders in certain countries only due to AppSource restrictions.  When you sign-in with your work/school account you will be granted some initial free credits to test out the premium models.  After those are consumed, you will need an AppSource subscription.
 
-<ul>
-    <li>Free: 200 credits/mo. The way the system is set up you have to "purchase" a free plan, which requires a billing method, even though you will not be charged.  Microsoft handles all billing and does not share any of this information.  Our apologies for any inconvenience.</li>
-    <li>Preview: $2/mo. 1,000 credits/mo., for a limited time only.  This is a very deep discount on comparable services. e.g. 1,000 credits enables translation of 1M characters of text, which would cost $30 using other providers such as DeepL.</li>
-</ul>
+The cost to use premium models varies by model and service, and is detailed in the documentation for each app.  For example, US$1 = 1000 credits = 1M characters of text for a premium translation model.  As a comparison, Azure translation costs US$10 for 1M characters of text, and DeepL costs US$30 for the same.
 
-Plans with more credits will become available in the future.  In the meantime, if you need more credits, please contact us and we'll try to help you out.  
+## Subscription Plans
 
-Some details to note about how the subscription plans work are as follows: 
+The following subscription plans are available on AppSource:
 
-<ul>
-    <li>Your subscription adds a monthly allotment of credits to your account that can be used with any Boardflare app in Excel or Sheets that consumes credits.</li>
-    <li>Plans renew monthly, and you can upgrade or downgrade your plan based on your needs.</li>
-    <li>Credits are reset to the monthly allotment of your plan on renewal, at the beginning of each billing month.  Unused credits do not roll over to the following month.</li>
-    <li>The number of credits consumed per request varies by model and service, and is detailed in the documentation. For example, 1 credit = 1000 characters of text for a premium translation model.</li>
-    <li>Each user can only purchase one seat for their own use. If you need to purchase multiple seats at once, please contact us.</li>
-    <li>You may cancel your subscription through the Microsoft billing portal.  Cancellations within 72 hours of purchase receive a refund, after that there are no refunds.  We suggest you start with the Free plan to make sure it meets your needs.</li>
-    <li>All billing is handled by Microsoft, so we do not see your billing information, and have no control over refunds and other billing adjustments.</li>
-</ul>
+- Free: 200 credits/mo. Note that the way AppSource works you have to "purchase" a free plan, which requires a billing method, even though you will not be charged.  Microsoft handles all billing and does not share any of this information with us.  Our apologies for any inconvenience.
+- Starter: $2/mo. 2,000 credits/mo.  e.g. this provides 2M characters of premium translation per month, which costs $20 using Azure translation or $60 using DeepL.
+
+Plans with more credits will become available in the future.  In the meantime, if you need more credits, please contact us.
+
+## Subscription Terms
+
+- Your subscription adds a monthly allotment of credits to your account that can be used with any Boardflare add-in for Excel.
+- Purchase a plan for a single month, or to renew monthly.
+- Credits are reset to the monthly allotment of your plan on renewal, at the beginning of each billing month. Unused credits do not roll over to the following month.
+- The number of credits consumed per request varies by model and service, and is detailed in the documentation. For example, 1 credit = 1000 characters of text for a premium translation model.
+- Each user currently must purchase their own subscription, but we are working on a way to share a subscription with a team.
+- You may cancel your subscription through the Microsoft billing portal. Cancellations within 72 hours of purchase receive a full refund, after that there are no refunds. We suggest you start with the Free plan to make sure it meets your needs.
+- All billing is handled by Microsoft, so we do not see your billing information, and have no control over refunds and other billing adjustments.
+- Subscriptions are only available to Microsoft work/school account holders in countries where Microsoft collects tax on our behalf.  Microsoft personal accounts are not supported.
+- For more information, see the [Microsoft Marketplace Terms](https://learn.microsoft.com/en-us/legal/marketplace/marketplace-terms).
 
 ### Getting Started
 
