@@ -4,24 +4,24 @@ title: Pricing
 
 # Pricing
 
-## Basic Models: Unlimited Free Use
+## Free Models
 
 Boardflare apps for Excel and Sheets provide unlimited free use of basic machine learning models that run locally on your CPU.  These models are sufficient for many purposes, and no subscription, or even account regisration, is required to use them.  
 
 ## Premium Models
 
-Premium models with additional capabilities consume credits and are currently available for Microsoft work/school account holders in certain countries only due to AppSource restrictions.  When you sign-in with your work/school account you will be granted some initial free credits to test out the premium models.  After those are consumed, you will need an AppSource subscription.
+Premium models with additional capabilities consume credits and are currently available for Microsoft work/school account holders.  When you sign-in with your work/school account you will be granted some initial free credits.  After those are consumed, you will need an AppSource subscription.
 
-The cost to use premium models varies by model and service, and is detailed in the documentation for each app.  For example, US$1 = 1000 credits = 1M characters of text for a premium translation model.  As a comparison, Azure translation costs US$10 for 1M characters of text, and DeepL costs US$30 for the same.
+The cost to use premium models varies by model and service, and is detailed in the documentation for each app.  For example, US$1 = 1000 credits = 1M characters of text for a premium translation model.  As a comparison, Google translation costs US$20 for 1M characters of text.
 
 ## Subscription Plans
 
 The following subscription plans are available on AppSource:
 
-- Free: 200 credits/mo. Note that the way AppSource works you have to "purchase" a free plan, which requires a billing method, even though you will not be charged.  Microsoft handles all billing and does not share any of this information with us.  Our apologies for any inconvenience.
-- Starter: USD $2/mo. 2,000 credits/mo.  e.g. this provides 2M characters of premium translation per month, which costs USD $20-60 using Azure, DeepL, etc.
+- Free: 200 credits/mo. Note that AppSource requires you to "purchase" a free plan, which requires a billing method, even though you will not be charged.  Microsoft handles all billing and does not share any of this information with us.  Our apologies for any inconvenience.
+- Starter: USD $2/mo. 2,000 credits/mo.  e.g. this provides 2M characters of premium translation per month, which costs USD $40 using Google Translate.
 
-Plans with more credits will become available in the future.  In the meantime, if you need more credits, please contact us.
+Plans with more credits will become available in the future.
 
 ## Subscription Terms
 
@@ -35,7 +35,7 @@ Plans with more credits will become available in the future.  In the meantime, i
 - Subscriptions are only available to Microsoft work/school account holders in countries where Microsoft collects tax on our behalf.  Microsoft personal accounts are not supported.
 - For more information, see the [Microsoft Marketplace Terms](https://learn.microsoft.com/en-us/legal/marketplace/marketplace-terms).
 
-### Getting Started
+## Getting Started
 
 Go to AppSource to purchase a subscription, even for the free plan.
 
