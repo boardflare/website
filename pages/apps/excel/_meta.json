@@ -1,5 +1,6 @@
 {
   "fuzzy-match": "Fuzzy Match",
   "sentiment-analysis": "Sentiment Analysis",
-  "translate": "Translate"
+  "translate": "Translate",
+  "hugging-face": "Hugging Face"
 }
