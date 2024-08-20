@@ -4,11 +4,11 @@ title: Hugging Face for Excel
 
 # Hugging Face for Excel
 
-Inference models and spaces on Hugging Face using Excel custom functions. 100% free and unlimited use.
+Inference models and spaces on Hugging Face from Excel functions for free.
 
 ## Overview
 
-This app provides functions which wrap existing Hugging Face JavaScript libraries (specifically `@huggingface/inference, @gradio/client, @xenova/transformers`) so that you can inference models and spaces on Hugging Face without having to build/host/publish an Excel add-in.  
+Provides functions which wrap existing Hugging Face JavaScript libraries (specifically `@huggingface/inference, @gradio/client, @xenova/transformers`) so that you can inference models and spaces on Hugging Face without having to build/host/publish an Excel add-in.
 
 We're thinking this could be useful for the following types of users: 
 - Data scientists that want an easy way to enable end-users to use their models from the familiar interface of Excel.
@@ -19,7 +19,17 @@ As an example, you could build a custom function that translates text from one l
 
 These functions are intended to be consumed in a named Excel [LAMBDA function](https://support.microsoft.com/en-us/office/lambda-function-bd212d27-1cd1-4321-a34a-ccbf254b8b67) to conceal details not relevant to end-users (e.g. task, model, hf_token, endpoint, etc.).
 
-We love open source, but moving the code behind this into its own public repo is a project for another day. 
+## Installation
+
+Install from the Microsoft AppSource store at the link below, or directly from Excel.
+
+<a href="https://appsource.microsoft.com/en-us/product/office/WA200007046?tab=Overview">
+    <img 
+        src="/images/MS_AppSource.png" 
+        alt="AppSource"
+        style="padding-top: 10px; width: 200px;"
+    />
+</a>
 
 ## Features
 
@@ -28,15 +38,17 @@ We love open source, but moving the code behind this into its own public repo is
 💻 Option to inference locally.<br>
 🚀 Fast way to test or operationalize your model.<br>
 
+## Demo Workbook
+
+Download a copy of the [demo workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EZqMLW_bjpFKudG65wSJzt0B5Ft_DI2AfjZdOFwT0JMwFg?e=dNPbsT) to see the functions in action.  You'll need to put your hf_token on the ReadMe sheet to use the serverless API inference.
+
 ## Functions
 
 As outlined below, the Gradio function uses a repeating parameter function signature to enable it to pass an arbitrary data payload.  All other functions are designed around Transformers pipeline tasks such as translation, summarization, etc. regardless of whether inferencing is local or via API (serverless or dedicated). We have initially supported the most common parameters for each task, and may add more in the future.
 
-Local inference is happening in the same browser iframe that is running the add-in inside Excel, using a separate web worker thread.  Right now this runs on the CPU and is painfully slow for anything but very small models.  This situation will change with the coming release of v3 Transformers.js and the long-awaited WebGPU support.  Stay tuned!
-
 ### Gradio
 
-[Gradio](https://www.gradio.app/) is a great way to build AI demos, and is increasingly be used to host APIs for production applications.  Our HF.GRADIO function uses the [Gradio JavaScript client](https://www.gradio.app/docs/js-client) under the hood to connect to the API of a Gradio space and provide user feedback on queue status, ETA, etc.  The function signature is as follows:
+[Gradio](https://www.gradio.app/) is a great way to build AI demos, and is increasingly being used to host APIs for production applications.  Our HF.GRADIO function uses the [Gradio JavaScript client](https://www.gradio.app/docs/js-client) under the hood to connect to the API of a Gradio space and provide user feedback on queue status, ETA, etc.  The function signature is as follows:
 
 ```excel
 =HF.GRADIO(hf_space, hf_token, arg1, arg2, ...)
@@ -48,9 +60,9 @@ Local inference is happening in the same browser iframe that is running the add-
 | hf_token | No | Needed for private spaces (e.g. "hf_eiffw3.."). |
 | arg1, arg2, ... | Yes | Data array elements to be passed to the space. |
 
-e.g. `=HF.GRADIO("boardflare/translation", "hf_eiffw3..", "Hello", "en", "fr")` for a translation space with similar functionality to the `HF.TRANSLATION` function below.
+e.g. `=HF.GRADIO("boardflare/translation", "hf_eiffw3..", "Hello", "en", "fr")` for a translation space demo we built with similar functionality to the `HF.TRANSLATION` function below.
 
-The `arg1, arg2, ...` is a repeating parameter in Excel which means you can pass as many arguments as you like and they will be packaged as an array and sent to the space as a payload of shape `{data: [arg1, arg2, ...]}`. The args can be of any Excel scalar type (e.g. string, number, boolean). You need to ensure they are passed in the order they are expected by your Gradio app.  The return from the Gradio app must be a scalar of one of the above types.  In case you're wondering if it is possible for each of the args and the return to be matrix values (an Excel range), the answer is yes.  This is not supported currently because it means all arguments would be sent as a matrix, even if they are just single cells, e.g. `{data: [[["foo"]], [["bar"]], ...]}`, since there can be only one repeating parameter in the function.  This doesn't work with single-line standard Gradio app interfaces, so we left that for another day and a different function.
+The `arg1, arg2, ...` is a repeating parameter in Excel which means you can pass as many arguments as you like and they will be packaged as an array and sent to the space as a payload of shape `{data: [arg1, arg2, ...]}`. The args can be of any Excel scalar type (e.g. string, number, boolean). You need to ensure they are passed in the order they are expected by your Gradio app.  The return from the Gradio app must be a scalar of one of the above types.  In case you're wondering if it is technically possible for each of the args and the return to be matrix values (i.e. an Excel range), the answer is yes.  This is not supported currently because it means all arguments would be sent as a matrix, even if they are just single cells, e.g. `{data: [[["foo"]], [["bar"]], ...]}`, since there can be only one repeating parameter in the function.  This doesn't work with single-line standard Gradio app interfaces, so we left that for another day and a different function.
 
 ### Translation
 
@@ -125,14 +137,37 @@ Output: a range of scores for each label which will spill across columns.
 
 e.g. `=HF.ZERO_SHOT_CLASSIFICATION("facebook/bart-large-mnli", "I am feeling great today", D2:D5)` for zero-shot classification using serverless API with no token, where D2:D5 contains the labels to score, e.g. "positive", "negative", "neutral", "mixed".
 
-## Installation
+### Text Generation
 
-Install from the Microsoft AppSource store at the link below, or directly from Excel.
+The `HF.TEXT_GENERATION` function signature is as follows:
 
-<a href="https://appsource.microsoft.com/en-us/product/office/WA200007046?tab=Overview">
-    <img 
-        src="/images/MS_AppSource.png" 
-        alt="AppSource"
-        style="padding-top: 10px; width: 200px;"
-    />
-</a>
+```excel
+=HF.TEXT_GENERATION(hf_model, text, [max_length], [hf_token], [hf_endpoint])
+```
+
+The parameters are as follows:
+
+| Parameter   | Required | Description                                                   |
+|-------------|----------|---------------------------------------------------------------|
+| hf_model    | Yes      | Model name (e.g. `Xenova/distilgpt2`).                        |
+| text        | Yes      | Text to generate from.                                        |
+| max_length  | No       | Maximum length of the generated text (tokens).                |
+| hf_token    | No       | HF token (e.g. hf_ddie3kd...).                                |
+| hf_endpoint | No       | Inference endpoint (e.g. "https://xyz.eu-west-1.aws.endpoints.huggingface.cloud/gpt2"). |
+
+Output: the generated text string.
+
+e.g. `=HF.TEXT_GENERATION("Xenova/distilgpt2", "Once upon a time")` for text generation locally.
+
+## Roadmap
+
+This is an initial version to gather feedback.  We have a few ideas for future enhancements:
+
+- Support for more transformers tasks, in particular [chat completion](https://huggingface.co/docs/huggingface.js/inference/README#text-generation-chat-completion-api-compatible) prompts.
+- Upgrade to v3 Transformers.js and WebGPU support for faster local inference.
+- Add user authentication and centralized hf_token management for enterprises so that tokens are not being passed around in Excel workbooks, and IT / model developers can gather user-level usage stats for endpoints.
+- Function to call AutoTrain space API to fine-tune a model directly from Excel.
+- Gradio space support for range inputs and outputs.
+- Reorganize code so it can be open sourced. Also show people how they can host their own custom Excel add-ins easily on a HF static space.
+
+If any of these things are of keen interest to you, please [let us know](https://www.boardflare.com/company/support).
