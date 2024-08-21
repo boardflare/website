@@ -4,18 +4,18 @@ title: Hugging Face for Excel
 
 # Hugging Face for Excel
 
-Inference models and spaces on Hugging Face from Excel functions for free.
+Inference models and spaces on Hugging Face from Excel functions.  Free to use.
 
 ## Overview
 
-Provides functions which wrap existing Hugging Face JavaScript libraries (specifically `@huggingface/inference, @gradio/client, @xenova/transformers`) so that you can inference models and spaces on Hugging Face without having to build/host/publish an Excel add-in.
+Provides Excel custom functions which wrap existing Hugging Face JavaScript libraries (specifically `@huggingface/inference, @gradio/client, @xenova/transformers`) so that you can inference models and spaces on Hugging Face without having to build/host/publish an Excel add-in.
 
 We're thinking this could be useful for the following types of users: 
 - Data scientists that want an easy way to enable end-users to use their models from the familiar interface of Excel.
 - Excel wizards that want to build their own custom AI functions using existing models available on Hugging Face. 
 - Model testers and labelers that need an easy way to run datasets through a model and annotate results.
 
-As an example, you could build a custom function that translates text from one language to another using a Hugging Face model, similar to what we did in our [Translate for Excel](/apps/excel/translate) add-in, which uses [Transformers.js](https://github.com/xenova/transformers.js) and the Opus-MT series of models.  The possibilities are endless.
+As an example, you could build a custom function that translates text from one language to another using a Hugging Face model, similar to what we did in our [Translate for Excel](/apps/excel/translate) add-in, which uses [Transformers.js](https://github.com/xenova/transformers.js) and the Opus-MT series of models.
 
 These functions are intended to be consumed in a named Excel [LAMBDA function](https://support.microsoft.com/en-us/office/lambda-function-bd212d27-1cd1-4321-a34a-ccbf254b8b67) to conceal details not relevant to end-users (e.g. task, model, hf_token, endpoint, etc.).
 
@@ -23,7 +23,7 @@ These functions are intended to be consumed in a named Excel [LAMBDA function](h
 
 Install from the Microsoft AppSource store at the link below, or directly from Excel.
 
-<a href="https://appsource.microsoft.com/en-us/product/office/WA200007046?tab=Overview">
+<a href="https://appsource.microsoft.com/en-us/product/office/WA200007352?tab=Overview">
     <img 
         src="/images/MS_AppSource.png" 
         alt="AppSource"
@@ -38,13 +38,13 @@ Install from the Microsoft AppSource store at the link below, or directly from E
 💻 Option to inference locally.<br>
 🚀 Fast way to test or operationalize your model.<br>
 
-## Demo Workbook
+## Demo
 
 Download a copy of the [demo workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EZqMLW_bjpFKudG65wSJzt0B5Ft_DI2AfjZdOFwT0JMwFg?e=dNPbsT) to see the functions in action.  You'll need to put your hf_token on the ReadMe sheet to use the serverless API inference.
 
 ## Functions
 
-As outlined below, the Gradio function uses a repeating parameter function signature to enable it to pass an arbitrary data payload.  All other functions are designed around Transformers pipeline tasks such as translation, summarization, etc. regardless of whether inferencing is local or via API (serverless or dedicated). We have initially supported the most common parameters for each task, and may add more in the future.
+As outlined below, the Gradio function uses a repeating parameter function signature to enable it to pass an arbitrary data payload.  All other functions are designed around Transformers pipeline tasks such as translation, summarization, etc. regardless of whether inferencing is local or via API (serverless or dedicated).  We have initially supported a small subset of Transformers tasks, with the most common parameters for each.
 
 ### Gradio
 
@@ -62,7 +62,7 @@ As outlined below, the Gradio function uses a repeating parameter function signa
 
 e.g. `=HF.GRADIO("boardflare/translation", "hf_eiffw3..", "Hello", "en", "fr")` for a translation space demo we built with similar functionality to the `HF.TRANSLATION` function below.
 
-The `arg1, arg2, ...` is a repeating parameter in Excel which means you can pass as many arguments as you like and they will be packaged as an array and sent to the space as a payload of shape `{data: [arg1, arg2, ...]}`. The args can be of any Excel scalar type (e.g. string, number, boolean). You need to ensure they are passed in the order they are expected by your Gradio app.  The return from the Gradio app must be a scalar of one of the above types.  In case you're wondering if it is technically possible for each of the args and the return to be matrix values (i.e. an Excel range), the answer is yes.  This is not supported currently because it means all arguments would be sent as a matrix, even if they are just single cells, e.g. `{data: [[["foo"]], [["bar"]], ...]}`, since there can be only one repeating parameter in the function.  This doesn't work with single-line standard Gradio app interfaces, so we left that for another day and a different function.
+The `arg1, arg2, ...` is a repeating parameter in Excel which means you can pass as many arguments as you like and they will be packaged as an array and sent to the space as a payload of shape `{data: [arg1, arg2, ...]}`. The args can be of any Excel scalar type (e.g. string, number, boolean). You need to ensure they are passed in the order they are expected by your Gradio app.  The return from the Gradio app must be a scalar of one of the above types.  In case you're wondering if it is technically possible for each of the args and the return to be matrix values (i.e. an Excel range), the answer is yes.  This is not supported currently because it means all arguments would be sent as a matrix, even if they are just single cells, e.g. `{data: [[["foo"]], [["bar"]], ...]}`, since there can be only one repeating parameter in the function.  This doesn't work with single-line standard Gradio app interfaces.  The solution is to use Python code on both sides (Gradio and Excel) to shape the data as needed.  More on this in the [Architecture](#architecture) and [Roadmap](#roadmap) sections below.
 
 ### Translation
 
@@ -159,15 +159,73 @@ Output: the generated text string.
 
 e.g. `=HF.TEXT_GENERATION("Xenova/distilgpt2", "Once upon a time")` for text generation locally.
 
+
+```js filename="example.js"
+console.log('hello, world')
+```
+
+## Architecture
+
+Excel add-ins with custom functions are a web app with a `functions.json` file that defines the function signature in Excel and a `functions.js` file that runs when the function is called. A manifest.xml file is used to tell Excel where to find the above files, and the add-in name, icon, etc.
+
+For example, a simple `functions.json` that performs sentiment analysis on a string might look like this:
+
+```json filename="functions.json"
+{
+  "functions": [
+    {
+      "description": "Performs sentiment analysis on a string.",
+      "id": "SENTIMENT_ANALYSIS",
+      "name": "SENTIMENT_ANALYSIS",
+      "parameters": [
+        {
+          "name": "text",
+          "description": "The text to analyze.",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}
+```
+
+And the `functions.js` might look like this:
+
+```javascript filename="functions.js"
+// Define the SENTIMENT_ANALYSIS function
+async function sentimentAnalysis(text) {
+  const response = await fetch('https://api.example.com/sentiment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ text: text })
+  });
+  const result = await response.json();
+  return result.sentiment;
+}
+
+// Let Excel know sentimentAnalysis is the handler for the SENTIMENT_ANALYSIS function defined in functions.json
+CustomFunctions.associate("SENTIMENT_ANALYSIS", sentimentAnalysis);
+```
+
+`functions.js` runs in a browser, either the WebView2 control in Excel for Windows (based on Chromium) or an iframe in Excel for the web.  For local model inferencing, a web worker is used to run the [Transformers.js](https://github.com/xenova/transformers.js) library.  [Pyodide](https://pyodide.org/en/stable/index.html) or [PyScript](https://pyscript.net/) could also be used to run Python code in the browser.  The [Anaconda Toolbox for Excel](https://docs.anaconda.com/excel/toolbox/) is an example of running Python code in Excel this way.
+
+The built-in [Python in Excel](https://support.microsoft.com/en-au/office/get-started-with-python-in-excel-a33fbcbe-065b-41d3-82cf-23d05397f53d) (soon to be GA) enables arbitrary Python code to be run in Excel using an Azure runtime, and the [Anacode Code](https://docs.anaconda.com/excel/code/) tool enables the same locally using the above mentioned PyScript.  Both of these tools open up the option to run Python code to wrap a generic Excel custom function which calls Hugging Face APIs.  This would be similar to what we've provided with the Gradio function, but with more flexibility and control over the data payload.  Why not just call the Hugging Face APIs directly from Python?  The Python in Excel runtime is sandboxed to not allow network access, similar to runtimes used by LLMs.
+
+Since it is just a web app, you could host a custom Excel add-in on a Hugging Face static space, although a reverse proxy is needed to provide CORS support when used in Excel for the web.  Taking the customization a step further, one could prompt an LLM to create an entirely custom Excel add-in and push the code to a static space.
+
+There are over [a billion Excel users worldwide](https://scottmax.com/excel-statistics/#Excel_User_Statistics), and many of them will be starting to dabble in Python with the coming GA of [Python in Excel](https://support.microsoft.com/en-au/office/get-started-with-python-in-excel-a33fbcbe-065b-41d3-82cf-23d05397f53d).  This will be greatly accelerated by LLMs (e.g. [Copilot in Excel](https://support.microsoft.com/en-us/office/get-started-with-copilot-in-excel-d7110502-0334-4b4f-a175-a73abdfc118a)) enabling them to [write Python code in Excel](https://techcommunity.microsoft.com/t5/excel-blog/introducing-copilot-support-for-python-in-excel-advanced-data/ba-p/3928120) without really needing to know Python.  Our feeling is that this will open the door to many more Excel wizards becoming DIY data scientists and wanting to use Hugging Face tools and models from Excel, and hopefully this add-in will help them get there faster.
+
 ## Roadmap
 
-This is an initial version to gather feedback.  We have a few ideas for future enhancements:
+This is an initial version to gather feedback.  Some ideas for future enhancements:
 
 - Support for more transformers tasks, in particular [chat completion](https://huggingface.co/docs/huggingface.js/inference/README#text-generation-chat-completion-api-compatible) prompts.
 - Upgrade to v3 Transformers.js and WebGPU support for faster local inference.
-- Add user authentication and centralized hf_token management for enterprises so that tokens are not being passed around in Excel workbooks, and IT / model developers can gather user-level usage stats for endpoints.
-- Function to call AutoTrain space API to fine-tune a model directly from Excel.
-- Gradio space support for range inputs and outputs.
-- Reorganize code so it can be open sourced. Also show people how they can host their own custom Excel add-ins easily on a HF static space.
+- AutoTrain API support to fine-tune a model directly from Excel.
+- Deploy add-in to a HF static space so people can easily duplicate it and customize it to their needs.
+- Add user authentication and centralized hf_token management for enterprises so tokens are not hard-coded in Excel workbooks, and IT / model developers can gather user-level metrics for endpoint consumption.
+- Generic Gradio and Transformer functions which accept an artibrary number of range inputs, and return a range output.  Basically this would be one function to rule them all, using a Python in Excel wrapper to handle the data transformation, but eliminating the need to build/host/publish an Excel add-in.
 
 If any of these things are of keen interest to you, please [let us know](https://www.boardflare.com/company/support).
