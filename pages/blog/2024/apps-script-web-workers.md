@@ -1,18 +1,18 @@
 ---
-title: Creating a Web Worker from a client-side script in an HTML page served by Google Apps Script
-date: 2024-01-15
+title: Creating a Web Worker with Google Apps Script
+date: 2024-04-15
 ---
 
-# Creating a Web Worker from a client-side script in an HTML page served by Google Apps Script
-January 15, 2024
+# Creating a Web Worker with Google Apps Script
+April 15, 2024
 
 ## Background
 
-In Google Sheets extensions, Google Apps Script is used to serve the HTML page for the sidebar in the UI.  To do machine learning (or any other intensive processing) client-side, ideally you want to use a [web worker](https://web.dev/articles/workers-basics) so the UI can remain responsive (e.g. to report on progress, cancel the operation, etc.) and also to enable multi-threaded processing.  In our case, we also want to use libaries like Transformers.js which are ESM only.
+In Google Sheets extensions, Google Apps Script is used to serve the HTML page for the sidebar in the UI.  To do machine learning (or any other intensive processing) client-side, ideally you want to use a [web worker](https://web.dev/articles/workers-basics) so the UI can remain responsive (e.g. to report on progress, cancel the operation, etc.) and also to enable multi-threaded processing. 
 
 ## Problem
 
-Google Apps Script doesn't support serving a worker script directly from a file. This means that you can't create a new Web Worker using `new Worker('worker.js')` in your client-side script. 
+Google Apps Script doesn't support serving a worker script directly from a file.
 
 ## Solution
 

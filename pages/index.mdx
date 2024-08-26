@@ -7,8 +7,8 @@ import Link from 'next/link';
 <div>
     <div className="text-8xl font-bold text-center tracking-tight text-blue-900 mt-16 mb-12">
         <h1 className="flex flex-col items-center">
-            <span>AI Tools</span>
-            <span className="text-gray-500 text-4xl">for Excel and Sheets</span>
+            <span>AI as a Function</span>
+            {/* <span className="text-gray-500 text-4xl">for Excel and Sheets</span> */}
         </h1>
     </div>
     <div className="flex justify-center space-x-20 mb-12" >
@@ -19,17 +19,16 @@ import Link from 'next/link';
     </div>
 </div>
 
-Use AI models locally in the browser for enhanced privacy and no cost, and leverage larger models in the cloud for higher quality results. Most tools are accessed through custom functions, as shown in the following example:
+Our apps for Excel and Sheets provide custom functions to perform AI tasks such as translation, sentiment analysis, fuzzy matching, etc., e.g. `=BOARDFLARE.TRANSLATE("Hello", "en", "fr")`.  
 
-```excel
-=BOARDFLARE.TRANSLATE("I love this product!", "en", "fr")
-```
+AI models running in the browser are 100% free to use.  Premium models with enhanced capabilites that run in the cloud are available with a subscription.
+
 <div className="flex justify-center text-lg">
     
 </div>
 
 <div className="flex justify-center mt-10">
-    <Link href="/tasks/nlp/sentiment">
+    <Link href="/apps/excel/translate">
         <button className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">
             Get Started
         </button>
