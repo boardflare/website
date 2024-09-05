@@ -1,3 +1,5 @@
+import { useConfig } from 'nextra-theme-docs'
+
 const logo = (
     <span style={{ display: "flex", alignItems: "center" }}>
         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" height="30" viewBox="1132.06 418.099 67.133 59.61" width="30">
@@ -57,7 +59,15 @@ export default {
     toc: {
         float: true,
         // extraContent() {
-        //     return <>👉</>
+        //     const { frontMatter } = useConfig();
+        //     const { title, icon } = frontMatter;
+        //     const iconPath = `/icons/${icon}`;
+        //     console.log(title, icon);
+        //     return (
+        //         <>
+        //             <img src={iconPath} alt={title} style={{ width: "128px" }} />
+        //         </>
+        //     );
         // }
     },
     // gitTimestamp: {
