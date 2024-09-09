@@ -9,26 +9,25 @@ Unlimited free AI running locally in Excel.
 
 ## Overview
 
-Provides unlimited free and secure AI by using smaller models that can run locally on your computer.  The catch?  These models are incredibly good for their size, but are slow and dumb compared to the current version ChatGPT.  However, GPUs are becoming more powerful, and small models are getting smarter, so speed and quality should both continue to improve.  We're starting with a handful of functions and will add more over time.
+Provides unlimited free and secure AI by using a small model ([currently Gemma2 2B](https://ai.google.dev/gemma)) that runs locally on your computer.  While incredibly good for its size, it is not as fast and smart as ChatGPT, but maybe is all you need for simple tasks.
 
 ## Features
 
-🆓 Unlimited free use<br>
+🆓 Unlimited free use.<br>
 💻 Processed locally on your computer.<br>
 🔒 No data is shared outside Excel.<br>
 
+## Requirements
+- You must have a device that supports [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) with `shader-f16`.
+
 ## Limitations
-- The models are smaller and less powerful than ChatGPT.  Depending on your task, they may be more than enough, or not enough at all. YMMV.
-- Compared to online services like ChatGPT, running the models on your computer will be slow, in some cases painfully slow.  However, this is changing quickly as embedded GPUs are getting more powerful.
-- The PROMPT function requires a GPU that supports `shader-f16`.
+- Much slower and less powerful than ChatGPT. 
 
 ## Functions
 
-Each of the function currently uses a different specialized AI model to perform a specific task.  We're using models that will run on CPU where possible to make them available to the most users, but some functions (e.g. PROMPT) requireS a GPU. 
+These are the initial functions provided.  PROMPT is the most versatile and enables you to prompt the model to do a wide range of tasks.  The other functions are more specialized and are provided for convenience.
 
 ### Classify
-
-Runs on CPU.
 
 =<code>FREEGPT.CLASSIFY (text, categories)</code><br>
 <code>text:</code> Text to classify.<br>
@@ -38,25 +37,20 @@ E.g., to classify the content of cell A1 into categories listed in cells B1 to B
 
 ### Prompt
 
-This requires a GPU that supports `shader-f16` and consumes roughly 3-4GB of memory for the base model.
-
 =<code>FREEGPT.PROMPT (prompt, [data], [options])</code><br>
 <code>prompt:</code> Instructions for model, e.g. "What is the problem this user is having?<br>
-<code>data:</code> Optional data to provide context to the model. If a range of cells is provided, it will be converted to a list added to the prompt.  Continuing with the example above, this could be a cell with a support ticket description.<br>
-<code>options:</code> Range of processing options.  This is a placeholder and currently does nothing.  In future, it will enable setting things like temperature, model, etc.<br>
+<code>data:</code> Optional data to provide context to the model. If a range of cells is provided, it will be converted to a comma-separated list that is added to the prompt.  Continuing with the example above, this could be a cell with a support ticket description.<br>
 
 ### Summarize
-
-Runs on CPU.
 
 =<code>FREEGPT.SUMMARIZE (text)</code><br>
 <code>text:</code> Text to summarize.<br>
 E.g., to summarize the content of cell A1:<br>
 <code>=FREEGPT.SUMMARIZE(A1)</code><br>
 
-### Translate
+This just uses the PROMPT function with a default prompt of "Summarize the following text:".  It is provided for convenience.
 
-Runs on CPU.
+### Translate
 
 =<code>FREEGPT.TRANSLATE (text, source_lang, target_lang, [model])</code><br>
 <code>text:</code> Must be less than 1000 characters.<br>
@@ -73,6 +67,14 @@ Afrikaans "<code>af</code>", Arabic "<code>ar</code>", Czech "<code>cs</code>", 
 ## Applications
 
 Use for simple or less critical tasks that do not require a powerful AI model.
+
+## Attribution
+
+This add-in would not be possible without the following great open-source software projects:
+
+- [WebLLM](https://github.com/mlc-ai/web-llm), see [license](https://github.com/mlc-ai/web-llm/blob/main/LICENSE)
+- [Transformers.js](https://github.com/xenova/transformers.js), see [license](https://github.com/xenova/transformers.js/blob/main/LICENSE)
+- [Gemma](https://github.com/google-deepmind/gemma), see [license] (https://github.com/google-deepmind/gemma/blob/main/LICENSE)
 
 ## Installation
 
