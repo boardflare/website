@@ -5,11 +5,11 @@ icon: freegpt.png
 
 # FreeGPT for Excel
 
-Unlimited free AI running locally in Excel.
+Unlimited free AI functions running locally in Excel.
 
 ## Overview
 
-Provides unlimited free and secure AI by using a small model ([currently Gemma2 2B](https://ai.google.dev/gemma)) that runs locally on your computer.  While incredibly good for its size, it is not as fast and smart as ChatGPT, but maybe is all you need for simple tasks.
+Provides unlimited free and secure AI functions by using a small model that runs locally on your computer.  While not as fast and smart as ChatGPT, maybe it is all you need for simple tasks.
 
 ## Features
 
