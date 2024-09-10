@@ -3,5 +3,6 @@
   "sentiment-analysis": "Sentiment Analysis",
   "translate": "Translate",
   "hugging-face": "Hugging Face",
-  "freegpt": "FreeGPT"
+  "freegpt": "FreeGPT",
+  "python": "Python"
 }
