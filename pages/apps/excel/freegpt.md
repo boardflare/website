@@ -74,7 +74,7 @@ This add-in would not be possible without the following great open-source softwa
 
 - [WebLLM](https://github.com/mlc-ai/web-llm), see [license](https://github.com/mlc-ai/web-llm/blob/main/LICENSE)
 - [Transformers.js](https://github.com/xenova/transformers.js), see [license](https://github.com/xenova/transformers.js/blob/main/LICENSE)
-- [Gemma](https://github.com/google-deepmind/gemma), see [license] (https://github.com/google-deepmind/gemma/blob/main/LICENSE)
+- [Gemma](https://github.com/google-deepmind/gemma), see [license](https://github.com/google-deepmind/gemma/blob/main/LICENSE)
 
 ## Installation
 
