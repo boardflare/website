@@ -46,7 +46,7 @@ This add-in would not be possible without [Pyodide](https://github.com/pyodide/p
 
 Install from the Microsoft AppSource store at the link below, or directly from Excel.
 
-<a href="https://appsource.microsoft.com/en-us/product/office/WA200007427?tab=Overview">
+<a href="https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview">
     <img 
         src="/images/MS_AppSource.png" 
         alt="AppSource"
