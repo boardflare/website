@@ -3,22 +3,36 @@ title: Python for Excel
 icon: python.png
 ---
 
+import { Callout } from 'nextra/components'
+
 # Python for Excel
 
-Run Python code locally in Excel for free.
+Run Python code locally in Excel for free.  
+
+<Callout type="warning" emoji="🧪">
+  **EXPERIMENTAL**:  Breaking changes to the API are probable.  Please provide [feedback](/company/support).
+</Callout>
 
 ## Overview
 
-Provides the ability to run Python code as a function locally within Excel.  It is intended solely for the purpose of enabling more powerful formulas by encapsulating Python code, typically in a user-friendly named LAMBDA function.  It does not provide a Jupyter notebook style execution environment, or the ability to directly reference Excel ranges from Python, like [Python in Excel](https://support.microsoft.com/en-au/office/get-started-with-python-in-excel-a33fbcbe-065b-41d3-82cf-23d05397f53d) does.
+Provides the ability to run Python code as a function locally within Excel.  It is intended solely for the purpose of enabling more powerful formulas by encapsulating Python code, typically in a user-friendly named LAMBDA function.  Install from the Microsoft AppSource store at the link below, or directly from Excel.
+
+<a href="https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview">
+    <img 
+        src="/images/MS_AppSource.png" 
+        alt="AppSource"
+        style={{ paddingTop: '10px', width: '150px' }}
+    />
+</a>
 
 ## Features
 
-🆓 Free with no Office 365 license required.<br>
-🌐 Works in Excel for web as well as desktop.<br>
-☁️ Runtime has network access for API calls, etc.<br>
-📦 Import custom packages (pure Python only).<br>
-🔒 Runs locally, so no data is shared outside Excel.<br>
-🚀 Performance is only limited by your CPU.<br>
+🆓 Free with no Office 365 license required.<br/>
+🌐 Works in Excel for web as well as desktop.<br/>
+☁️ Runtime has network access for API calls, etc.<br/>
+📦 Import custom packages (pure Python only).<br/>
+🔒 Runs locally, so no data is shared outside Excel.<br/>
+🚀 Performance is only limited by your CPU.<br/>
 
 ## Runtime
 
@@ -26,7 +40,7 @@ Provides the ability to run Python code as a function locally within Excel.  It 
 
 ### Packages
 
- Pyodide includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, which means there is a Python wheel that ends with `-py3-none-any.whl`, e.g. `beautifulsoup4-4.12.3-py3-none-any.whl`.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work, but double-check the wheel.
+Pyodide includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, which means there is a Python wheel that ends with `-py3-none-any.whl`, e.g. `beautifulsoup4-4.12.3-py3-none-any.whl`.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work, but double-check the wheel.
 
 ### Console
 
@@ -109,14 +123,3 @@ Some example applications are as follows:
 
 4. **Calling APIs**:  For example, let's say you're trying to call a REST API and manipulate the JSON response into something useful.  While in theory you could use the Excel `WEBSERVICE` function, it is much easier to use the `requests` and `json` packages in Python.
 
-## Installation
-
-Install from the Microsoft AppSource store at the link below, or directly from Excel.
-
-<a href="https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview">
-    <img 
-        src="/images/MS_AppSource.png" 
-        alt="AppSource"
-        style="padding-top: 10px; width: 200px;"
-    />
-</a>
