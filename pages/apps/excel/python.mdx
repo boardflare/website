@@ -7,15 +7,9 @@ import { Callout } from 'nextra/components'
 
 # Python for Excel
 
-Run Python code locally in Excel for free.  
-
 <Callout type="warning" emoji="🧪">
   **EXPERIMENTAL**:  Breaking changes to the API are probable.  Please provide [feedback](/company/support).
 </Callout>
-
-## Overview
-
-Provides the ability to run Python code as a function locally within Excel.  It is intended solely for the purpose of enabling more powerful formulas by encapsulating Python code, typically in a user-friendly named LAMBDA function.  Install from the Microsoft AppSource store at the link below, or directly from Excel.
 
 <a href="https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview">
     <img 
@@ -25,28 +19,28 @@ Provides the ability to run Python code as a function locally within Excel.  It 
     />
 </a>
 
+## Overview
+
+This add-in focuses on running Python code as a [pure function](https://en.wikipedia.org/wiki/Pure_function), so you can incorporate it into your formulas and LAMBDA functions.  This is fundamentally different than the native [Python in Excel](https://support.microsoft.com/en-us/office/get-started-with-python-in-excel-a33fbcbe-065b-41d3-82cf-23d05397f53d) which is more of an interactive calculation tool, similar to a Jupyter Notebook, and does not work as a function inside formulas.  Some other key differences are outlined in the [features](#features) below.  Install from the Microsoft AppSource store at the link below, or directly from Excel.
+
 ## Features
 
-🆓 Free with no Office 365 license required.<br/>
+Some key differences compared to the native [Python in Excel](https://support.microsoft.com/en-us/office/get-started-with-python-in-excel-a33fbcbe-065b-41d3-82cf-23d05397f53d) are as follows:
+
+🆓 Free add-in and no Office 365 license is required.<br/>
 🌐 Works in Excel for web as well as desktop.<br/>
-☁️ Runtime has network access for API calls, etc.<br/>
+☁️ Runtime has network access for API calls.<br/>
 📦 Import custom packages (pure Python only).<br/>
 🔒 Runs locally, so no data is shared outside Excel.<br/>
 🚀 Performance is only limited by your CPU.<br/>
 
 ## Runtime
 
-[Pyodide](https://pyodide.org/en/stable/index.html) is the Python runtime, which is based on [WebAssembly](https://webassembly.org/) running in the browser used by Excel desktop and web to host add-ins.  The runtime is sandboxed by the browser and has no direct access to the file system.  It does have network access, so you can make API calls to external services.
-
-### Packages
+[Pyodide](https://pyodide.org/en/stable/index.html) is the Python runtime, which is based on [WebAssembly](https://webassembly.org/) running in the browser used by Excel desktop and web to host add-ins.  This is currently running Python 3.12, but has limitations as discussed in the [Pyodide documentation](https://pyodide.org/en/stable/usage/wasm-constraints.html).
 
 Pyodide includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, which means there is a Python wheel that ends with `-py3-none-any.whl`, e.g. `beautifulsoup4-4.12.3-py3-none-any.whl`.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work, but double-check the wheel.
 
-### Console
-
 Any output to `stdout` or `stderr` is displayed in the Console area of the add-in task pane. This is useful for debugging your code, and also for displaying intermediate results of long-running operations such as functions that are processing large input arrays. 
-
-### Globals
 
 Global variables are used to pass data to your code, as discussed in more detail below.  Global variables are cleared after each function invocation, so no state is maintained between calls.
 
@@ -109,7 +103,57 @@ Or using numpy and returning a row:
 ```
 This sets global `data1 = [[1,2]]`, so `pyout = [['Sales', 3]]`, which outputs a row with `Sales` in one cell and `3` in the next cell.
 
-More examples coming soon!
+### PY.BETA
+
+`PY.BETA` function has the same array input/output as `PY.ARR` but contains all the latest beta features.  At this point, the main difference is that if the `code` starts with `https://` it will attempt to load the code from that URL.  Note that `http` is not supported because the add-in runs in a secure context and the Edge browser runtime blocks insecure requests.
+
+```excel
+=BOARDFLARE.PY.BETA("https://example.com/mycode.py", {1,2})
+```
+Loading code from a URL solves three key problems as follows: 
+
+1. Centralized deployment.  Putting your Python code in a central location allows you to update it without having to update each Excel workbook that contains it.  
+
+2. Version control.  If the central location is either a git repository (e.g. GitHub) or a storage location deployed to from a git repository (e.g. Azure Storage) you can properly version control your code.
+
+3. No cut-and-paste development.  Loading code from a URL allows you to use live reload with your favorite development tools instead of cut-and-paste.  See the [development](#development) section for more details.
+
+## Development
+
+### Local IDE
+
+If you are a Python developer, you'll already have your favorite tools, and you simply need to set things up for live serving your code to URL.  For example, [VS Code](https://code.visualstudio.com/) together with [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) enables you to serve files on a localhost URL as follows: 
+
+```excel
+=BOARDFLARE.PY.BETA("https://localhost:4000/mycode.py", {1,2})
+```
+
+It may be convenient to simply hardcode the data1, data2, ... globals into your code so that you can test directly in your IDE with your local Python runtime without having toggle over to Excel.  You can use the fact that the Python `sys.platform` in Excel will be `emscripten` to only use the hardcoded data outside Excel.  For example:
+
+```python
+import sys
+
+# Hard-code data when NOT in Excel
+if sys.platform != 'emscripten':
+    data1 = [[2]]
+    data2 = [[3]]
+
+# Print globals to console to confirm
+print(f"data1: {data1}, data2: {data2}")
+
+# Perform element-wise addition
+pyout = [[data1[0][0] + data2[0][0]]]
+```
+
+### JupyterLite
+
+If you're familiar with JupyterLab or Notebooks, a great option is [JupyterLite](https://jupyterlite.readthedocs.io/en/stable/_static/lab/index.html) which is a JupyterLab distribution that runs in the browser using the same Pyodide Python kernal that this add-in is using.  This means that any code that runs in JupyterLite should run in Excel.  Right now you'll need to cut and paste your code into Excel, or push it to some location accessible by URL (e.g. GitHub Gist) if using `PY.BETA`.
+
+Since JupyterLite stores its files in the browser IndexedDB, if we hosted a JupyterLite instance on the same sub-domain as our add-in (so that they could share the same storage), it would enable you to directly reference your code files in Jupyter from they `PY` functions, similar to using a URL.  This would provide the equivalent of live reload from a Jupyter notebook.  If this is something you think would be useful, please [let us know](/company/support).
+
+### ChatGPT
+
+[ChatGPT](https://chat.openai.com/) and similar tools can be used to generate Python code snippets.  You can then copy and paste these snippets into Excel, or use the `PY.BETA` function to load the code from a URL.  This can be a great way to quickly prototype code, especially if you're not a Python developer.
 
 ## Applications
 
@@ -121,5 +165,21 @@ Some example applications are as follows:
 
 3. **Using AI models**: AI models can be called via APIs with complex prompts and agentic patterns using packages like [LangChain](https://pypi.org/project/langchain/).
 
-4. **Calling APIs**:  For example, let's say you're trying to call a REST API and manipulate the JSON response into something useful.  While in theory you could use the Excel `WEBSERVICE` function, it is much easier to use the `requests` and `json` packages in Python.
+4. **Calling APIs**:  For example, let's say you're trying to call a REST API and manipulate the JSON response into something useful.
 
+## Changelog
+
+1.0.3 - 2024-09-24
+- Added `PY.BETA` function with ability to load code from a URL.
+- Improved error handling.
+- Fixed bug blocking Mac users.
+
+1.0.2 - 2024-09-15
+- Improved error handling and reporting.
+- Changed to using `pyout` as the output variable.
+
+1.0.1 - 2024-09-12
+- Added `PY.ARR` function to handle arrays natively.
+
+1.0.0 - 2024-09-10
+- Initial release.  
