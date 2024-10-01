@@ -6,13 +6,13 @@ title: Pricing
 
 ## Free
 
-Boardflare apps for Excel and Sheets provide unlimited free use of basic machine learning models that run locally on your CPU.  These models are sufficient for many purposes, and no subscription, or even account registration, is required to use them.  
+Boardflare apps for Excel and Sheets provide unlimited free use of basic functionality with no subscription, or even account registration.  
 
 ## Premium
 
-Premium models with additional capabilities are currently available for Microsoft work/school account holders only.  We use AppSource for handling billing and unfortunately it does not support personal accounts.  When you sign-in with your work/school account you will be granted some initial free credits.  After those are consumed, you will need a [Boardflare premium subscription](https://appsource.microsoft.com/en-us/product/web-apps/whistlernetworksinc1621738129547.boardflare-flatrate), as outlined below.
+Premium features are currently available for Excel and Microsoft work/school account holders only.  We use AppSource for handling billing and unfortunately it does not support personal accounts.  When you sign-in with your work/school account you will be granted some initial free credits.  After those are consumed, you will need a [Boardflare premium subscription](https://appsource.microsoft.com/en-us/product/web-apps/whistlernetworksinc1621738129547.boardflare-flatrate), as outlined below.
 
-The cost to use premium models varies by model and service, and is detailed in the documentation for each app.  For example, US$1 = 1000 credits = 1 million characters of text for the premium translation model.  As a comparison, the Google translation API costs US$20 for 1M characters of text.
+The cost to use premium services vary, and is detailed in the documentation for each app.  For example, US$1 = 1000 credits = 1 million characters of text for the premium translation model.  As a comparison, the Google translation API costs US$20 for 1M characters of text.
 
 ## Subscription
 
