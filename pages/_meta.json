@@ -25,7 +25,6 @@
   },
   "blog": {
     "title": "Blog",
-    "display": "hidden",
     "type": "page",
     "theme": {
       "breadcrumb": false

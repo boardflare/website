@@ -6,9 +6,11 @@ date: 2024-05-29
 # GOOGLETRANSLATE for Excel
 May 29, 2024
 
+> Updated: Microsoft has announced their own new native [TRANSLATE function](https://techcommunity.microsoft.com/t5/microsoft-365-insider-blog/new-translation-functions-in-excel-translate-and-detectlanguage/ba-p/4231456) for Excel.  See [this post](/blog/2024/translate-excel.md).
+
 ## GOOGLETRANSLATE
 
-GOOGLETRANSLATE is a popular function in Google Sheets that allows users to translate text directly within their spreadsheets. It's a powerful tool for working with multilingual data and has become an essential feature for many users. It translates text from one language to another with a simple function syntax of GOOGLETRANSLATE(text, [source_language], [target_language]).
+[GOOGLETRANSLATE](https://support.google.com/docs/answer/3093331?hl=en) is a popular function in Google Sheets that allows users to translate text directly within their spreadsheets. It's a powerful tool for working with multilingual data and has become an essential feature for many users. It translates text from one language to another with a simple function syntax of GOOGLETRANSLATE(text, [source_language], [target_language]).
 
 ## Translate for Excel
 
