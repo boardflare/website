@@ -1,10 +1,10 @@
 ---
-title: Python in Excel
+title: LAMBDA Functions using Python
 date: 2024-09-16
 ---
 
-# Python in Excel
-September 16, 2024
+# LAMBDA Functions using Python
+October 4, 2024
 
 ## Overview
 

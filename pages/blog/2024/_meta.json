@@ -1,5 +1,6 @@
 {
-  "apps-script-web-workers": "Apps Script Web Workers",
+  "python-in-excel": "Python in Excel",
+  "translate-excel": "Excel TRANSLATE Function",
   "googletranslate-excel": "GOOGLETRANSLATE",
-  "translate-excel": "Excel TRANSLATE Function"
+  "apps-script-web-workers": "Apps Script Web Workers"
 }

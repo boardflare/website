@@ -1,7 +1,7 @@
 ---
 title: Local GPT for Excel
 ---
-
+import { DeviceInfo } from '@/components/DeviceInfo.jsx'
 import { Callout } from 'nextra/components'
 
 # Local GPT for Excel
@@ -12,7 +12,7 @@ import { Callout } from 'nextra/components'
 
 ## Overview
 
-Provides unlimited free and secure AI functions by using a small language model, currently [Gemma2 2B](https://github.com/google-deepmind/gemma), that runs locally on your computer so your data never leaves Excel.  While not as fast and smart as ChatGPT, maybe it is all you need for simple tasks.  If you have access to an advanced GPU on your computer, it may be possible to run much larger and more powerful models. Please [let us know](/company/support) if you are interested in this as a paid upgrade.
+Provides unlimited free and private AI inference by using a smaller language model, currently [Gemma2 2B](https://github.com/google-deepmind/gemma), that runs locally on your computer so your data never leaves Excel.  While not as fast and smart as ChatGPT, maybe it is all you need for simple tasks.  If you have a discrete GPU on your computer, it may be possible to run much larger and more powerful models. Please [let us know](/company/support) if you are interested in this.
 
 Install from the Microsoft AppSource store at the link below, or directly from Excel.
 
@@ -26,54 +26,39 @@ Install from the Microsoft AppSource store at the link below, or directly from E
 
 ## Features
 
-🆓 Unlimited free use of small models.<br/>
+🆓 Unlimited free use.<br/>
 💻 Processed locally on your computer.<br/>
 🔒 No data is shared outside Excel.<br/>
 
 ## Requirements
-- You must have a device that supports [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) with `shader-f16`.
+Your computer must support [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) and specifically `shader-f16`.  Results of our check:
+
+<DeviceInfo />
 
 ## Functions
 
-These are the initial functions provided.  LOCAL.GPT is the most versatile and enables you to prompt the model to do a wide range of tasks.  The other functions are more specialized and are provided for convenience.
+This app provides only one general function.  This can be used to create specialized LAMBDA functions as outlined later.
 
 ### LOCAL.GPT
 
-=<code>BOARDFLARE.LOCAL.GPT (prompt, [data], [options])</code><br/>
-<code>prompt:</code> Instructions for model, e.g. "What is the problem this user is having?<br/>
-<code>data:</code> Optional data to provide context to the model. If a range of cells is provided, it will be converted to a comma-separated list that is added to the prompt.  Continuing with the example above, this could be a cell with a support ticket description.<br/>
+=<code>BOARDFLARE.LOCAL.GPT (prompt, [options])</code><br/>
+- prompt: Instructions for model
+- options: Placeholder for options such as system message, temperature, max tokens, etc., currently does nothing.
 
-### LOCAL.CLASSIFY
+## Examples
 
-=<code>BOARDFLARE.LOCAL.CLASSIFY (text, categories)</code><br/>
-<code>text:</code> Text to classify.<br/>
-<code>categories:</code> Range of categories.<br/>
-E.g., to classify the content of cell A1 into categories listed in cells B1 to B5:<br/>
-<code>=BOARDFLARE.LOCAL.CLASSIFY(A1, B1:B5)</code><br/>
+### Simple
 
+```excel
+=BOARDFLARE.LOCAL.GPT("What is the problem this user is having?  Support Ticket: " & A1)
+```
 
-### LOCAL.SUMMARIZE
+### LAMBDA
 
-=<code>BOARDFLARE.LOCAL.SUMMARIZE (text)</code><br/>
-<code>text:</code> Text to summarize.<br/>
-E.g., to summarize the content of cell A1:<br/>
-<code>=BOARDFLARE.LOCAL.SUMMARIZE(A1)</code><br/>
-
-This just uses the LOCAL.GPT function with a prompt of "Summarize the following text:".  It is provided for convenience.
-
-### LOCAL.TRANSLATE
-
-=<code>BOARDFLARE.LOCAL.TRANSLATE (text, source_lang, target_lang, [model])</code><br/>
-<code>text:</code> Must be less than 1000 characters.<br/>
-<code>source_lang:</code> Text language, e.g. "fr" for French.<br/>
-<code>target_lang:</code> Translation language, e.g. "en" for English.<br/>
-E.g., to translate cell A1 from French to English:<br/>
-<code>=BOARDFLARE.LOCAL.TRANSLATE(A1, "fr", "en")</code><br/>
-
-Either the source or target language must be English "<code>en</code>", and the other language may be any one of the following: 
-
-Afrikaans "<code>af</code>", Arabic "<code>ar</code>", Czech "<code>cs</code>", Danish "<code>da</code>", Dutch "<code>nl</code>", Finnish "<code>fi</code>", French "<code>fr</code>", German "<code>de</code>", Hindi "<code>hi</code>", Hungarian "<code>hu</code>", Indonesian "<code>id</code>", Italian "<code>it</code>", Japanese "<code>jap</code>", Russian "<code>ru</code>", Spanish "<code>es</code>", Swedish "<code>sv</code>", Ukrainian "<code>uk</code>", Vietnamese "<code>vi</code>", Xhosa "<code>xh</code>", Chinese "<code>zh</code>"
-
+```excel
+=LAMBDA(ticket, BOARDFLARE.LOCAL.GPT("What is the problem this user is having?  Support Ticket: " & ticket))
+=USERPROBLEM(A1)
+```
 
 ## Applications
 
