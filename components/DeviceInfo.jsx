@@ -16,7 +16,9 @@ export function DeviceInfo() {
 
     return (
         <div>
-            <p><b>{supportsF16 ? 'This computer should work with Local GPT' : 'This computer will NOT work with Local GPT'}</b></p>
+            <p>
+                {supportsF16 ? 'WebGPU with shader-f16 is supported in this browser' : <span>WebGPU with shader-f16 is <strong>NOT</strong> supported in this browser</span>}
+            </p>
         </div>
     );
 };

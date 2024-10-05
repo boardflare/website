@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.nx-text-\[\.9em\] {
-  font-size: 1em;
-}
+/* ._text-\[\.9em\] {
+  font-size: 2em;
+} */
 
 :root {
   --foreground-rgb: 0, 0, 0;

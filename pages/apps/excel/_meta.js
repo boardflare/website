@@ -1,4 +1,4 @@
-{
+export default {
   "fuzzy-match": "Fuzzy Match",
   "sentiment-analysis": "Sentiment Analysis",
   "translate": "Translate",

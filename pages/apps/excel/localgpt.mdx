@@ -31,29 +31,45 @@ Install from the Microsoft AppSource store at the link below, or directly from E
 🔒 No data is shared outside Excel.<br/>
 
 ## Requirements
-Your computer must support [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) and specifically `shader-f16`.  Results of our check:
 
-<DeviceInfo />
+The model used requires your browser supports [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) and the GPU supports `shader-f16`.  This is evaluated using the browser API with the following code:
+
+```javascript
+const adapter = await navigator.gpu.requestAdapter();
+const supportsF16 = adapter?.features.has('shader-f16');
+```
+
+If `supportsF16` is not `true` the model will not run. 
+
+Running that code right now in this browser yields the following result:
+
+<Callout type="info" emoji="💻">
+  <DeviceInfo />
+</Callout>
+
+However, the browser you are using to view this web page may be different than the one that will run the add-in in Excel.  The main scenario where this is likely to occur is on Mac, where you might be using Chrome as your browser, but Excel uses Safari, which only has experimental support for WebGPU. 
+
+The model also consumes roughly 2-3 GB of memory, so this will typically run on a computer with 8 GB.  Anything less and you most likely will run into memory issues.
 
 ## Functions
 
-This app provides only one general function.  This can be used to create specialized LAMBDA functions as outlined later.
+This app provides only one general function, as follows:
 
 ### LOCAL.GPT
 
 =<code>BOARDFLARE.LOCAL.GPT (prompt, [options])</code><br/>
-- prompt: Instructions for model
-- options: Placeholder for options such as system message, temperature, max tokens, etc., currently does nothing.
+- `prompt`: Instructions for model (e.g. `"summarize: " & A1`).
+- `options`: Placeholder for options, currently does nothing.
 
 ## Examples
 
-### Simple
+Typically you will want a prompt that concatenates an instruction with a cell value, such as the following:
 
 ```excel
 =BOARDFLARE.LOCAL.GPT("What is the problem this user is having?  Support Ticket: " & A1)
 ```
 
-### LAMBDA
+Or you could create a LAMBDA function like this:
 
 ```excel
 =LAMBDA(
@@ -64,7 +80,8 @@ This app provides only one general function.  This can be used to create special
 )
 ```
 
-This could then be named and used like `=USERPROBLEM(A1)`
+Then name it `GETPROBLEM`, so end-users could call it with `=GETPROBLEM(A1)`.  Generally you will want to use a named LAMBDA function to make it simpler for others to use and easier to update the prompt once for the entire workbook.
+
 
 ## Applications
 
