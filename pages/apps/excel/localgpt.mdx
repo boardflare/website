@@ -56,9 +56,15 @@ This app provides only one general function.  This can be used to create special
 ### LAMBDA
 
 ```excel
-=LAMBDA(ticket, BOARDFLARE.LOCAL.GPT("What is the problem this user is having?  Support Ticket: " & ticket))
-=USERPROBLEM(A1)
+=LAMBDA(
+    ticket, 
+    BOARDFLARE.LOCAL.GPT(
+        "What is the problem this user is having? Support Ticket: " & ticket
+    )
+)
 ```
+
+This could then be named and used like `=USERPROBLEM(A1)`
 
 ## Applications
 

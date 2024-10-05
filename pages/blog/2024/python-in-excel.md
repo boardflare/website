@@ -40,6 +40,8 @@ We realize all of these weaknesses could be considered strengths, depending on t
 
 - **Python cells share state**:  The Python cells are executed in the order they appear in the workbook, and they share state, similar to a Jupyter notebook.  This is both a positive and a negative, and can make it difficult to debug and understand the code.
 
+See also this great [post by xlwings](https://www.xlwings.org/blog/my-thoughts-on-python-in-excel) on these and some other potential weaknesses.
+
 ## Alternatives
 
 ### PyXLL

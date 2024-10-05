@@ -3,6 +3,6 @@
   "sentiment-analysis": "Sentiment Analysis",
   "translate": "Translate",
   "hugging-face": "Hugging Face",
-  "freegpt": "Local GPT",
+  "localgpt": "Local GPT",
   "python": "Python"
 }
