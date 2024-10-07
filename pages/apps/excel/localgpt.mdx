@@ -12,9 +12,7 @@ import { Callout } from 'nextra/components'
 
 ## Overview
 
-Provides unlimited free and private AI inference by using a smaller language model, currently [Gemma2 2B](https://github.com/google-deepmind/gemma), that runs locally on your computer so your data never leaves Excel.  While not as fast and smart as ChatGPT, maybe it is all you need for simple tasks.  If you have a discrete GPU on your computer, it may be possible to run much larger and more powerful models. Please [let us know](/company/support) if you are interested in this.
-
-Install from the Microsoft AppSource store at the link below, or directly from Excel.
+Provides unlimited free and private AI inference by using a smaller language model, currently [Gemma2 2B](https://github.com/google-deepmind/gemma), that runs locally on your computer so your data never leaves Excel.  While not as fast and smart as ChatGPT, maybe it is all you need for simple tasks.
 
 <a href="https://appsource.microsoft.com/en-us/product/office/WA200007427?tab=Overview">
     <img 
@@ -32,14 +30,12 @@ Install from the Microsoft AppSource store at the link below, or directly from E
 
 ## Requirements
 
-The model used requires your browser supports [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) and the GPU supports `shader-f16`.  This is evaluated using the browser API with the following code:
+Your computer/browser must support [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API) with the 16bit floating point shader feature.  This is evaluated using the browser API with the following code:
 
 ```javascript
 const adapter = await navigator.gpu.requestAdapter();
 const supportsF16 = adapter?.features.has('shader-f16');
 ```
-
-If `supportsF16` is not `true` the model will not run. 
 
 Running that code right now in this browser yields the following result:
 
@@ -47,9 +43,9 @@ Running that code right now in this browser yields the following result:
   <DeviceInfo />
 </Callout>
 
-However, the browser you are using to view this web page may be different than the one that will run the add-in in Excel.  The main scenario where this is likely to occur is on Mac, where you might be using Chrome as your browser, but Excel uses Safari, which only has experimental support for WebGPU. 
+However, the browser you are using to view this web page may be different than the one that will run the add-in in Excel.  If you are using Chrome or Edge on Windows then the message above will apply to your Excel web runtime also.  On Mac, Excel will use Safari, which only has experimental support for WebGPU, so it may or may not work. 
 
-The model also consumes roughly 2-3 GB of memory, so this will typically run on a computer with 8 GB.  Anything less and you most likely will run into memory issues.
+The model requires 2-3 GB of memory when in use, and takes up about 1.5 GB of storage when cached.  You will need at least 8 GB of RAM on your computer.  The speed it generates text at depends heavily on the speed of your computer's CPU and GPU, so if it appears painfully slow, there is nothing wrong, you just have a slow GPU.
 
 ## Functions
 
@@ -59,29 +55,55 @@ This app provides only one general function, as follows:
 
 =<code>BOARDFLARE.LOCAL.GPT (prompt, [options])</code><br/>
 - `prompt`: Instructions for model (e.g. `"summarize: " & A1`).
-- `options`: Placeholder for options, currently does nothing.
+- `options`: Options, provided as an 2 x n array with one or more of the properties `system_message`, `max_tokens`, `temperature` in the first column and the value in the second. 
 
 ## Examples
+
+See the following [workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Ec6Mpv0DuKBDjRbg4lAMTT8BkV6JSzL2vuBBFUvXhhYTQg?e=dgfGrm).
 
 Typically you will want a prompt that concatenates an instruction with a cell value, such as the following:
 
 ```excel
 =BOARDFLARE.LOCAL.GPT("What is the problem this user is having?  Support Ticket: " & A1)
+
 ```
 
-Or you could create a LAMBDA function like this:
+Including `options` as an [array constant](https://support.microsoft.com/en-us/office/use-array-constants-in-array-formulas-477443ea-5e71-4242-877d-fcae47454eb8) as follows:
+
+```excel
+=BOARDFLARE.LOCAL.GPT("What is the problem this user is having? Support Ticket: " & A1, 
+    {"system_message", "You are an expert summarizer"; "max_tokens", 100; "temperature", 0.5}
+)
+```
+
+You could also wrap this in a LAMBDA function like this:
 
 ```excel
 =LAMBDA(
     ticket, 
     BOARDFLARE.LOCAL.GPT(
-        "What is the problem this user is having? Support Ticket: " & ticket
+        "What is the problem this user is having? Support Ticket: " & ticket, 
+        {"system_message", "You are an expert summarizer"; "max_tokens", 100; "temperature", 0.5}
     )
 )
 ```
 
 Then name it `GETPROBLEM`, so end-users could call it with `=GETPROBLEM(A1)`.  Generally you will want to use a named LAMBDA function to make it simpler for others to use and easier to update the prompt once for the entire workbook.
 
+To insert an array of values into the prompt, `ARRAYTOTEXT` can be used to convert the array to a string.  For example, if the array `C4:E4` each contains a tag value, the following formula could be used:
+
+```excel
+=BOARDFLARE.LOCAL.GPT(
+    "Which of these tags: (" & ARRAYTOTEXT(C4:E4) & ") best matches this support ticket: " & C3, 
+    { "system_message", "You are classifying text, only return the value of the tag that best matches the text and nothing more."; "max_tokens", 5}
+)
+```
+
+Note that the `system_message` is used to guide the model to only return the single tag, otherwise you may get a paragraph explaining why it chose the tag it did.
+
+<Callout type="info" emoji="✅">
+ When constructing your prompt, it is often useful to construct it using a formula in a separate cell first so you can catch any mistakes.
+</Callout>
 
 ## Applications
 

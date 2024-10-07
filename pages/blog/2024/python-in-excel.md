@@ -50,7 +50,7 @@ See also this great [post by xlwings](https://www.xlwings.org/blog/my-thoughts-o
 
 ### xlwings
 
-[xlwings](https://www.xlwings.org/) comes in two variants.  The client product runs on Windows or Mac and is similar to PyXLL in terms of being able to build traditional Excel add-ins.  The [xlwings Server](https://server.xlwings.org/en/latest/) is used to create modern Excel web add-ins entirely in Python.  This is a very clever strategy that eliminates the intermediate step of building a web app which calls a Python API. The xlwings Server is the web app, but all the web bits are built automatically based on the Python functions.  So there are no Excel JavaScript APIs to deal with and making sure that your `functions.js` matches any changes you have made to your Python functions.  They are also working on an xlwings Script version which will run in the browser, which sounds very promising.
+[xlwings](https://www.xlwings.org/) comes in two variants.  The client product runs on Windows or Mac and is similar to PyXLL in terms of being able to build traditional Excel add-ins.  The [xlwings Server](https://server.xlwings.org/en/latest/) is used to create modern Excel web add-ins entirely in Python by deploying a web app using Python code, similar to [Streamlit](https://streamlit.io/) or [Gradio](https://www.gradio.app/).  This is a very clever strategy that eliminates the need for a separate Excel add-in web app which calls a Python API.  They are also working on an xlwings Script version which will run in the browser, which sounds very promising.
 
 ### Anaconda Code
 
