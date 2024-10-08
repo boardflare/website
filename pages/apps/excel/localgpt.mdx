@@ -49,11 +49,11 @@ The model requires 2-3 GB of memory when in use, and takes up about 1.5 GB of st
 
 ## Functions
 
-This app provides only one general function, as follows:
+This app provides only one general function `GPT`, as follows:
 
-### LOCAL.GPT
+### GPT
 
-=<code>BOARDFLARE.LOCAL.GPT (prompt, [options])</code><br/>
+=<code>BOARDFLARE.GPT (prompt, [options])</code><br/>
 - `prompt`: Instructions for model (e.g. `"summarize: " & A1`).
 - `options`: Options, provided as an 2 x n array with one or more of the properties `system_message`, `max_tokens`, `temperature` in the first column and the value in the second. 
 
@@ -64,14 +64,14 @@ See the following [workbook](https://whistlernetworks.sharepoint.com/:x:/s/Board
 Typically you will want a prompt that concatenates an instruction with a cell value, such as the following:
 
 ```excel
-=BOARDFLARE.LOCAL.GPT("What is the problem this user is having?  Support Ticket: " & A1)
+=BOARDFLARE.GPT("What is the problem this user is having?  Support Ticket: " & A1)
 
 ```
 
 Including `options` as an [array constant](https://support.microsoft.com/en-us/office/use-array-constants-in-array-formulas-477443ea-5e71-4242-877d-fcae47454eb8) as follows:
 
 ```excel
-=BOARDFLARE.LOCAL.GPT("What is the problem this user is having? Support Ticket: " & A1, 
+=BOARDFLARE.GPT("What is the problem this user is having? Support Ticket: " & A1, 
     {"system_message", "You are an expert summarizer"; "max_tokens", 100; "temperature", 0.5}
 )
 ```
@@ -81,7 +81,7 @@ You could also wrap this in a LAMBDA function like this:
 ```excel
 =LAMBDA(
     ticket, 
-    BOARDFLARE.LOCAL.GPT(
+    BOARDFLARE.GPT(
         "What is the problem this user is having? Support Ticket: " & ticket, 
         {"system_message", "You are an expert summarizer"; "max_tokens", 100; "temperature", 0.5}
     )
@@ -93,7 +93,7 @@ Then name it `GETPROBLEM`, so end-users could call it with `=GETPROBLEM(A1)`.  G
 To insert an array of values into the prompt, `ARRAYTOTEXT` can be used to convert the array to a string.  For example, if the array `C4:E4` each contains a tag value, the following formula could be used:
 
 ```excel
-=BOARDFLARE.LOCAL.GPT(
+=BOARDFLARE.GPT(
     "Which of these tags: (" & ARRAYTOTEXT(C4:E4) & ") best matches this support ticket: " & C3, 
     { "system_message", "You are classifying text, only return the value of the tag that best matches the text and nothing more."; "max_tokens", 5}
 )
