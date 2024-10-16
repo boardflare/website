@@ -3,7 +3,8 @@ import nextra from 'nextra'
 const withNextra = nextra({
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.jsx',
-  latex: true
+  latex: true,
+  defaultShowCopyCode: true
   // ... your Nextra config
 })
 

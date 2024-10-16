@@ -24,7 +24,7 @@ export default {
     // },
     // docsRepositoryBase: 'https://github.com/Bolleman/boardflare/tree/main/',
     footer: {
-        text: (
+        content: (
             <span>
                 Boardflare ©{' '} {new Date().getFullYear()}
             </span>
