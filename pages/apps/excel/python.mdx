@@ -8,18 +8,8 @@ import { Callout } from 'nextra/components'
 # Python for Excel
 
 <Callout type="warning" emoji="🧪">
-  **EXPERIMENTAL**:  Breaking changes are probable.  [Feedback](/company/support) is appreciated!
+  **EXPERIMENTAL**:  Breaking changes are probable, without deprecation warnings.
 </Callout>
-
-## Overview
-
-Runs Python code as a function so you can incorporate it into your formulas and LAMBDA functions.  For example, incorporating Python code in a LAMBDA function which is then named `MYFUNC` and called with `5, 3`:
-    
-```excel
-=LAMBDA(x, y, BOARDFLARE.PY("pyout = data1 * data2", x, y))
-=MYFUNC(5, 3)
-```
-This enables you to create extremely powerful custom functions without needing to build a custom Excel add-in.
 
 <a href="https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview">
     <img 
@@ -29,28 +19,48 @@ This enables you to create extremely powerful custom functions without needing t
     />
 </a>
 
+## Overview
+
+Runs Python code as a function so you can incorporate it into your formulas and LAMBDA functions.  For example, incorporating Python code in a LAMBDA function which is then named `MYFUNC` and called with `5, 3`:
+    
+```excel
+=LAMBDA(x, y, BOARDFLARE.PY("pyout = data1 * data2", x, y))
+=MYFUNC(5, 3)
+```
+This enables you to build Excel custom functions using Python without needing to build a custom Excel add-in.
+
 ## Features
 
 Some key differences compared to the native [Python in Excel](https://support.microsoft.com/en-us/office/get-started-with-python-in-excel-a33fbcbe-065b-41d3-82cf-23d05397f53d) are as follows:
 
+✅ Use as a function in formulas and LAMBDAs.<br/>
 🆓 Free add-in, no Office 365 license required.<br/>
 🌐 Works in Excel for web as well as desktop.<br/>
-☁️ Runtime has network access for API calls.<br/>
+☁️ Runtime has network access for API calls (with CORS).<br/>
 📦 Import custom packages (pure Python only).<br/>
 🔒 Runs locally, so no data is shared outside Excel.<br/>
-✅ Can be used inside formulas and LAMBDA functions.<br/>
 ➡️ Code can be centralized and loaded from a URL.<br/>
 🚀 Performance is only limited by your CPU.<br/>
 
-## Runtime
+## Python Runtime
 
 [Pyodide](https://pyodide.org/en/stable/index.html) is the Python runtime, which is based on [WebAssembly](https://webassembly.org/) running in the browser used by Excel desktop and web to host add-ins.  This is currently running Python 3.12, but has limitations as discussed in the [Pyodide documentation](https://pyodide.org/en/stable/usage/wasm-constraints.html).
 
+Any output to `stdout` or `stderr` is displayed in the Console area of the add-in task pane. This is useful for debugging your code, and also for displaying intermediate results of long-running operations such as functions that are processing large input arrays. Global variables are used to pass data to your code, as discussed in more detail below.  Global variables are cleared after each function invocation, so no state is maintained between calls.
+
+## Custom Packages
+
 Pyodide includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, which means there is a Python wheel that ends with `-py3-none-any.whl`, e.g. `beautifulsoup4-4.12.3-py3-none-any.whl`.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work, but double-check the wheel.
 
-Any output to `stdout` or `stderr` is displayed in the Console area of the add-in task pane. This is useful for debugging your code, and also for displaying intermediate results of long-running operations such as functions that are processing large input arrays. 
+You do not need to install packages, just import them in your code.  Your code will be scanned for imports and any found will be handled for you using `micropip` in the background and the package will be downloaded if needed from PyPI.  If you try to import a package for which there is not a pure Python wheel available on PyPI, an error will be thrown.
 
-Global variables are used to pass data to your code, as discussed in more detail below.  Global variables are cleared after each function invocation, so no state is maintained between calls.
+## Loading Code
+
+Code can be loaded from a URL, which is useful for sharing code between workbooks and version control.  This is done by passing the URL as the code argument to the `PY` function as explained further below.  Code can only be loaded from a URL if it is served over HTTPS and has CORS headers due to browser security restrictions, since add-ins run in a browser even in desktop Excel.
+
+A [GitHub Gist](https://gist.github.com/) or file in a public GitHub repo both add CORS headers to raw links so will work. Make sure you click on the raw button in the Gist to get a URL that goes directly to your code [like this](https://gist.githubusercontent.com/bolleman/14e68b8d6a6e2897ef5f70dbd28ea7e3/raw/ce32551dd5df578371d70db563459d450921f13b/emails.py).
+
+We plan to add a feature in the future to enable users to load code from OneDrive or SharePoint using their credentials, similar to how [Office Scripts](https://learn.microsoft.com/en-us/office/dev/scripts/overview/excel) work.
 
 ## Functions
 
@@ -125,7 +135,7 @@ You can also load code from URL:
 ```
 ### PY.BETA
 
-`PY.BETA` has been updated to handle scalars the same as `PY` and arrays the same as `PY.ARR`.  It fundamentally operates on arrays so it can do both, but it has helpers to convert scalars to arrays and arrays to scalars so this is less tedious when handling scalars.  The plan is this code will replace the current `PY` function, and `PY.ARR` will be deprecated.
+`PY.BETA` has been updated to handle scalars the same as `PY` and arrays the same as `PY.ARR`.  It fundamentally operates on arrays so it can do both, but it has helpers to convert scalars to arrays and arrays to scalars so this is less tedious for the developer.  The plan is this code will replace the current `PY` function, and `PY.ARR` will be deprecated.
 
 On the input side, the conversion rules are outlined in the table below:
 
@@ -165,30 +175,11 @@ Or you could do the following, which shows how `data1`, `data2` row matrices hav
 ={15, 12}
 ```
 
-So the best of both worlds in one function.
+So the best of both worlds in one function!  Please let us know if you have any [feedback](/company/support) on this function.
 
-## Development
+## Jupyterlite Development
 
-### Code from URL
-
-Code can only be loaded from a URL if it is served over HTTPS due to browser security restrictions.  Deploying your code to a URL such as a [GitHub Gist](https://gist.github.com/) has the benefit of being able to update your function without having to update all the Excel workbooks using it, as well as providing better version control.  If you use a GitHub Gist, make sure you click on the raw button in the Gist to get a URL that goes directly to your code [like this](https://gist.githubusercontent.com/bolleman/14e68b8d6a6e2897ef5f70dbd28ea7e3/raw/ce32551dd5df578371d70db563459d450921f13b/emails.py).
-
-### Local IDE
-
-Using an IDE such as [VS Code](https://code.visualstudio.com/) with something like [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) enables you to work with your local code files with live reload as follows: 
-
-```excel
-=BOARDFLARE.PY.ARR("https://localhost:4000/mycode.py", {1,2})
-```
-
-### JupyterLite
-
-[Jupyterlite](https://jupyterlite.readthedocs.io/en/stable/_static/lab/index.html) runs in the browser using the same Pyodide Python kernal that this add-in is using, so any code that runs in Jupyterlite should run in Python for Excel.  Once you have your code running in Jupyterlite, you can move it into Excel by copy/paste, or one of the following methods:
-- sync notebook to a GitHub Gist
-- load notebook code using the `BOARDFLARE.JL` function
-- use AI to help write code.
-
-** Details Coming Soon **
+[Jupyterlite](https://jupyterlite.readthedocs.io/en/stable/_static/lab/index.html) runs in the browser using the same Pyodide Python kernal that this add-in is using, so any code that runs in Jupyterlite should run in Python for Excel.
 
 ## Applications
 
@@ -204,9 +195,9 @@ Some example applications are as follows:
 
 ## Changelog
 
-1.0.5 - 2024-10-09
+1.0.5 - 2024-10-18
 - `PY.BETA` handles both arrays and scalars with auto-conversion helpers.
-- Beta version of Jupyterlite with `BOARDFLARE.JL` function.
+- Beta version of Jupyterlite.
 
 1.0.4 - 2024-09-25
 - Added ability to load code from URL to `PY` and `PY.ARR` functions.  `PY.BETA` now has no new features, but will be where new features are tested before moving to `PY` and `PY.ARR`.

@@ -1,5 +1,5 @@
 ---
-title: Translation
+title: Fuzzy Matching
 ---
 
 # Fuzzy Matching
@@ -10,12 +10,18 @@ Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/A
 
 ## Apps
 
+### Excel
+
 - [Fuzzy Match for Excel](/apps/excel/fuzzy-match) is our Excel add-in that provides a fuzzy matching version of XLOOKUP and XMATCH functions that runs entirely in Excel with no data being sent to the cloud.
 - [Python for Excel](/apps/excel/python) provides access to the Python functions listed below, along with the ability to customize the functions to your specific needs.
 
 ## Functions
 
-- [FUZZY](/functions/text/fuzzy) - Calculates the normalized similarity of strings using various algorithms.                           |
+### Python
+
+- [fuzzy_distance](/tasks/nlp/fuzzy-match/fuzzy_distance) - Calculates the normalized similarity of strings using various algorithms.
+
+### Excel
 
 ## Entity Resolution
 

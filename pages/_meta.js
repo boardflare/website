@@ -9,17 +9,8 @@ export default {
       "toc": false
     }
   },
-  "functions": {
-    "title": "Functions",
-    "type": "page",
-    "theme": {
-      "breadcrumb": false,
-      "sidebar": true
-    }
-  },
   "tasks": {
-    "title": "Tasks",
-    "display": "hidden",
+    "title": "Functions",
     "type": "page",
     "theme": {
       "breadcrumb": false

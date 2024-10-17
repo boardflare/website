@@ -1,17 +1,17 @@
-# Fuzzy Matching
+import { Gradio } from '@/components/Gradio'
 
-[Fuzzy matching](/tasks/nlp/fuzzy-match) compares a string to a list of strings and returning the closest match.
+# fuzzy_distance
 
-## Python Functions
+Uses the Python [textdistance](https://github.com/life4/textdistance) library which implements edit (e.g. Levenshtein), token, sequence, and phonetic algorithms to calculate the similarity between two strings.
 
-### fuzzy
+## Usage
 
-Uses the Python [textdistance](https://github.com/life4/textdistance) package which implements edit, token, sequence, and phonetic algorithms. 
+### BOARDFLARE.PY
 
-`fuzzy` is similar to the spreadsheet `XMATCH` function, comparing a `lookup_value` with a `lookup_array` and returning the index of the closest match from the `lookup_array` together with a normalized similarity score between 0 and 1 (higher is more similar).
+`fuzzy_distance` compares a `lookup_value` with a `lookup_array` and returns the index of the closest match and a normalized similarity score between 0 and 1 (higher is more similar).
 
 ```excel
-=BOARDFLARE.PY("text/fuzzy.ipynb", lookup_value, lookup_array, algorithm)
+=BOARDFLARE.PY("text/fuzzy_distance.ipynb", lookup_value, lookup_array, algorithm)
 ```
 
 | Argument       | Positional | Type   | Description                                                   |
@@ -27,24 +27,29 @@ Returns a list with two elements:
 | Index             | int    | Index of the closest matching string in the `lookup_array` to the `lookup_value`. |
 | Similarity        | float  | The similarity score between 0 and 1, where a higher score indicates more similarity. The similarity score is only a relative measure within a single algorithm. E.g. a similarity of 0.7 with Jaccard could be more similar than 0.8 with Levenshtein|
 
-For example, to calculate the similarity between the string `"example"` and a list of strings `"samples", "exemplar", "sample", "examples"` using the Jaccard algorithm, you would use the following formula, which returns `1, 0.875`, which is `exemplar`.  Note that `examples` also has the same score, but `exemplar` is the first match in the list.
+For example, to calculate the similarity between the string `"example"` and a list of strings `"samples", "exemplar", "sample", "examples"` using the Jaccard algorithm, you would use the following formula, which returns `1, 0.875`, which is `exemplar`.
 
 ```excel
-=BOARDFLARE.PY("text/fuzzy/textdistance.ipynb", "example", {"samples", "exemplar", "sample", "examples"}, "jaccard")
+=BOARDFLARE.PY("text/fuzzy_distance.ipynb", "example", {"samples", "exemplar", "examples"}, "jaccard")
 ```
+### Native Excel PY
 
-## LAMBDA Functions
+This function cannot be used with Microsoft's Python in Excel as it requires the `textdistance` library which is not available in the Microsoft Python environment.  You could implement something similar using the [thefuzz](https://github.com/seatgeek/thefuzz) library which is available, but only supports the `levenshtein` algorithm.
 
-### FUZZYMATCH
+## Excel LAMBDAs
 
-Similar to `XMATCH`, extends `fuzzy` Python function to provide the ability to set a similarity threshold. The default algorithm is `levenshtein` and similarity_threshold is `0.7`.
+These functions are similar to the `XMATCH` and `XLOOKUP` functions in Excel, but with the added ability to set a similarity threshold.
+
+### FUZZY.DIST.MATCH
+
+Provides features similar to `XMATCH`, but with the ability to set a similarity threshold and algorithm. The default algorithm is `levenshtein` and similarity_threshold is `0.7`.
 
 ```excel
 =LAMBDA(lookup_value, lookup_array, [similarity_threshold], [algorithm],
     LET(
         threshold, IF(ISOMITTED(similarity_threshold), 0.7, similarity_threshold),
         algo, IF(ISOMITTED(algorithm), "levenshtein", algorithm),
-        result, BOARDLARE.PY("text/fuzzy.ipynb", lookup_value, lookup_array, algo),
+        result, BOARDLARE.PY("text/fuzzy_distance.ipynb", lookup_value, lookup_array, algo),
         index, INDEX(result, 1),
         score, INDEX(result, 2),
         IF(score >= threshold, index, "No match")
@@ -52,12 +57,12 @@ Similar to `XMATCH`, extends `fuzzy` Python function to provide the ability to s
 )
 
 ```excel
-=FUZZYMATCH("example", {"samples", "exemplar", "sample", "examples"})
+=FUZZY.DIST.MATCH(A1, B1:B10, 0.8,"jaccard")
 ```
 
-### FUZZYLOOKUP
+### FUZZY.DIST.LOOKUP
 
-Similar to `XLOOKUP`, extends `fuzzy` Python function to provide the ability to return a row from `return_array`. The default algorithm is `levenshtein` and similarity_threshold is `0.7`.
+Provides features similar to `XLOOKUP`, with the ability to return a row from a `return_array`. Otherwise the same as `FUZZY.DIST.MATCH`.
 
 ```excel
 =LAMBDA(lookup_value, lookup_array, return_array, [similarity_threshold], [algorithm],
@@ -73,14 +78,14 @@ Similar to `XLOOKUP`, extends `fuzzy` Python function to provide the ability to 
 ```
 
 ```excel
-=FUZZYLOOKUP("example", {"samples", "exemplar", "sample", "examples"}, {"A", "B", "C", "D"})
+=FUZZY.DIST.LOOKUP(A1, B1:B10, C1:E10, 0.8,"jaccard")
 ```
 
 ## Similarity Algorithms
 
-Descriptions of the available algorithms are given in the tables below.
+The similarity algorithms available in `textdistance` are given in the tables below.
 
-### Edit
+### Edit Distance
 
 | Algorithm            | Description                                                                 |
 |----------------------|-----------------------------------------------------------------------------|
@@ -114,7 +119,6 @@ Descriptions of the available algorithms are given in the tables below.
 | Algorithm            | Description                                                                 |
 |----------------------|-----------------------------------------------------------------------------|
 | [`bag`](https://github.com/Yomguithereal/talisman/blob/master/src/metrics/bag.js)                | Measures bag similarity between two sequences                               |
-| [`editex`](https://anhaidgroup.github.io/py_stringmatching/v0.3.x/Editex.html)             | Measures phonetic similarity between two sequences                          |
 | [`mlipns`](http://www.sial.iias.spb.su/files/386-386-1-PB.pdf)             | Measures similarity using the MLIPNS algorithm                              |
 | [`monge_elkan`](https://www.academia.edu/200314/Generalized_Monge-Elkan_Method_for_Approximate_Text_String_Comparison)        | A hybrid algorithm combining multiple similarity measures. $ME(a,b)$ |
 
@@ -123,14 +127,8 @@ Descriptions of the available algorithms are given in the tables below.
 | Algorithm                                                                    | Description                                                                 |
 |------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
 | [`mra`](https://en.wikipedia.org/wiki/Match_rating_approach)                 | Measures similarity using the MRA algorithm                                 |
-| [`editex`](https://anhaidgroup.github.io/py_stringmatching/v0.3.x/Editex.html) | Measures similarity using the Editex algorithm                              |
+| [`editex`](https://anhaidgroup.github.io/py_stringmatching/v0.3.x/Editex.html) | Measures similarity using the Editex algorithm                              |                              |
 
-### Simple
+## Demo
 
-| Algorithm            | Description                                                                 |
-|----------------------|-----------------------------------------------------------------------------|
-| `identity`           | Measures if two strings are identical                                       |
-| `length`             | Measures the length difference between two strings                          |
-| `matrix`             | Measures similarity using a matrix                                          |
-| `prefix`             | Measures similarity based on common prefix                                  |
-| `postfix`            | Measures similarity based on common postfix                                 |
+<Gradio notebookPath="text/fuzzy_distance.ipynb" />

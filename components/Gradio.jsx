@@ -1,39 +1,68 @@
 import React, { useEffect } from 'react';
 
-const GradioApp = () => {
+export function Gradio({ notebookPath }) {
   useEffect(() => {
-    const gradioHTML = `
-      <gradio-lite shared-worker>
+    async function fetchNotebook() {
+      try {
+        const baseUrl = 'https://addins.boardflare.com/python/preview/notebooks/';
+        const response = await fetch(baseUrl + notebookPath);
+        const notebook = await response.json();
 
-        <gradio-requirements>
-          textdistance
-        </gradio-requirements>
+        let requirements = '';
+        let functionCode = '';
+        let appCode = '';
 
-        <gradio-file name="app.py" entrypoint>
-        import gradio as gr
-        from utils import add
+        notebook.cells.forEach(cell => {
+          if (cell.cell_type === 'raw') {
+            const tags = cell.metadata.tags || [];
+            if (tags.includes('requirements')) {
+              requirements = cell.source.join('');
+            }
+          } else if (cell.cell_type === 'code') {
+            const tags = cell.metadata.tags || [];
+            if (tags.includes('function')) {
+              functionCode = cell.source.join('');
+            }
+            if (tags.includes('gradio')) {
+              appCode = cell.source.join('');
+            }
+          }
+        });
 
-        demo = gr.Interface(fn=add, inputs=["number", "number"], outputs="number")
+        console.log('requirements:', requirements);
+        console.log('functionCode:', functionCode);
+        console.log('appCode:', appCode);
 
-        demo.launch()
-        </gradio-file>
+        const gradioHTML = `
+          <gradio-lite shared-worker>
 
-        <gradio-file name="utils.py" >
-        def add(a, b):
-          return a + b
-        </gradio-file>
-   
-      </gradio-lite>
-    `;
-    const container = document.getElementById('gradio-container');
-    container.innerHTML = gradioHTML;
-  }, []);
+            <gradio-requirements>
+              ${requirements}
+            </gradio-requirements>
+
+            <gradio-file name="app.py" entrypoint>
+            ${appCode}
+            </gradio-file>
+
+            <gradio-file name="function.py" >
+            ${functionCode}
+            </gradio-file>
+      
+          </gradio-lite>
+        `;
+        const container = document.getElementById('gradio-container');
+        container.innerHTML = gradioHTML;
+      } catch (error) {
+        console.error('Error fetching notebook:', error);
+      }
+    }
+
+    fetchNotebook();
+  }, [notebookPath]);
 
   return (
     <div id="gradio-container">
       {/* Gradio Lite app will be injected here */}
     </div>
   );
-};
-
-export default GradioApp;
+}
