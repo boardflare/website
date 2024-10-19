@@ -8,7 +8,7 @@ import { Callout } from 'nextra/components'
 # Python for Excel
 
 <Callout type="warning" emoji="🧪">
-  **EXPERIMENTAL**:  Breaking changes are probable, without deprecation warnings.
+  **EXPERIMENTAL**:  Expect breaking changes.
 </Callout>
 
 <a href="https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview">
@@ -19,15 +19,15 @@ import { Callout } from 'nextra/components'
     />
 </a>
 
-## Overview
+## Python as a Function
 
-Runs Python code as a function so you can incorporate it into your formulas and LAMBDA functions.  For example, incorporating Python code in a LAMBDA function which is then named `MYFUNC` and called with `5, 3`:
+Run Python code as a function to power your formulas and LAMBDA functions, which is not possible with Excel's native `PY` feature.  It is as simple as the following:
     
 ```excel
-=LAMBDA(x, y, BOARDFLARE.PY("pyout = data1 * data2", x, y))
-=MYFUNC(5, 3)
+=LAMBDA(x, BOARDFLARE.RUNPY("arg1 + 2", x))
+=MYFUNC(5) = 7
 ```
-This enables you to build Excel custom functions using Python without needing to build a custom Excel add-in.
+This enables you to build custom functions using Python without building a custom Excel add-in.
 
 ## Features
 
@@ -36,10 +36,10 @@ Some key differences compared to the native [Python in Excel](https://support.mi
 ✅ Use as a function in formulas and LAMBDAs.<br/>
 🆓 Free add-in, no Office 365 license required.<br/>
 🌐 Works in Excel for web as well as desktop.<br/>
-☁️ Runtime has network access for API calls (with CORS).<br/>
+☁️ Runtime has network access for API calls (need CORS).<br/>
 📦 Import custom packages (pure Python only).<br/>
 🔒 Runs locally, so no data is shared outside Excel.<br/>
-➡️ Code can be centralized and loaded from a URL.<br/>
+➡️ Code can be loaded from a URL.<br/>
 🚀 Performance is only limited by your CPU.<br/>
 
 ## Python Runtime
@@ -52,147 +52,121 @@ Any output to `stdout` or `stderr` is displayed in the Console area of the add-i
 
 Pyodide includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, which means there is a Python wheel that ends with `-py3-none-any.whl`, e.g. `beautifulsoup4-4.12.3-py3-none-any.whl`.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work, but double-check the wheel.
 
-You do not need to install packages, just import them in your code.  Your code will be scanned for imports and any found will be handled for you using `micropip` in the background and the package will be downloaded if needed from PyPI.  If you try to import a package for which there is not a pure Python wheel available on PyPI, an error will be thrown.
+You do not need to install packages, just import them in your code.  Your code will be scanned for imports and any found will be handled for you using `micropip` in the background and the package will be downloaded if needed from PyPI.  If you try to import an external package (not part of the Python standard library or one of the built-in packages) for which there is not a pure Python wheel available on PyPI, an error will be thrown.
 
-## Loading Code
+### Loading Code
 
-Code can be loaded from a URL, which is useful for sharing code between workbooks and version control.  This is done by passing the URL as the code argument to the `PY` function as explained further below.  Code can only be loaded from a URL if it is served over HTTPS and has CORS headers due to browser security restrictions, since add-ins run in a browser even in desktop Excel.
+Code can be loaded from a URL, which is useful for sharing code between workbooks and version control.  This is done by passing the URL as the code argument to the `RUNPY` function as explained further below, which must end in `.py` or `.ipynb`.  If it is an `.ipynb` file, the code will be extracted from the code cell in the notebook with a `function` tag.  Adding tags to code cells varies by Jupyter implementation in VS Code, Notebooks, JupyterLab, etc.
 
-A [GitHub Gist](https://gist.github.com/) or file in a public GitHub repo both add CORS headers to raw links so will work. Make sure you click on the raw button in the Gist to get a URL that goes directly to your code [like this](https://gist.githubusercontent.com/bolleman/14e68b8d6a6e2897ef5f70dbd28ea7e3/raw/ce32551dd5df578371d70db563459d450921f13b/emails.py).
+Code can only be loaded from a URL if it is served over HTTPS and has CORS headers due to browser security restrictions, since add-ins run in a browser environment even in desktop Excel.  A [GitHub Gists](https://gist.github.com/) or files in public GitHub repos both have CORS headers to raw links so will work. Make sure you click on the raw button to get a URL that goes directly to your raw code.  We plan to add a feature in the future to enable users to share and load code from OneDrive or SharePoint using their credentials, similar to how [Office Scripts](https://learn.microsoft.com/en-us/office/dev/scripts/overview/excel) currently work.
 
-We plan to add a feature in the future to enable users to load code from OneDrive or SharePoint using their credentials, similar to how [Office Scripts](https://learn.microsoft.com/en-us/office/dev/scripts/overview/excel) work.
+## RUNPY Function
 
-## Functions
+See our [example workbook](https://1drv.ms/x/s!AmvHMvGKbZDOibEu75MVo8mvZqbAkg?e=XRMdBI) for usage.
 
-Functions are accessed in the `BOARDFLARE` namespace (e.g. `=BOARDFLARE.PY(code, [data1])`).  See our [example workbook](https://1drv.ms/x/s!AmvHMvGKbZDOibEu75MVo8mvZqbAkg?e=XRMdBI) for usage.
-
-### PY
-
-The `PY` function executes Python code with optional repeating **scalar** arguments `data1, data2, ...` which are assigned to global variables and returns a **scalar** (e.g. 5 in a single cell).
+The `RUNPY` function executes Python code and returns the result.  Optional positional arguments `arg1, arg2, ...` (similar to Python *args) are set as globals to pass as arguments of your Python function.
 
 ```excel
-=BOARDFLARE.PY(code, [data1])
+=BOARDFLARE.RUNPY(code, [arg1])
 ```
 
-| Argument | Type   | Optional | Description |
-|----------|--------|----------|-------------|
-| code     | string | No       | Python code, or URL to code, e.g. `https://foo.com/code.py`.  Python code must assign global variable `pyout` with a **scalar** of type `int, float, bool, or str`. |
-| data1    | number, string, boolean | Yes       | Repeating argument that will set global **scalar** variables `data1, data2, ..` which you can then reference in your code to pass in data. |
+For example, if the following Python code is stored in cell `A1`:
 
-A simple example is as follows:
+```python
+def add(a, b):
+  return a + b
+add(arg1,arg2)
+```
+
+You can run this code and pass the arguments `arg1 = 2`, `arg2 = 3` as follows:
 
 ```excel
-=BOARDFLARE.PY("pyout = data1 * data2", 5, 3)
-```
-This sets global variables `data1 = 5 ; data2 = 3`, evaluates to `pyout = 15`, and returns `15` in a single cell.
-
-Or loading from URL:
-
-```excel
-=BOARDFLARE.PY("https://foo.com/code.py", 5, 3)
-```
-where `mycode.py` contains the same code as above.  Note that the URL must be served over HTTPS.
-
-You could assign serialized arrays (e.g. using `ARRAYTOTEXT`) to `data1, data2, ..` and return a serialized array which you deserialize in Excel, but a simpler approach is to use the `PY.ARR` function below which natively handles arrays.
-
-### PY.ARR
-
-The `PY.ARR` function is the same as `PY` except that it takes arrays for `data1, data2, ...` and outputs an array result to Excel.  Remember that **an array variable in Excel is always a 2D array, or matrix**, even if it represents a single row or column, or even a single cell.  Excel custom functions use the term **matrix** instead of array to help clarify this, and that is what we will do here also.
-
-```excel
-=BOARDFLARE.PY.ARR(code, [data1])
+=BOARDFLARE.RUNPY(A1,2,3)
 ```
 
-| Argument | Type   | Optional | Description |
-|----------|--------|----------|-------------|
-| code     | string | No       | Python code, or URL to code, e.g. `https://foo.com/code.py`.  Python code must assign global variable `pyout` with an **matrix** of elements of type `int, float, bool, or str`. |
-| data1    | array | Yes       | Repeating argument that will set global **matrix** variables `data1, data2, ..`. Values can be a range `A2:A3`, array constant `{2,3}`, or a function that returns an array. | 
+### Arguments
 
-You could use `PY.ARR` for scalars, but since everything is handled as a matrix, it can be a bit cumbersome.  Let's implement the previous example using `PY.ARR`:
-    
-```excel
-=BOARDFLARE.PY.ARR("pyout = [[data1[0][0] * data2[0][0]]]", {5}, {3})
+| Argument | Type            | Optional | Description                                                                |
+|----------|-----------------|----------|----------------------------------------------------------------------------|
+| code     | string          | No       | Python code text, or URL to code, e.g. `https://gist.github.com/code.py`.  |
+| arg1     | scalar or array | Yes      | Sets globals `arg1, arg2, ..` to pass in data.                             |
+
+The table below shows how values for `arg1, arg2, ..` are converted from Excel to Python types:
+
+| Excel Type | Example    | Python Type | Notes                             |
+|------------|------------|-------------|-----------------------------------|
+| Number     | 42         | int         |                                   |
+| Number     | 3.14       | float       |                                   |
+| String     | "hello"    | str         |                                   |
+| Boolean    | TRUE       | bool        |                                   |
+| Array      | `{1, 2, 3}`| DataFrame   | An array constant                 |
+| Array      | A1:B2      | DataFrame   | A range of cells in an Excel sheet|
+
+Arrays are converted to a pandas DataFrame without headers.
+
+### Return Values
+
+The value of the last expression in your Python code is returned as the result of the `BOARDFLARE.RUNPY` function, similar to a Jupyter notebook cell, or Excel's PY.  A good practice is to define a function and then call that function on the last line.  For example, in the following code returns the sum of the arguments:
+
+```python
+# Using BOARDFLARE.RUNPY
+def add(a, b):
+  return a + b
+add(arg1,arg2)
 ```
 
-See what we mean?  But for anything involving arrays, `PY.ARR` is the way to go.  Here's a simple example that takes a row array and returns a single cell:
+The value of this Python expression must be one of those in the table below, which will be converted to the corresponding Excel types.
 
-```excel
-=BOARDFLARE.PY.ARR("total = sum(data1[0]); pyout = [[total]]", {1,2})
-```
-This sets global `data1 = [[1,2]]`, so `pyout = [[3]]`, which outputs `3` in a single cell in Excel.
+| Python Type | Example    | Excel Type |
+|-------------|------------|------------|
+| int         | 42         | Number     |
+| float       | 3.14       | Number     |
+| str         | "hello"    | String     |
+| bool        | True       | Boolean    |
+| 2D list (Matrix)    | [[1, 2], [3, 4]] | Array |
+| 2D list (Column Vector) | [[1], [2], [3]] | Array |
+| 2D list (Row Vector) | [[1, 2, 3]] | Array |
 
-Or using numpy and returning a row:
+Other Python types such as Numpy arrays, Pandas DataFrames, dicts, tuples, etc., are not supported and will result in an error.  If you need to return a more complex data structure for use in another function, you can convert it to a string using `json.dumps`.
 
-```excel
-=BOARDFLARE.PY.ARR("import numpy as np; total = np.sum(data1[0]).item(); pyout = [['Sales', total]]", {1,2})
-```
-This sets global `data1 = [[1,2]]`, so `pyout = [['Sales', 3]]`, which outputs a row with `Sales` in one cell and `3` in the next cell.
+### Excel PY Compatibility
 
-You can also load code from URL:
+While `RUNPY` is intended to address a different use-case than Excel's `PY` function, we have tried to keep them as similar as possible so that you can re-use code between them.  Specifically, we also convert arrays to pandas DataFrames without headers, and the last expression in the code is the return value.  `RUNPY` return values are restricted to scalars and lists only.  If imported packages are available in both environments, the same code should work in both, with the only difference being how the arguments are passed, as shown in the highlighted lines below.
 
-```excel
-=BOARDFLARE.PY.ARR("https://foo.com/code.py", {1,2})
-```
-### PY.BETA
-
-`PY.BETA` has been updated to handle scalars the same as `PY` and arrays the same as `PY.ARR`.  It fundamentally operates on arrays so it can do both, but it has helpers to convert scalars to arrays and arrays to scalars so this is less tedious for the developer.  The plan is this code will replace the current `PY` function, and `PY.ARR` will be deprecated.
-
-On the input side, the conversion rules are outlined in the table below:
-
-| Input Type       | Conversion Rule             | Raw Input            | Global                |
-|------------------|-----------------------------|----------------------|-----------------------|
-| Cell             | Converted to a scalar       | `[[5]]`              | `5`                   |
-| Column           | Flattened to a simple array | `[[1], [2]]`         | `[1, 2]`              |
-| Row              | Flattened to a simple array | `[[1, 2]]`           | `[1, 2]`              |
-| Matrix (m x n)   | Untouched                   | `[[1, 2], [3, 4]]`   | `[[1, 2], [3, 4]]`    |
-
-So if you select a single cell for `data1`, instead of having to access the scalar with `data1[0][0]`, it will be converted to a scalar for you.  Similarly, if you select a column or a row, it will be flattened to a simple array.  If you need to know whether a simple array came from a column or row, you can access the raw input on the `data` global variable, which is an array of elements representing `data1`, `data2`, etc.
-
-On the output side, it is the opposite, as follows:
-
-| Output Type | Conversion Rule            | pyout               | Array Value to Excel       |
-|-------------|-----------------------------|---------------------|----------------------------|
-| Scalar      | Converted to an array cell  | `5`                 | `[[5]]`                    |
-| Array       | Converted to a row          | `[1, 2]`            | `[[1, 2]]`                 |
-| Matrix      | Untouched                   | `[[1, 2], [3, 4]]`  | `[[1, 2], [3, 4]]`         |
-
-So the clumsy example given earlier of trying to multiply two scalars:
-
-```excel
-=BOARDFLARE.PY.ARR("pyout = [[data1[0][0] * data2[0][0]]]", {5}, {3})
+```python {4}
+# Using BOARDFLARE.RUNPY
+def add(a, b):
+  return a + b
+add(arg1,arg2)
 ```
 
-Could be written as:
 
-```excel
-=BOARDFLARE.PY.BETA("pyout = data1 * data2", 5, 3)
+```python {4}
+# Using Excel's PY
+def add(a, b):
+  return a + b
+add(xl("A2"),xl("B2"))
 ```
 
-Or you could do the following, which shows how `data1`, `data2` row matrices have been flattened to simple arrays, and the resulting python list has been converted to a row matrix Excel is expecting, keeping your Python code simpler to write:
+`RUNPY` takes arguments like a regular Excel function which enables you to use it Excel formulas, whereas Excel's `PY` is more of an interactive environment which enables you to reference Excel cells directly.  Each approach has its own strengths and weaknesses, and it is convenient to be able to easily move code between them as needed with minimal changes.
 
-```excel
-=BOARDFLARE.PY.BETA("pyout = [a * b for a, b in zip(data1, data2)]", {5,3}, {3,4})
-={15, 12}
-```
+We decided to change our main function name to `RUNPY` to avoid confusion with Excel's `PY` function.
 
-So the best of both worlds in one function!  Please let us know if you have any [feedback](/company/support) on this function.
+## Use Cases
 
-## Applications
+Some key use-cases we see are as follows:
 
-Some example applications are as follows:
+1. **Python-powered LAMBDAs**: Named LAMBDA functions enable the creation highly-customized custom functions, but they are limited by what can be done with Excel functions.  `BOARDFLARE.RUNPY` allows Python to be used inside LAMBDA functions enabling them to be as powerful as custom functions which previously required building an Excel add-in.  We plan to fully explote this capability by creating a library of Python functions and LAMBDA functions which consume them for various use-cases.
 
-1. **Data extraction**: Python has several libraries available for extracting data from strings.  For example, if you load HTML using PowerQuery, you could parse it using [BeautifulSoup](https://pypi.org/project/beautifulsoup4/).
+2. **Local Processing**: Often local processing is preferred for privacy, peformance, or cost reasons.  In addition to Python running locally, we plan to enable Python code to use local AI models similar to those used in our other add-ins (e.g. Local GPT, Translate, etc.).
 
-2. **Data manipulation**: [pandas](https://pandas.pydata.org/) is a popular library for manipulating tabular data and might be a good alternative to PowerQuery for some tasks.
-
-3. **Using AI models**: AI models can be called via APIs with complex prompts and agentic patterns using packages like [LangChain](https://pypi.org/project/langchain/).
-
-4. **Calling APIs**:  For example, let's say you're trying to call a REST API and manipulate the JSON response into something useful.
+3. **Calling APIs**:  There are many instances where calling a REST API (e.g. using a LLM from OpenAI) or scraping a web page would be useful.
 
 ## Changelog
 
-1.0.5 - 2024-10-18
-- `PY.BETA` handles both arrays and scalars with auto-conversion helpers.
+1.0.5 - 2024-10-19
+- `RUNPY` is a new function which handles both arrays and scalars similar to the `PY` function in Excel.
+- `PY` and `PY.ARR` functions have been deprecated and will be removed on Nov 1, 2024.
 - Beta version of Jupyterlite.
 
 1.0.4 - 2024-09-25
@@ -211,4 +185,4 @@ Some example applications are as follows:
 - Added `PY.ARR` function to handle arrays natively.
 
 1.0.0 - 2024-09-10
-- Initial release.  
+- Initial release.
