@@ -1,3 +1,3 @@
 export default {
-  "fuzzy_distance": "fuzzy_distance",
+  "text_distance": "text_distance",
 }

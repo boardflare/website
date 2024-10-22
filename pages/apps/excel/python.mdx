@@ -1,6 +1,5 @@
 ---
 title: Python for Excel
-icon: python.png
 ---
 
 import { Callout } from 'nextra/components'
@@ -46,19 +45,24 @@ Some key differences compared to the native [Python in Excel](https://support.mi
 
 [Pyodide](https://pyodide.org/en/stable/index.html) is the Python runtime, which is based on [WebAssembly](https://webassembly.org/) running in the browser used by Excel desktop and web to host add-ins.  This is currently running Python 3.12, but has limitations as discussed in the [Pyodide documentation](https://pyodide.org/en/stable/usage/wasm-constraints.html).
 
+### STDOUT and Globals
+
 Any output to `stdout` or `stderr` is displayed in the Console area of the add-in task pane. This is useful for debugging your code, and also for displaying intermediate results of long-running operations such as functions that are processing large input arrays. Global variables are used to pass data to your code, as discussed in more detail below.  Global variables are cleared after each function invocation, so no state is maintained between calls.
 
-## Custom Packages
+### Custom Packages
 
 Pyodide includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, which means there is a Python wheel that ends with `-py3-none-any.whl`, e.g. `beautifulsoup4-4.12.3-py3-none-any.whl`.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work, but double-check the wheel.
 
 You do not need to install packages, just import them in your code.  Your code will be scanned for imports and any found will be handled for you using `micropip` in the background and the package will be downloaded if needed from PyPI.  If you try to import an external package (not part of the Python standard library or one of the built-in packages) for which there is not a pure Python wheel available on PyPI, an error will be thrown.
 
-### Loading Code
+### Remote Code
 
-Code can be loaded from a URL, which is useful for sharing code between workbooks and version control.  This is done by passing the URL as the code argument to the `RUNPY` function as explained further below, which must end in `.py` or `.ipynb`.  If it is an `.ipynb` file, the code will be extracted from the code cell in the notebook with a `function` tag.  Adding tags to code cells varies by Jupyter implementation in VS Code, Notebooks, JupyterLab, etc.
+If a URL starting with `https://` is provided for the code string, it will be fetched and the text contents used as the code.  Excel add-ins run in a browser instance, even for desktop apps, so be aware of the following restrictions when loading code from a URL:
 
-Code can only be loaded from a URL if it is served over HTTPS and has CORS headers due to browser security restrictions, since add-ins run in a browser environment even in desktop Excel.  A [GitHub Gists](https://gist.github.com/) or files in public GitHub repos both have CORS headers to raw links so will work. Make sure you click on the raw button to get a URL that goes directly to your raw code.  We plan to add a feature in the future to enable users to share and load code from OneDrive or SharePoint using their credentials, similar to how [Office Scripts](https://learn.microsoft.com/en-us/office/dev/scripts/overview/excel) currently work.
+- `http://` links will not work due to browser security restrictions.
+- The server must respond with a CORS header to allow the request.  This is the case for GitHub Gists and raw links to files in public GitHub repos.  Note that GitHub Gist raw links change each time you edit the file and create a new version.
+
+Public links to files in OneDrive or SharePoint will not work due to lack of CORS headers, but we plan to add a feature to enable users to share and load code from OneDrive or SharePoint, similar to how [Office Scripts](https://learn.microsoft.com/en-us/office/dev/scripts/overview/excel) currently work.
 
 ## RUNPY Function
 
@@ -89,9 +93,9 @@ You can run this code and pass the arguments `arg1 = 2`, `arg2 = 3` as follows:
 | Argument | Type            | Optional | Description                                                                |
 |----------|-----------------|----------|----------------------------------------------------------------------------|
 | code     | string          | No       | Python code text, or URL to code, e.g. `https://gist.github.com/code.py`.  |
-| arg1     | scalar or array | Yes      | Sets globals `arg1, arg2, ..` to pass in data.                             |
+| arg1     | scalar or array | Yes      | Repeating argument that sets globals `arg1, arg2, ..` to pass in data.                             |
 
-The table below shows how values for `arg1, arg2, ..` are converted from Excel to Python types:
+The table below shows how argument values for `arg1, arg2, ..` are converted from Excel to Python types:
 
 | Excel Type | Example    | Python Type | Notes                             |
 |------------|------------|-------------|-----------------------------------|
@@ -106,67 +110,73 @@ Arrays are converted to a pandas DataFrame without headers.
 
 ### Return Values
 
-The value of the last expression in your Python code is returned as the result of the `BOARDFLARE.RUNPY` function, similar to a Jupyter notebook cell, or Excel's PY.  A good practice is to define a function and then call that function on the last line.  For example, in the following code returns the sum of the arguments:
+The value of the last expression in your Python code is returned by the `BOARDFLARE.RUNPY` function, similar to a Jupyter notebook cell, or Excel's `PY`.  A good practice is to wrap your code in a function, and then call that function on the last line.  For example, the following code returns the sum of the arguments:
 
 ```python
-# Using BOARDFLARE.RUNPY
 def add(a, b):
   return a + b
+
 add(arg1,arg2)
 ```
 
-The value of this Python expression must be one of those in the table below, which will be converted to the corresponding Excel types.
+The last expression must return a type in the table below, which will be converted to the corresponding Excel type.
 
-| Python Type | Example    | Excel Type |
-|-------------|------------|------------|
-| int         | 42         | Number     |
-| float       | 3.14       | Number     |
-| str         | "hello"    | String     |
-| bool        | True       | Boolean    |
-| 2D list (Matrix)    | [[1, 2], [3, 4]] | Array |
-| 2D list (Column Vector) | [[1], [2], [3]] | Array |
-| 2D list (Row Vector) | [[1, 2, 3]] | Array |
+| Python Type             | Example            | Excel Type |
+|-------------------------|--------------------|------------|
+| int                     | 42                 | Number     |
+| float                   | 3.14               | Number     |
+| str                     | "hello"            | String     |
+| bool                    | True               | Boolean    |
+| 2D list (Matrix)        | [[1, 2], [3, 4]]   | Array      |
+| 2D list (Column Vector) | [[1], [2], [3]]    | Array      |
+| 2D list (Row Vector)    | [[1, 2, 3]]        | Array      |
 
-Other Python types such as Numpy arrays, Pandas DataFrames, dicts, tuples, etc., are not supported and will result in an error.  If you need to return a more complex data structure for use in another function, you can convert it to a string using `json.dumps`.
+If the last expression returns another Python type such as Numpy array, Pandas DataFrame, dict, tuple, etc., it will throw an error.  If you need to return a more complex data structure for use in another function, you can convert it to a JSON string using `json.dumps`.
 
 ### Excel PY Compatibility
 
-While `RUNPY` is intended to address a different use-case than Excel's `PY` function, we have tried to keep them as similar as possible so that you can re-use code between them.  Specifically, we also convert arrays to pandas DataFrames without headers, and the last expression in the code is the return value.  `RUNPY` return values are restricted to scalars and lists only.  If imported packages are available in both environments, the same code should work in both, with the only difference being how the arguments are passed, as shown in the highlighted lines below.
+`RUNPY` takes arguments like a regular Excel function which enables you to use it Excel formulas, whereas Excel's `PY` is more of an interactive environment which enables you to reference Excel cells directly.  Each approach is useful for different use-cases, so it would be convenient to be able to use the same code in either.
 
-```python {4}
+To help achieve this, `RUNPY` also does the following:
+- converts Excel arrays to pandas DataFrames without headers
+- returns the value of the last expression in the code.  
+
+If imported packages are available in both environments, the same code should work in both, with the only difference being how the arguments are passed to the Python function, as shown in the highlighted lines below.
+
+```python {5}
 # Using BOARDFLARE.RUNPY
 def add(a, b):
   return a + b
+
 add(arg1,arg2)
 ```
 
 
-```python {4}
+```python {5}
 # Using Excel's PY
 def add(a, b):
   return a + b
+
 add(xl("A2"),xl("B2"))
 ```
 
-`RUNPY` takes arguments like a regular Excel function which enables you to use it Excel formulas, whereas Excel's `PY` is more of an interactive environment which enables you to reference Excel cells directly.  Each approach has its own strengths and weaknesses, and it is convenient to be able to easily move code between them as needed with minimal changes.
-
-We decided to change our main function name to `RUNPY` to avoid confusion with Excel's `PY` function.
+While maybe not our preferred development tool, the Excel `PY` can be a handy way for writing quick code snippets with syntax highlighting before moving code to `RUNPY` for use in Excel formulas.
 
 ## Use Cases
 
 Some key use-cases we see are as follows:
 
-1. **Python-powered LAMBDAs**: Named LAMBDA functions enable the creation highly-customized custom functions, but they are limited by what can be done with Excel functions.  `BOARDFLARE.RUNPY` allows Python to be used inside LAMBDA functions enabling them to be as powerful as custom functions which previously required building an Excel add-in.  We plan to fully explote this capability by creating a library of Python functions and LAMBDA functions which consume them for various use-cases.
+1. **Python-powered LAMBDAs**: `RUNPY` allows Python to be used inside LAMBDA functions enabling them to be as powerful as custom functions which previously required building an Excel add-in.  We plan to fully explote this capability by creating a library of Python functions and LAMBDA functions which consume them for various use-cases.
 
-2. **Local Processing**: Often local processing is preferred for privacy, peformance, or cost reasons.  In addition to Python running locally, we plan to enable Python code to use local AI models similar to those used in our other add-ins (e.g. Local GPT, Translate, etc.).
+2. **Local Processing**: Often local processing is preferred for privacy, peformance, or cost reasons.  In addition to Python running locally, we plan to enable Python code to use local AI models similar to those used in our other add-ins (e.g. Translate, etc.).
 
 3. **Calling APIs**:  There are many instances where calling a REST API (e.g. using a LLM from OpenAI) or scraping a web page would be useful.
 
 ## Changelog
 
-1.0.5 - 2024-10-19
-- `RUNPY` is a new function which handles both arrays and scalars similar to the `PY` function in Excel.
-- `PY` and `PY.ARR` functions have been deprecated and will be removed on Nov 1, 2024.
+1.0.5 - 2024-10-22
+- `RUNPY` is a new function which handles both arrays and scalars similar to the Excel's `PY`.
+- `PY` and `PY.ARR` functions have been deprecated and will be removed on Nov 1, 2024 to avoid confusion.
 - Beta version of Jupyterlite.
 
 1.0.4 - 2024-09-25

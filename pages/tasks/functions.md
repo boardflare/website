@@ -1,38 +1,52 @@
 # Functions
 
-Our functions for Excel are grouped by task categories (e.g. Text Analysis > Fuzzy Matching).  They are further organized by Python function (e.g. `fuzzy_distance`), and one or more Excel LAMBDA functions based on this function (e.g. `FUZZY.DIST.MATCH`), as explained further below.  This gives you the best of both worlds: the power of Python, and the ease of customization and simplicity of Excel LAMBDAs.
+Our functions for Excel are grouped by task categories (e.g. Text Analysis > Fuzzy Matching).  Each Python function (e.g. `text_distance`) has one or more example Excel LAMBDA functions based on this function (e.g. `FUZZY.DIST.MATCH`), as explained further below.  This gives you the best of both worlds: the power of Python, and the ease of customization and simplicity of Excel LAMBDAs.
 
 ## Python
 
-Python functions provide access to the vast array of Python libraries and can be run in Excel using either of the following tools:
+Python functions can be run in Excel using either [Boardflare's Python for Excel](/apps/excel/python) add-in or [Microsoft's Python in Excel](https://support.microsoft.com/en-us/office/introduction-to-python-in-excel-55643c2e-ff56-4168-b1ce-9428c8308545).  The main differences between the two are outlined in the table below:
 
-- [Boardflare's Python for Excel](/apps/excel/python) add-in.  The `BOARDFLARE.PY` function takes the Python code and data as separate arguments and then returns a result. For example, `BOARDFLARE.PY("text/fuzzy_distance.ipynb", data1, data2)` calls the [fuzzy_distance](/tasks/nlp/fuzzy-match/fuzzy_distance) function.
+| Feature            | `BOARDFLARE.RUNPY`                                      | Excel `PY`                                                                |
+|--------------------|---------------------------------------------------------|---------------------------------------------------------------------------|
+| Integration        | Excel function                                          | Special cell feature                                                      |
+| Usage              | Can be used in Excel formulas, such as LAMBDA functions | Interactive use, similar to Jupyter notebook.                             |
+| Data Reference     | Data passed as arguments to function                    | Cells are directly referenced in the Python code                          |
+| Example Use        | `=BOARDFLARE.RUNPY("arg1 + 2", A4)`                     | `=PY(arg1 = xl("A4"); arg1 + 2)`                                          |
+| Python Packages    | [Pyodide built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html) and external pure-python | [Anaconda distribution packages](https://support.microsoft.com/en-us/office/open-source-libraries-and-python-in-excel-c817c897-41db-40a1-b9f3-d5ffe6d1bf3e) only. |
+| Processing         | Local in Excel add-in browser runtime                   | Microsoft cloud                                                           |
+| Network Access     | Network access for API calls, web scraping              | No network access allowed                                                 |
+| Platforms          | Excel for web and desktop (Windows/Mac)                 | Excel desktop only                                                        |
+| Pricing            | Free for base features                                  | Requires Microsoft 365 subscription                                       |
 
-- [Microsoft's Python in Excel](https://support.microsoft.com/en-us/office/introduction-to-python-in-excel-55643c2e-ff56-4168-b1ce-9428c8308545) feature runs Python code in a special `PY` cell.  The cells containing your data are directly referenced in your Python code, e.g. `data1 = xl("F4")`
+Each tool has its own advantages and disadvantages depending on your use-case.  We have aligned the syntax of `BOARDFLARE.RUNPY` with the Excel `PY` cell feature to make it as easy as possible to re-use the same Python function code in either tool so you can choose the best tool for your needs.  For example, we also convert input arrays to pandas DataFrames by default, and return the last expression in the Python code as the result, just like the `PY` cell feature.
 
-Each tool for running Python in Excel has its own advantages and disadvantages, but one key difference is that `BOARDFLARE.PY` is a function which can be used in Excel formulas, such as a LAMBDA function, whereas Microsoft's `PY` is a feature of the cell itself and cannot.  We leverage this capability to create Excel LAMBDA functions which customize the Python functions for specific use-cases as discussed below.
+Due to differences in packages supported in each Python enviroment, not all functions can be used in both, but wherever possible we have tried to implement functions that can be used in both environments.
 
-## Excel LAMBDA
+One of the key features of `BOARDFLARE.RUNPY` is its ability to be used in Excel formulas, such as a LAMBDA function, as discussed below.
 
-For each of our Python functions, we typically provide several [Excel LAMBDA](https://support.microsoft.com/en-us/office/lambda-function-bd212d27-1cd1-4321-a34a-ccbf254b8b67) functions which extend the Python function to provide additional convenience features,  address specialized use-cases, or just simplify use for end-users.
+## LAMBDA
 
-For example, the Python `fuzzy_distance` function can be extended to create a `FUZZY.DIST.MATCH` LAMBDA function which uses the `jaccard` algorithm and only returns a match over a similarity of `0.9` as follows:
+For each Python functions that can be used in `BOARDFLARE.RUNPY`, we typically provide several [Excel LAMBDA](https://support.microsoft.com/en-us/office/lambda-function-bd212d27-1cd1-4321-a34a-ccbf254b8b67) functions which extend the Python function to provide additional convenience features,  address specialized use-cases, or just simplify use for end-users.
+
+For example, the Python `fuzzy_distance` function can be extended to create a `FUZZY.DIST.MATCH` LAMBDA function as follows:
 
 ```excel
-=LAMBDA(lookup_value, lookup_array, 
+=LAMBDA(lookup_value, lookup_array, [similarity_threshold], [algorithm],
     LET(
-        result, BOARDLARE.PY("text/fuzzy.ipynb", lookup_value, lookup_array, "jaccard"),
+        threshold, IF(ISOMITTED(similarity_threshold), 0.7, similarity_threshold),
+        algo, IF(ISOMITTED(algorithm), "jaccard", algorithm),
+        result, BOARDFLARE.RUNPY("text/fuzzy/text_distance.ipynb", lookup_value, lookup_array, algo),
         index, INDEX(result, 1),
         score, INDEX(result, 2),
-        IF(score >= 0.9, index, "No match")
+        IF(score >= threshold, index, "No match")
     )
 )
 ```
 
-This function can then be used as follows:
+This function can then be used as follows (e.g. assuming it is named `FUZZY.DIST.MATCH`):
 
 ```excel
 =FUZZY.DIST.MATCH(A1, B1:B10)
 ```
 
-To help reduce confusion, and in keeping with Python and Excel naming conventions, our Python function names are always lower case, e.g. `fuzzy_distance`, whereas Excel LAMBDA function names are always capitalized, e.g. `FUZZY.DIST.MATCH`.
+To help reduce confusion, and in keeping with Python and Excel naming conventions, our Python function names are always lower case, e.g. `text_distance`, whereas Excel LAMBDA function names are always capitalized, e.g. `FUZZY.DIST.MATCH`.

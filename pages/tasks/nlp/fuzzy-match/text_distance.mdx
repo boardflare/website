@@ -1,55 +1,54 @@
-import { Gradio } from '@/components/Gradio'
-
-# fuzzy_distance
+# text_distance
 
 Uses the Python [textdistance](https://github.com/life4/textdistance) library which implements edit (e.g. Levenshtein), token, sequence, and phonetic algorithms to calculate the similarity between two strings.
 
 ## Usage
 
-### BOARDFLARE.PY
+### BOARDFLARE.RUNPY
 
-`fuzzy_distance` compares a `lookup_value` with a `lookup_array` and returns the index of the closest match and a normalized similarity score between 0 and 1 (higher is more similar).
-
-```excel
-=BOARDFLARE.PY("text/fuzzy_distance.ipynb", lookup_value, lookup_array, algorithm)
-```
-
-| Argument       | Positional | Type   | Description                                                   |
-|----------------|------------|--------|---------------------------------------------------------------|
-| `lookup_value` | data1      | string | A single string to compare against the list of strings.       |
-| `lookup_array` | data2      | list   | A list of strings to compare with the `lookup_value`.         |
-| `algorithm`    | data3      | string | Specifies the algorithm to use for similarity calculation.  See the available algorithms [below](#algorithms).   |
-
-Returns a list with two elements:
-
-| Return Value      | Type   | Description                                                                 |
-|-------------------|--------|-----------------------------------------------------------------------------|
-| Index             | int    | Index of the closest matching string in the `lookup_array` to the `lookup_value`. |
-| Similarity        | float  | The similarity score between 0 and 1, where a higher score indicates more similarity. The similarity score is only a relative measure within a single algorithm. E.g. a similarity of 0.7 with Jaccard could be more similar than 0.8 with Levenshtein|
-
-For example, to calculate the similarity between the string `"example"` and a list of strings `"samples", "exemplar", "sample", "examples"` using the Jaccard algorithm, you would use the following formula, which returns `1, 0.875`, which is `exemplar`.
+`text_distance` compares `lookup_value(s)` with a `lookup_array` and returns the index of the closest match and a normalized similarity score (within a given algorithm) between 0 and 1 (higher is more similar).  It is basically a fuzzy matching version Excel's `XMATCH` function.
 
 ```excel
-=BOARDFLARE.PY("text/fuzzy_distance.ipynb", "example", {"samples", "exemplar", "examples"}, "jaccard")
+=BOARDFLARE.RUNPY("text/fuzzy/text_distance.ipynb", lookup_value(s), lookup_array, algorithm)
 ```
-### Native Excel PY
 
-This function cannot be used with Microsoft's Python in Excel as it requires the `textdistance` library which is not available in the Microsoft Python environment.  You could implement something similar using the [thefuzz](https://github.com/seatgeek/thefuzz) library which is available, but only supports the `levenshtein` algorithm.
+| Argument         | Positional | Type            | Description                                                                 |
+|------------------|------------|-----------------|-----------------------------------------------------------------------------|
+| `lookup_value(s)`| arg1       | string or list  | String(s) to compare with the strings in the `lookup_array`.                |
+| `lookup_array`   | arg2       | list            | A list of strings to compare with the `lookup_value`.                       |
+| `algorithm`      | arg3       | string          | Specifies the [algorithm](#algorithms) to use for similarity calculation.   |
 
-## Excel LAMBDAs
+Returns an array with two columns:
+
+| Return Value | Type  | Description                                                                                  |
+|--------------|-------|----------------------------------------------------------------------------------------------|
+| Index        | int   | Index of the closest matching string in the `lookup_array` to each `lookup_value`.           |
+| Similarity   | float | The similarity score between 0 and 1, where a higher score indicates more similarity.        |
+
+For example, to calculate the similarity between the string `"example"` and an array constant `{"samples", "exemplar", "sample", "examples"}` using the Jaccard algorithm, you would use the following formula, which returns `1, 0.875`, which is `exemplar`.
+
+```excel
+=BOARDFLARE.RUNPY("text/fuzzy/text_distance.ipynb", "example", {"samples", "exemplar", "examples"}, "jaccard")
+```
+
+### Excel PY
+
+The `textdistance` package is not available in the Excel Python environment.
+
+## LAMBDAs
 
 These functions are similar to the `XMATCH` and `XLOOKUP` functions in Excel, but with the added ability to set a similarity threshold.
 
 ### FUZZY.DIST.MATCH
 
-Provides features similar to `XMATCH`, but with the ability to set a similarity threshold and algorithm. The default algorithm is `levenshtein` and similarity_threshold is `0.7`.
+Provides features similar to `XMATCH`, but with the ability to set a similarity threshold and algorithm. The default algorithm is `jaccard` and similarity_threshold is `0.7`.
 
 ```excel
 =LAMBDA(lookup_value, lookup_array, [similarity_threshold], [algorithm],
     LET(
         threshold, IF(ISOMITTED(similarity_threshold), 0.7, similarity_threshold),
-        algo, IF(ISOMITTED(algorithm), "levenshtein", algorithm),
-        result, BOARDLARE.PY("text/fuzzy_distance.ipynb", lookup_value, lookup_array, algo),
+        algo, IF(ISOMITTED(algorithm), "jaccard", algorithm),
+        result, BOARDFLARE.RUNPY("text/fuzzy/text_distance.ipynb", lookup_value, lookup_array, algo),
         index, INDEX(result, 1),
         score, INDEX(result, 2),
         IF(score >= threshold, index, "No match")
@@ -57,7 +56,7 @@ Provides features similar to `XMATCH`, but with the ability to set a similarity 
 )
 
 ```excel
-=FUZZY.DIST.MATCH(A1, B1:B10, 0.8,"jaccard")
+=FUZZY.DIST.MATCH(A1, B1:B10, 0.8)
 ```
 
 ### FUZZY.DIST.LOOKUP
@@ -68,8 +67,8 @@ Provides features similar to `XLOOKUP`, with the ability to return a row from a 
 =LAMBDA(lookup_value, lookup_array, return_array, [similarity_threshold], [algorithm],
     LET(
         threshold, IF(ISOMITTED(similarity_threshold), 0.7, similarity_threshold),
-        algo, IF(ISOMITTED(algorithm), "levenshtein", algorithm),
-        result, BOARDLARE.PY("text/fuzzy.ipynb", lookup_value, lookup_array, algo),
+        algo, IF(ISOMITTED(algorithm), "jaccard", algorithm),
+        result, BOARDFLARE.RUNPY("text/fuzzy/text_distance.ipynb", lookup_value, lookup_array, algo),
         index, INDEX(result, 1),
         score, INDEX(result, 2),
         IF(score >= threshold, INDEX(return_array, index), "No match")
@@ -78,7 +77,7 @@ Provides features similar to `XLOOKUP`, with the ability to return a row from a 
 ```
 
 ```excel
-=FUZZY.DIST.LOOKUP(A1, B1:B10, C1:E10, 0.8,"jaccard")
+=FUZZY.DIST.LOOKUP(A1, B1:B10, C1:E10, 0.8, "jaccard")
 ```
 
 ## Similarity Algorithms
@@ -128,7 +127,3 @@ The similarity algorithms available in `textdistance` are given in the tables be
 |------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
 | [`mra`](https://en.wikipedia.org/wiki/Match_rating_approach)                 | Measures similarity using the MRA algorithm                                 |
 | [`editex`](https://anhaidgroup.github.io/py_stringmatching/v0.3.x/Editex.html) | Measures similarity using the Editex algorithm                              |                              |
-
-## Demo
-
-<Gradio notebookPath="text/fuzzy_distance.ipynb" />
