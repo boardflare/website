@@ -162,6 +162,38 @@ add(xl("A2"),xl("B2"))
 
 While maybe not our preferred development tool, the Excel `PY` can be a handy way for writing quick code snippets with syntax highlighting before moving code to `RUNPY` for use in Excel formulas.
 
+## Examples
+
+Here are some simple examples to get you started:
+
+```python
+# Function to convert inches to mm.
+def inches_to_mm(inches):
+    return inches * 25.4
+
+inches_to_mm(arg1)
+```
+
+```python
+# Function to calculate the area of a circle.
+import math
+
+def circle_area(radius):
+    return math.pi * radius ** 2
+
+circle_area(arg1)
+```
+
+```python
+# Function to extract email address from a string.
+import re
+
+def extract_email(text):
+    return re.search(r'[\w\.-]+@[\w\.-]+', text).group(0)
+
+extract_email(arg1)
+```
+
 ## Use Cases
 
 Some key use-cases we see are as follows:
