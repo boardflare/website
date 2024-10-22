@@ -97,14 +97,14 @@ You can run this code and pass the arguments `arg1 = 2`, `arg2 = 3` as follows:
 
 The table below shows how argument values for `arg1, arg2, ..` are converted from Excel to Python types:
 
-| Excel Type | Example    | Python Type | Notes                             |
-|------------|------------|-------------|-----------------------------------|
-| Number     | 42         | int         |                                   |
-| Number     | 3.14       | float       |                                   |
-| String     | "hello"    | str         |                                   |
-| Boolean    | TRUE       | bool        |                                   |
-| Array      | `{1, 2, 3}`| DataFrame   | An array constant                 |
-| Array      | A1:B2      | DataFrame   | A range of cells in an Excel sheet|
+| Excel Type | Example    | Python Type |
+|------------|------------|-------------|
+| Number     | 42         | int         |
+| Number     | 3.14       | float       |
+| String     | "hello"    | str         |
+| Boolean    | TRUE       | bool        |
+| Array      | `{1, 2, 3}`| DataFrame   |
+| Array      | A1:B2      | DataFrame   |
 
 Arrays are converted to a pandas DataFrame without headers.
 
@@ -119,7 +119,7 @@ def add(a, b):
 add(arg1,arg2)
 ```
 
-The last expression must return a type in the table below, which will be converted to the corresponding Excel type.
+The last expression must return a Python type in the table below, which will be converted to the corresponding Excel type.
 
 | Python Type             | Example            | Excel Type |
 |-------------------------|--------------------|------------|
@@ -166,18 +166,17 @@ While maybe not our preferred development tool, the Excel `PY` can be a handy wa
 
 Some key use-cases we see are as follows:
 
-1. **Python-powered LAMBDAs**: `RUNPY` allows Python to be used inside LAMBDA functions enabling them to be as powerful as custom functions which previously required building an Excel add-in.  We plan to fully explote this capability by creating a library of Python functions and LAMBDA functions which consume them for various use-cases.
+1. **Python-powered LAMBDAs**: `RUNPY` allows Python to be used inside LAMBDA functions enabling them to be as powerful as custom functions which previously required building an Excel add-in.
 
-2. **Local Processing**: Often local processing is preferred for privacy, peformance, or cost reasons.  In addition to Python running locally, we plan to enable Python code to use local AI models similar to those used in our other add-ins (e.g. Translate, etc.).
+2. **Local Processing**: Often local processing is preferred for privacy, peformance, or cost reasons.
 
-3. **Calling APIs**:  There are many instances where calling a REST API (e.g. using a LLM from OpenAI) or scraping a web page would be useful.
+3. **Accessing APIs**:  e.g. using LLM from OpenAI, loading or pushing data where Power Query is not suitable, etc.
 
 ## Changelog
 
 1.0.5 - 2024-10-22
 - `RUNPY` is a new function which handles both arrays and scalars similar to the Excel's `PY`.
-- `PY` and `PY.ARR` functions have been deprecated and will be removed on Nov 1, 2024 to avoid confusion.
-- Beta version of Jupyterlite.
+- `PY` and `PY.ARR` functions have been deprecated and will be removed on Dec 1, 2024 to avoid confusion.
 
 1.0.4 - 2024-09-25
 - Added ability to load code from URL to `PY` and `PY.ARR` functions.  `PY.BETA` now has no new features, but will be where new features are tested before moving to `PY` and `PY.ARR`.
