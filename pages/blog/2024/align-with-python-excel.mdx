@@ -83,7 +83,7 @@ text_distance(arg1, arg2, arg3)
 
 ## LAMBDA functions using Python
 
-One of the great features of `BOARDFLARE.RUNPY` is that it can be used to build LAMBDA functions that can be used in Excel formulas.  For example, the `text_distance` function can be used to build a `FUZZY.DIST.MATCH` function that is similar to Excel's `XMATCH` function, but with the added ability to set a similarity threshold.  Here's the code:
+One of the great features of `BOARDFLARE.RUNPY` is that it can be used to build LAMBDA functions that can be used in Excel formulas. For example, the `text_distance` function can be used to build a `FUZZYMATCH.TD` function that is similar to Excel's `XMATCH` function, but with the added ability to set a similarity threshold. Here's the code:
 
 ```excel
 =LAMBDA(lookup_value, lookup_array, [similarity_threshold], [algorithm],
@@ -101,10 +101,10 @@ One of the great features of `BOARDFLARE.RUNPY` is that it can be used to build 
 This function can be named and used in Excel formulas as follows:
 
 ```excel
-=FUZZY.DIST.MATCH(A1, B1:B10, 0.8)
+=FUZZYMATCH.TD(A1, B1:B10, 0.8)
 ```
 
-Or, a `FUZZY.DIST.LOOKUP` function can be built that is similar to Excel's `XLOOKUP` function, but with the added ability to return a row from a `return_array`.  Here's the code:
+Or, a `FUZZYLOOKUP.TD` function can be built that is similar to Excel's `XLOOKUP` function, but with the added ability to return a row from a `return_array`. Here's the code:
 
 ```excel
 =LAMBDA(lookup_value, lookup_array, return_array, [similarity_threshold], [algorithm],
@@ -122,8 +122,8 @@ Or, a `FUZZY.DIST.LOOKUP` function can be built that is similar to Excel's `XLOO
 This function can be named and used in Excel formulas as follows:
 
 ```excel
-=FUZZY.DIST.LOOKUP(A1, B1:B10, C1:E10, 0.8, "jaccard")
-```
+=FUZZYLOOKUP.TD(A1, B1:B10, C1:E10, 0.8, "jaccard")
+````
 
 ## Conclusion
 

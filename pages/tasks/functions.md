@@ -1,6 +1,6 @@
 # Functions
 
-Our functions for Excel are grouped by task categories (e.g. Text Analysis > Fuzzy Matching).  Each Python function (e.g. `text_distance`) has one or more example Excel LAMBDA functions based on this function (e.g. `FUZZY.DIST.MATCH`), as explained further below.  This gives you the best of both worlds: the power of Python, and the ease of customization and simplicity of Excel LAMBDAs.
+Our functions for Excel are grouped by task categories (e.g. Text Analysis > Fuzzy Matching).  Each Python function (e.g. `text_distance`) has one or more example Excel LAMBDA functions based on this function (e.g. `FUZZYMATCH.TD`), as explained further below.  This gives you the best of both worlds: the power of Python, and the ease of customization and simplicity of Excel LAMBDAs.
 
 ## Python
 
@@ -28,7 +28,7 @@ One of the key features of `BOARDFLARE.RUNPY` is its ability to be used in Excel
 
 For each Python functions that can be used in `BOARDFLARE.RUNPY`, we typically provide several [Excel LAMBDA](https://support.microsoft.com/en-us/office/lambda-function-bd212d27-1cd1-4321-a34a-ccbf254b8b67) functions which extend the Python function to provide additional convenience features,  address specialized use-cases, or just simplify use for end-users.
 
-For example, the Python `fuzzy_distance` function can be extended to create a `FUZZY.DIST.MATCH` LAMBDA function as follows:
+For example, the Python `fuzzy_distance` function can be extended to create a `FUZZYMATCH.TD` LAMBDA function as follows:
 
 ```excel
 =LAMBDA(lookup_value, lookup_array, [similarity_threshold], [algorithm],
@@ -43,10 +43,10 @@ For example, the Python `fuzzy_distance` function can be extended to create a `F
 )
 ```
 
-This function can then be used as follows (e.g. assuming it is named `FUZZY.DIST.MATCH`):
+This function can then be used as follows (e.g. assuming it is named `FUZZYMATCH.TD`):
 
 ```excel
-=FUZZY.DIST.MATCH(A1, B1:B10)
+=FUZZYMATCH.TD(A1, B1:B10)
 ```
 
-To help reduce confusion, and in keeping with Python and Excel naming conventions, our Python function names are always lower case, e.g. `text_distance`, whereas Excel LAMBDA function names are always capitalized, e.g. `FUZZY.DIST.MATCH`.
+To help reduce confusion, and in keeping with Python and Excel naming conventions, our Python function names are always lower case, e.g. `text_distance`, whereas Excel LAMBDA function names are always capitalized, e.g. `FUZZYMATCH.TD`.

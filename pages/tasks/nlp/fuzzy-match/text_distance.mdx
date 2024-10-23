@@ -39,7 +39,7 @@ The `textdistance` package is not available in the Excel Python environment.
 
 These functions are similar to the `XMATCH` and `XLOOKUP` functions in Excel, but with the added ability to set a similarity threshold.
 
-### FUZZY.DIST.MATCH
+### FUZZYMATCH.TD
 
 Provides features similar to `XMATCH`, but with the ability to set a similarity threshold and algorithm. The default algorithm is `jaccard` and similarity_threshold is `0.7`.
 
@@ -56,12 +56,12 @@ Provides features similar to `XMATCH`, but with the ability to set a similarity 
 )
 
 ```excel
-=FUZZY.DIST.MATCH(A1, B1:B10, 0.8)
+=FUZZYMATCH.TD(A1, B1:B10, 0.8)
 ```
 
-### FUZZY.DIST.LOOKUP
+### FUZZYLOOKUP.TD
 
-Provides features similar to `XLOOKUP`, with the ability to return a row from a `return_array`. Otherwise the same as `FUZZY.DIST.MATCH`.
+Provides features similar to `XLOOKUP`, with the ability to return a row from a `return_array`. Otherwise the same as `FUZZYMATCH.TD`.
 
 ```excel
 =LAMBDA(lookup_value, lookup_array, return_array, [similarity_threshold], [algorithm],
@@ -77,7 +77,7 @@ Provides features similar to `XLOOKUP`, with the ability to return a row from a 
 ```
 
 ```excel
-=FUZZY.DIST.LOOKUP(A1, B1:B10, C1:E10, 0.8, "jaccard")
+=FUZZYLOOKUP.TD(A1, B1:B10, C1:E10, 0.8, "jaccard")
 ```
 
 ## Similarity Algorithms
