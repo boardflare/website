@@ -1,22 +1,31 @@
 ---
-title: Translation
+title: Fuzzy Matching
 ---
 
 # Fuzzy Matching
 
 ## Overview
 
-Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/Approximate_string_matching), refers to process of finding strings that are similar but may contain typos, misspellings, or other small differences. Fuzzy matching algorithms are designed to handle these variations and find the best matches for a given search string in a dataset of strings along with their edit distance or similarity.  One of the most common applications of fuzzy matching is entity resolution, and that is the focus of this task.  This page is a scratchpad we use to collect information on fuzzy matching and entity resolution, so things will be in various stages of completion, organization, and accuracy.
+Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/Approximate_string_matching), refers to process of finding strings that are similar but may contain typos, misspellings, or other small differences. Fuzzy matching algorithms are designed to handle these variations and find the best matches for a given search string in a dataset of strings along with their edit distance or similarity.  One of the most common applications of fuzzy matching is entity resolution, and that is the focus of this task. 
 
 ## Apps
 
+### Excel
+
 - [Fuzzy Match for Excel](/apps/excel/fuzzy-match) is our Excel add-in that provides a fuzzy matching version of XLOOKUP and XMATCH functions that runs entirely in Excel with no data being sent to the cloud.
+- [Python for Excel](/apps/excel/python) provides access to the Python and LAMBDA functions listed below, along with the ability to customize the functions to your specific needs.
+
+## Functions
+
+### Python
+
+- [text_distance](/tasks/nlp/fuzzy-match/text_distance) - Calculates the normalized similarity of strings using various algorithms.
+
+### Excel
 
 ## Entity Resolution
 
 [Entity resolution](https://paperswithcode.com/task/entity-resolution) is also known as entity matching, entity deduplication, [record linkage](https://en.wikipedia.org/wiki/Record_linkage), entity disambiguation, duplicate detection, record matching, etc. In entity resolution, the goal is to identify and merge records that refer to the same real-world entity but may have different representations or identifiers and there is no unique key to match them. This is problem appears in data integration, data cleaning, data quality management, master data management, and other data-related tasks.  Some common entity types that are matched include: names of people, companies, products, and locations.
-
-### Company Entities
 
 Company Entity Matching is a specific type of entity resolution task that focuses on matching records that refer to the same company or organization. This task is challenging due to variations in company names, abbreviations, misspellings, and other inconsistencies in the data.
 
@@ -24,11 +33,8 @@ For example, you may encounter variations such as "Microsoft Corporation", "Micr
 
 An overview of the state of the art in company entity matching is provided in this paper:  [CompanyName2Vec: Company Entity Matching Based on Job Ads](https://arxiv.org/pdf/2201.04687)
 
-### Vertical-specific Entities
+Vertical-specific entities are specific to a particular domain or industry. For example, in  healthcare, you may need to match procedures. In e-commerce, you may need to match product listings from different online retailers.  In hospitality, you may need to [match hotel listings from different booking platforms](https://towardsdatascience.com/natural-language-processing-for-fuzzy-string-matching-with-python-6632b7824c49).
 
-Vertical-specific entities are specific to a particular domain or industry. For example, in  healthcare, you may need to match procedures. In e-commerce, you may need to match product listings from different online retailers.  Here is a list of some reference examples:
-
-- [Hotels](https://towardsdatascience.com/natural-language-processing-for-fuzzy-string-matching-with-python-6632b7824c49)
 
 ## Datasets
 
@@ -38,15 +44,11 @@ Vertical-specific entities are specific to a particular domain or industry. For 
 
 - [Rotom](https://github.com/megagonlabs/rotom) is a technique for expanding entity matching datasets by generating synthetic data. It can be used to create larger datasets for training and evaluating entity matching models.
 
-## Transformer-based Models
+## Transformer Models
 
 Transformer-based models have shown significant improvements in various natural language processing tasks, including entity matching. These models leverage large pre-trained language models like BERT, RoBERTa, and others to learn contextual representations of text and perform fuzzy matching tasks. They can be fine-tuned on specific datasets to improve their performance on entity matching tasks.
 
-Research organizations:
-
-- [WBSG - Mannheim](https://github.com/wbsg-uni-mannheim)
-
-### Hugging Face Models
+- [MatchGPT](https://github.com/wbsg-uni-mannheim/MatchGPT)
 
 - [Jellyfish](https://huggingface.co/NECOUDBFM/Jellyfish-13B) is a transformer-based model developed by NECO UDBFM. There is a 7B and 13B size model.  Paper: [Jellyfish-13B: A Large-Scale Pretrained Model for Fuzzy Matching](https://arxiv.org/pdf/2312.01678)
 
@@ -66,15 +68,13 @@ Research organizations:
     
     - Attribute Value Extraction (AVE): Given a text description of an entity and a set of predefined attributes, the task is to extract attribute values from the text description.
 
-### Other Models
-
 - [Megagon deep entity matching models](https://megagon.ai/deep-entity-matching-with-pre-trained-language-models/), utilize pre-trained language models for the task of entity matching. These models leverage the power of large-scale pre-trained models like BERT, RoBERTa, and DistilBERT, and fine-tune them for specific tasks such as entity matching, deduplication, and record linkage. The article provides a comprehensive overview of the methodology, benefits, and challenges of using deep learning for entity matching tasks.
 
 - [Magellan](https://pages.cs.wisc.edu/~anhai/papers/magellan-tr.pdf) is a python based system for entity matching that uses machine learning to automatically generate matching rules. It is designed to handle large datasets and can be used for tasks such as deduplication, record linkage, and data integration. The main project website with links to datasets is available [here](https://sites.google.com/site/anhaidgroup/useful-stuff/the-magellan-data-repository).
 
 - [AutoML-EM](https://www.cs.sfu.ca/~jnwang/papers/icde2021-automl-er.pdf) is a system for entity matching from a [team at SFU](https://www.cs.sfu.ca/~jnwang/). 
 
-## Edit Distance Algorithms
+## Similarity Algorithms
 
 The problem of approximate string matching can be defined as given a search string $P = p_1p_2...p_m$ and a text string $T = t_1t_2…t_n$, the objective is to identify a substring $T_{j',j} = t_{j'}…t_j$ in $T$ that has the least edit distance to the search string $P$ among all substrings of $T$.  A straightforward method would be to calculate the edit distance to $P$ for all substrings of $T$, and then choose the substring with the smallest distance. However, this method would have a time complexity of $O(n^3 m)$. 
 
@@ -140,7 +140,7 @@ The Jaro-Winkler similarity measure is a type of edit distance that rewards stri
 
 Soundex is a phonetic algorithm for indexing names by sound, as pronounced in English. The goal is for homophones to be encoded to the same representation so that they can be matched despite minor differences in spelling. This algorithm is useful in situations where two strings might sound the same, but are spelled differently.
 
-## Cloud Options
+## Cloud Services
 
 - [Senzing](https://senzing.com/) is an AI-based software that provides real-time entity resolution with fuzzy matching capabilities. It can be used to discover if different records refer to the same entity in a dataset.
 

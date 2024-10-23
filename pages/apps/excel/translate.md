@@ -6,6 +6,14 @@ title: Translate for Excel
 
 Unlimited free translation for 20 languages to and from English.
 
+<a href="https://appsource.microsoft.com/en-us/product/office/WA200007046?tab=Overview">
+    <img 
+        src="/images/MS_AppSource.png" 
+        alt="AppSource"
+        style="padding-top: 10px; width: 200px;"
+    />
+</a>
+
 ## Overview
 
 Provides a TRANSLATE function like <a href="http://www.boardflare.com/blog/2024/googletranslate-excel">GOOGLETRANSLATE for Excel</a>.  It translates 20 languages to or from English using machine learning models running on your CPU.  Your data never leaves Excel, and you have unlimited free use.
@@ -31,7 +39,9 @@ E.g., to translate cell A1 from French to English:<br>
 
 Either the source or target language must be English "<code>en</code>", and the other language may be any one of the following: 
 
-Afrikaans "<code>af</code>", Arabic "<code>ar</code>", Czech "<code>cs</code>", Danish "<code>da</code>", Dutch "<code>nl</code>", Finnish "<code>fi</code>", French "<code>fr</code>", German "<code>de</code>", Hindi "<code>hi</code>", Hungarian "<code>hu</code>", Indonesian "<code>id</code>", Italian "<code>it</code>", Japanese "<code>jap</code>", Russian "<code>ru</code>", Spanish "<code>es</code>", Swedish "<code>sv</code>", Ukrainian "<code>uk</code>", Vietnamese "<code>vi</code>", Xhosa "<code>xh</code>", Chinese "<code>zh</code>"
+Afrikaans "<code>af</code>", Arabic "<code>ar</code>", Czech "<code>cs</code>", Danish "<code>da</code>", Dutch "<code>nl</code>", Finnish "<code>fi</code>", French "<code>fr</code>", German "<code>de</code>", Hindi "<code>hi</code>", Hungarian "<code>hu</code>", Indonesian "<code>id</code>", Italian "<code>it</code>", Russian "<code>ru</code>", Spanish "<code>es</code>", Swedish "<code>sv</code>", Ukrainian "<code>uk</code>", Vietnamese "<code>vi</code>", Xhosa "<code>xh</code>", Chinese "<code>zh</code>"
+
+Note:  Japanese "<code>jap</code>" has been removed as the quality of the translation model used was found to be very low.  We will try to add it back again soon.
 
 ## Applications
 
@@ -45,15 +55,3 @@ Use it for any translation task in Excel. For example, translate multiple Excel 
 ## Alternatives
 
 Microsoft has announced a new native [TRANSLATE](https://techcommunity.microsoft.com/t5/microsoft-365-insider-blog/new-translation-functions-in-excel-translate-and-detectlanguage/ba-p/4231456) function with similar functionality but broader language coverage.  It is currently available to Beta Channel users on Windows and Mac.  It is unclear of this will offer unlimited free use once it reaches GA.
-
-## Installation
-
-Install from the Microsoft AppSource store at the link below, or directly from Excel.
-
-<a href="https://appsource.microsoft.com/en-us/product/office/WA200007046?tab=Overview">
-    <img 
-        src="/images/MS_AppSource.png" 
-        alt="AppSource"
-        style="padding-top: 10px; width: 200px;"
-    />
-</a>

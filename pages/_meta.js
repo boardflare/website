@@ -10,7 +10,7 @@ export default {
     }
   },
   "tasks": {
-    "title": "Tasks",
+    "title": "Functions",
     "type": "page",
     "theme": {
       "breadcrumb": false
