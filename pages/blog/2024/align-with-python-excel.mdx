@@ -1,0 +1,133 @@
+---
+title: Functions and aligning with Python in Excel
+date: 2024-10-22
+---
+
+# Functions and aligning with Python in Excel
+October 22, 2024
+
+## Overview
+
+Since we launched Boardflare's [Python for Excel](/apps/excel/python.md) add-in over a month ago, we've heard from users that they would like to see more pre-made Python functions that they can use as-is or modify to suit their needs.  As we've started buiding out a collection of Python [functions](/tasks/functions), we realized that we could align our API with Microsoft's [Python in Excel](https://techcommunity.microsoft.com/t5/excel-blog/python-in-excel-available-now/ba-p/4240212) so that the same code could be used in both with minimal modification.  
+
+## 🆕 BOARDFLARE.RUNPY function
+
+To achieve compatibility with Python in Excel, we've introduced a new `BOARDFLARE.RUNPY` function that handles both scalar and array inputs and outputs, and therefore replaces the original `BOARDFLARE.PY` and `BOARDFLARE.PY.ARR`functions which are now deprecated.  We chose the name `RUNPY` to reduce potential confusion with Excel's `PY` feature and we are not that creative with names.
+
+Like Python in Excel, `BOARDFLARE.RUNPY` now converts Excel arrays into pandas DataFrames.  It also returns the value of the last expression in the Python code, instead of using `pyout` as the output variable.  This approach not only aligns with Python in Excel, but also with Jupyter notebooks.
+
+The net result is that the same function code will work in both, with the only difference being how data is passed as arguments as shown in the following examples:
+
+```python {5}
+# Using BOARDFLARE.RUNPY
+def add(a, b):
+  return a + b
+
+add(arg1,arg2)
+```
+Assuming the code above is in cell `C2`, the arguments `arg1` and `arg2` are passed to the `BOARDFLARE.RUNPY` function as follows:
+
+```excel
+=BOARDFLARE.RUNPY(C2, A2, B2)
+```
+
+With Python in Excel, the same code would be written as follows:
+
+```python {5}
+# Using Excel's PY
+def add(a, b):
+  return a + b
+
+add(xl("A2"),xl("B2"))
+```
+
+Here the `xl` function is used to reference the Excel cells `A2` and `B2` inside the Python code.  The upside of Microsoft's approach is everything is all in one cell, so is easier to make changes when developing code interactively.  The downside is that it is not a function, and therefore can't be used in Excel formulas or LAMBDA functions the way `BOARDFLARE.RUNPY` can.
+
+## Functions collection
+
+We're just getting started on building out a collection of ready-to-use Python [functions](/tasks/functions) that can also be used as a starting point for building more complex functions.  
+
+For example, we've built a [text_distance](/tasks/nlp/fuzzy-match/text_distance) function for fuzzy matching that is similar to that used in our [Fuzzy Match](/apps/excel/fuzzy-match) app, but supports many more algorithms and can be readily modified to your specific needs.  Here's the code:  
+
+```python
+import textdistance
+import pandas as pd
+
+def text_distance(needle, haystack_df, algorithm='jaccard'):
+    # Get the algorithm function from textdistance
+    algo_func = getattr(textdistance, algorithm)
+    # Flatten the DataFrame to a list
+    haystack = haystack_df.values.flatten().tolist()
+    
+    # Check if needle is a DataFrame
+    if isinstance(needle, pd.DataFrame):
+        needle_list = needle.values.flatten().tolist()
+    else:
+        needle_list = [needle]
+    
+    results = [] 
+    for needle_item in needle_list:
+        # Calculate similarity scores with normalization and round to 2 decimal places
+        # Adjust index to be 1-based
+        scores = [(index + 1, round(algo_func.normalized_similarity(needle_item, item), 2)) for index, item in enumerate(haystack)]
+        # Sort based on scores in descending order
+        scores.sort(key=lambda x: x[1], reverse=True)
+        # Append the top index and score to results as a list
+        results.append(list(scores[0]))
+
+    # results is 2D list, e.g. [[1, 0.75], [2, 0.85]]
+    return results
+
+text_distance(arg1, arg2, arg3)
+```
+
+## LAMBDA functions using Python
+
+One of the great features of `BOARDFLARE.RUNPY` is that it can be used to build LAMBDA functions that can be used in Excel formulas.  For example, the `text_distance` function can be used to build a `FUZZY.DIST.MATCH` function that is similar to Excel's `XMATCH` function, but with the added ability to set a similarity threshold.  Here's the code:
+
+```excel
+=LAMBDA(lookup_value, lookup_array, [similarity_threshold], [algorithm],
+    LET(
+        threshold, IF(ISOMITTED(similarity_threshold), 0.7, similarity_threshold),
+        algo, IF(ISOMITTED(algorithm), "jaccard", algorithm),
+        result, BOARDFLARE.RUNPY("text/fuzzy/text_distance.ipynb", lookup_value, lookup_array, algo),
+        index, INDEX(result, 1),
+        score, INDEX(result, 2),
+        IF(score >= threshold, index, "No match")
+    )
+)
+```
+
+This function can be named and used in Excel formulas as follows:
+
+```excel
+=FUZZY.DIST.MATCH(A1, B1:B10, 0.8)
+```
+
+Or, a `FUZZY.DIST.LOOKUP` function can be built that is similar to Excel's `XLOOKUP` function, but with the added ability to return a row from a `return_array`.  Here's the code:
+
+```excel
+=LAMBDA(lookup_value, lookup_array, return_array, [similarity_threshold], [algorithm],
+    LET(
+        threshold, IF(ISOMITTED(similarity_threshold), 0.7, similarity_threshold),
+        algo, IF(ISOMITTED(algorithm), "jaccard", algorithm),
+        result, BOARDFLARE.RUNPY("text/fuzzy/text_distance.ipynb", lookup_value, lookup_array, algo),
+        index, INDEX(result, 1),
+        score, INDEX(result, 2),
+        IF(score >= threshold, INDEX(return_array, index), "No match")
+    )
+)
+```
+
+This function can be named and used in Excel formulas as follows:
+
+```excel
+=FUZZY.DIST.LOOKUP(A1, B1:B10, C1:E10, 0.8, "jaccard")
+```
+
+## Conclusion
+
+We've just started on this journey and are excited at the possibilities.  We're looking forward to hearing from you on what functions you'd like to see, and how we can make them more useful.  Please reach out to us at [support](/company/support) with your ideas and feedback.
+
+
+
