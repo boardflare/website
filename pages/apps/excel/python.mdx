@@ -196,6 +196,14 @@ extract_email(arg1)
 
 See this [workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) for demos of fuzzy matching functions and showing their use relative to Excel's native `PY` feature.
 
+## Errors
+
+Custom functions in Excel can unfortunately be quite buggy, and prone to random odd behaviors.  Some of the errors below are caused by real mistakes you might make, but often they are just randomly thrown due to the custom function not being properly initialized by Excel.  If you think this is the case, try restarting Excel.
+
+- `#VALUE!`:  If you are missing an argument to a function, or it is the wrong type (e.g. incorrect range reference), you will get this error.
+- `#NAME?`:  If the function name is spelled incorrectly, e.g. `BOARDFLARE.RUNPYY`, you will get this error.
+- `BUSY`:  This is normal for a few seconds. Anything longer than that and it is likely stuck.
+
 ## Use Cases
 
 Some key use-cases we see are as follows:
