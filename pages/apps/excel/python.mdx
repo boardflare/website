@@ -66,8 +66,6 @@ Public links to files in OneDrive or SharePoint will not work due to lack of COR
 
 ## RUNPY Function
 
-See our [example workbook](https://1drv.ms/x/s!AmvHMvGKbZDOibEu75MVo8mvZqbAkg?e=XRMdBI) for usage.
-
 The `RUNPY` function executes Python code and returns the result.  Optional positional arguments `arg1, arg2, ...` (similar to Python *args) are set as globals to pass as arguments of your Python function.
 
 ```excel
@@ -87,6 +85,8 @@ You can run this code and pass the arguments `arg1 = 2`, `arg2 = 3` as follows:
 ```excel
 =BOARDFLARE.RUNPY(A1,2,3)
 ```
+
+See our [examples](#examples) section below for more.
 
 ### Arguments
 
@@ -164,7 +164,15 @@ While maybe not our preferred development tool, the Excel `PY` can be a handy wa
 
 ## Examples
 
-Here are some simple examples to get you started:
+### Workbooks
+
+Here are some example workbooks, which also include a demo of using Excel's `PY` feature for comparison:
+- [Simple Examples](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EZ3eKR1wcltImmG2OA4sX-kB8RSA2cvJFM-hPoQGGdwMmA?e=m0eFdd)
+- [Fuzzy Matching](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ)
+
+### Code
+
+Here are some simple code examples to get you started:
 
 ```python
 # Function to convert inches to mm.
@@ -198,11 +206,18 @@ See this [workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_
 
 ## Errors
 
-Custom functions in Excel can unfortunately be quite buggy, and prone to random odd behaviors.  Some of the errors below are caused by real mistakes you might make, but often they are just randomly thrown due to the custom function not being properly initialized by Excel.  If you think this is the case, try restarting Excel.
+Here are some common Excel cell errors you may encounter:
 
-- `#VALUE!`:  If you are missing an argument to a function, or it is the wrong type (e.g. incorrect range reference), you will get this error.
-- `#NAME?`:  If the function name is spelled incorrectly, e.g. `BOARDFLARE.RUNPYY`, you will get this error.
-- `BUSY`:  This is normal for a few seconds. Anything longer than that and it is likely stuck.
+- `#VALUE!`:  An argument to a function is missing or it is the wrong type (e.g. incorrect range reference).
+- `#NAME?`:  The function name is spelled incorrectly, e.g. `BOARDFLARE.RUNPYY`.
+- `#BUSY!`:  This is normal for 5-10 seconds if you are importing libraries for the first time and have a slow internet connection. 
+
+To the left of the bottom of the task pane, you may also see additional errors such as the following:
+
+- `Error loading add-ins`
+- `We're starting the add-ins runtime, just a moment...`
+
+Unfortunately, the custom function capability of Excel can be a bit buggy and will throw various errors when the custom function is not being properly initialized by Excel.  If you think this is the case, try restarting Excel, or reloading the browser window.
 
 ## Use Cases
 
