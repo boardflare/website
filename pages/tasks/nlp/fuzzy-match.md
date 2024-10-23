@@ -17,11 +17,13 @@ Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/A
 
 ## Functions
 
+### Demo Workbook
+
+See this [workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) for demos of all fuzzy matching functions.
+
 ### Python
 
 - [text_distance](/tasks/nlp/fuzzy-match/text_distance) - Calculates the normalized similarity of strings using various algorithms.
-
-### Excel
 
 ## Entity Resolution
 
