@@ -47,7 +47,7 @@ This is a minimalist tool which is not designed to compete with the native [Pyth
 
 Any output to `stdout` or `stderr` is displayed in the Console area of the add-in task pane. This is useful for debugging your code, and also for displaying intermediate results of long-running operations such as functions that are processing large input arrays
 
-### Custom Packages
+### Import Packages
 
 Pyodide includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, which means there is a Python wheel that ends with `-py3-none-any.whl`, e.g. `beautifulsoup4-4.12.3-py3-none-any.whl`.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work, but double-check the wheel.
 
