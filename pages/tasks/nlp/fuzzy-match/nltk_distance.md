@@ -45,7 +45,7 @@ import nltk
 from nltk.metrics.distance import edit_distance, jaccard_distance, jaro_similarity
 from nltk.util import ngrams
 
-def nltk_distance(needle, haystack_df, algorithm='jaccard'):
+def nltk_distance(needle, haystack_df, algorithm):
     """
     Calculate the similarity between a needle and a haystack using various distance algorithms.
 

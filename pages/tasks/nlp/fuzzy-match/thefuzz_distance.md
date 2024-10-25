@@ -20,7 +20,7 @@ Define the function in a cell at the beginning of your workbook by pasting the f
 import pandas as pd
 from thefuzz import fuzz
 
-def thefuzz_distance(needle, haystack_df, algorithm='ratio'):
+def thefuzz_distance(needle, haystack_df, algorithm):
     """
     Calculate the similarity between a needle and a haystack using various distance algorithms.
 
