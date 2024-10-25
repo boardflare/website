@@ -26,19 +26,19 @@ Run Python code as a function to power your formulas and LAMBDA functions, which
 =LAMBDA(x, BOARDFLARE.RUNPY("arg1 + 2", x))
 =MYFUNC(5) = 7
 ```
-This enables you to build custom functions using Python without building a custom Excel add-in.
+This enables you to build custom functions using Python without building a custom Excel add-in.  This add-in was originally conceived as an internal tool for prototyping custom functions based on Python without the overhead of building a full add-in.  We realized that others could benefit from the same capability, so we decided to release it as a free add-in on the Microsoft AppSource store.
 
-## Features
+## Benefits
 
-Some key differences compared to the native [Python in Excel](https://support.microsoft.com/en-us/office/get-started-with-python-in-excel-a33fbcbe-065b-41d3-82cf-23d05397f53d) are as follows:
+This is a minimalist tool which is not designed to compete with the native [Python in Excel](https://support.microsoft.com/en-us/office/get-started-with-python-in-excel-a33fbcbe-065b-41d3-82cf-23d05397f53d), but it does offer some unique benefits as follows:
 
-✅ Use as a function in formulas and LAMBDAs.<br/>
+✅ Use Python as a function in formulas and LAMBDAs.<br/>
 🆓 Free add-in, no Office 365 license required.<br/>
 🌐 Works in Excel for web as well as desktop.<br/>
 ☁️ Runtime has network access for API calls (need CORS).<br/>
 📦 Import custom packages (pure Python only).<br/>
 🔒 Runs locally, so no data is shared outside Excel.<br/>
-➡️ Code can be loaded from a URL.<br/>
+➡️ Code can be loaded from a URL (e.g. GitHub).<br/>
 🚀 Performance is only limited by your CPU.<br/>
 
 ## Python Runtime
@@ -107,11 +107,10 @@ The table below shows how argument values for `arg1, arg2, ..` are converted fro
 | Null       | Unset optional LAMBDA argument | None        |
 | Null       | Arg skipped with `,`           | None        |
 
-Some things to about arguments are as follows:
-- Global variables are cleared after each function invocation.
+- Argument values are cleared after each function invocation.
 - Arrays are converted to a pandas DataFrame without headers.
-- Skipping args with a comma, sets the skipped arg to None. e.g. `=BOARDFLARE.RUNPY(A1,,3)` sets `arg1 = None` and `arg2 = 3`.
-- Unset optional args in a LAMBDA become `None`. e.g. `=LAMBDA([x], BOARDFLARE.RUNPY("3 + arg1", x))()` will set `arg1 = None` and throw an error because `None` is not a valid Python type for the `+` operator, so you would need to handle this case in your Python code.
+- Skipping an arg with a comma, sets that arg to None. e.g. `=BOARDFLARE.RUNPY("some code",,3)` sets `arg1 = None` and `arg2 = 3`.
+- Unset optional args in a LAMBDA also become `None`. e.g. `=LAMBDA([x], BOARDFLARE.RUNPY("3 + arg1", x))()` will set `arg1 = None` and throw an error in this example because `None` is not a valid Python type for the `+` operator, so you would need to handle this case in your Python code.
 
 ### Return Values
 
