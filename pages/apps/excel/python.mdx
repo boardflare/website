@@ -45,9 +45,7 @@ Some key differences compared to the native [Python in Excel](https://support.mi
 
 [Pyodide](https://pyodide.org/en/stable/index.html) is the Python runtime, which is based on [WebAssembly](https://webassembly.org/) running in the browser used by Excel desktop and web to host add-ins.  This is currently running Python 3.12, but has limitations as discussed in the [Pyodide documentation](https://pyodide.org/en/stable/usage/wasm-constraints.html).
 
-### STDOUT and Globals
-
-Any output to `stdout` or `stderr` is displayed in the Console area of the add-in task pane. This is useful for debugging your code, and also for displaying intermediate results of long-running operations such as functions that are processing large input arrays. Global variables are used to pass data to your code, as discussed in more detail below.  Global variables are cleared after each function invocation, so no state is maintained between calls.
+Any output to `stdout` or `stderr` is displayed in the Console area of the add-in task pane. This is useful for debugging your code, and also for displaying intermediate results of long-running operations such as functions that are processing large input arrays
 
 ### Custom Packages
 
@@ -92,21 +90,28 @@ See our [examples](#examples) section below for more.
 
 | Argument | Type            | Optional | Description                                                                |
 |----------|-----------------|----------|----------------------------------------------------------------------------|
-| code     | string          | No       | Python code text, or URL to code, e.g. `https://gist.github.com/code.py`.  |
+| code     | string          | No       | Python code text, or URL to code, e.g. `https://gist.github....code.py`.  |
 | arg1     | scalar or array | Yes      | Repeating argument that sets globals `arg1, arg2, ..` to pass in data.                             |
 
 The table below shows how argument values for `arg1, arg2, ..` are converted from Excel to Python types:
 
-| Excel Type | Example    | Python Type |
-|------------|------------|-------------|
-| Number     | 42         | int         |
-| Number     | 3.14       | float       |
-| String     | "hello"    | str         |
-| Boolean    | TRUE       | bool        |
-| Array      | `{1, 2, 3}`| DataFrame   |
-| Array      | A1:B2      | DataFrame   |
+| Excel Type | Example                        | Python Type |
+|------------|--------------------------------|-------------|
+| Number     | 42                             | int         |
+| Number     | 3.14                           | float       |
+| String     | "hello"                        | str         |
+| Boolean    | TRUE                           | bool        |
+| Array      | `{1, 2, 3}`                    | DataFrame   |
+| Array      | A1:B2                          | DataFrame   |
+| Null       | Reference to an empty cell     | None        |
+| Null       | Unset optional LAMBDA argument | None        |
+| Null       | Arg skipped with `,`           | None        |
 
-Arrays are converted to a pandas DataFrame without headers.
+Some things to about arguments are as follows:
+- Global variables are cleared after each function invocation.
+- Arrays are converted to a pandas DataFrame without headers.
+- Skipping args with a comma, sets the skipped arg to None. e.g. `=BOARDFLARE.RUNPY(A1,,3)` sets `arg1 = None` and `arg2 = 3`.
+- Unset optional args in a LAMBDA become `None`. e.g. `=LAMBDA([x], BOARDFLARE.RUNPY("3 + arg1", x))()` will set `arg1 = None` and throw an error because `None` is not a valid Python type for the `+` operator, so you would need to handle this case in your Python code.
 
 ### Return Values
 
