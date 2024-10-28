@@ -4,7 +4,7 @@ title: Terms of Use
 
 # Terms of Use
 
-Welcome to Boardflare, which includes this website and our app extensions for Microsoft Excel and Google Sheets, together our "Services". If you use our Services, you are agreeing to comply with and be bound by the following terms of use, which together with our [privacy policy](/about/privacy) govern our relationship with you. If you disagree with any part of these terms, do not use our Services.
+Welcome to Boardflare, which includes this website and our app extensions for Microsoft Excel and Google Sheets, together our "Services". If you use our Services, you are agreeing to comply with and be bound by the following terms of use, which together with our [privacy policy](/company/privacy) govern our relationship with you. If you disagree with any part of these terms, do not use our Services.
 
 The term 'us' or 'we' refers to the owner of the Services. The term 'you' refers to the user or viewer of the Services.
 
@@ -16,4 +16,4 @@ The term 'us' or 'we' refers to the owner of the Services. The term 'you' refers
 
 ## Contact Us
 
-If you have any questions or concerns about our terms of use, please [contact us](/about/contact).
+If you have any questions or concerns about our terms of use, please [contact us](/company/support).

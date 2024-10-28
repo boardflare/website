@@ -4,7 +4,7 @@ title: Privacy Policy
 
 # Privacy Policy
 
-Welcome to Boardflare, which includes this website and our app extensions for Microsoft Excel and Google Sheets, together our "Services". If you use our Services, you are agreeing to comply with and be bound by the following privacy policy, which together with our [terms of use](/about/terms), govern our relationship with you. If you disagree with any part of these terms, do not use our Services.
+Welcome to Boardflare, which includes this website and our app extensions for Microsoft Excel and Google Sheets, together our "Services". If you use our Services, you are agreeing to comply with and be bound by the following privacy policy, which together with our [terms of use](/company/terms), govern our relationship with you. If you disagree with any part of these terms, do not use our Services.
 
 This privacy policy outlines how our Service collects, uses, and protects your personal information.
 
@@ -35,4 +35,4 @@ We may update this privacy policy from time to time in order to reflect, for exa
 
 ## Contact Us
 
-If you have any questions or concerns about our privacy policy, please [contact us](/about/contact).
+If you have any questions or concerns about our privacy policy, please [contact us](/company/support).
