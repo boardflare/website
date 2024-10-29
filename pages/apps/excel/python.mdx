@@ -49,27 +49,26 @@ This is a minimalist tool which is not designed to compete with the native [Pyth
 
 Pyodide includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, which means there is a Python wheel that ends with `-py3-none-any.whl`, e.g. `beautifulsoup4-4.12.3-py3-none-any.whl`.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work, but double-check the wheel.
 
-You do not need to install packages, just import them in your code.  Your code will be scanned for imports and any found will be handled for you using `micropip` in the background and the package will be downloaded if needed from PyPI.  If you try to import an external package (not part of the Python standard library or one of the built-in packages) for which there is not a pure Python wheel available on PyPI, an error will be thrown.
+You do not need to install packages, just import them in your code. Your code will be scanned for imports and any found will be handled for you using `micropip` in the background and the package will be downloaded if needed from PyPI. If you try to import an external package (not part of the Python standard library or one of the built-in packages) for which there is not a pure Python wheel available on PyPI, an error will be thrown.
+
+However, specific imports (e.g., `from azure.core.credentials import AzureKeyCredential`) will not automatically install the relevant package. You need to handle these manually using `await micropip.install(['package1', 'package2'])`. `micropip` has already been imported for you.  For example:
+
+```python
+await micropip.install(['azure-ai-textanalytics'])
+
+from azure.core.credentials import AzureKeyCredential
+from azure.ai.textanalytics import TextAnalyticsClient
+```
 
 ### Network Access
 
-Network access is available to the Pyodide runtime via JavaScript. There are several options available using this.
-1. Directly using [pyfetch](https://pyodide.org/en/stable/usage/api/python-api/http.html#pyodide.http.pyfetch) - This is a Python wrapper around the Fetch API provided by Pyodide. This can be used to make HTTP requests to APIs.
+Network access is available to the Pyodide runtime via JavaScript. You should be able to access any public API that supports [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).  For example, you can use the `requests` package to access APIs that support CORS. For example, the following code fetches the GitHub API:
+  
+  ```python
+import requests
 
-```python
-  from pyodide.http import pyfetch
-  response = await pyfetch("https://some_url/myfiles.zip")
-  await response.unpack_archive()
-```
-2. Patching http libraries with [pyodide-http](https://github.com/koenvo/pyodide-http) - This patches http libraries such as `requests` so that they use JavaScript for network access.
-
-```python
-  # Patch requests to use JavaScript for network access.
-  import pyodide_http
-  pyodide_http.patch_all()
-
-  import requests
-  response = requests.get("https://some_url/myfiles.zip")
+response = requests.get('https://api.github.com')
+response.json()
 ```
 
 ### Security
