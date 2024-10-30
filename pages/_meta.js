@@ -9,8 +9,15 @@ export default {
       "toc": false
     }
   },
-  "tasks": {
+  "functions": {
     "title": "Functions",
+    "type": "page",
+    "theme": {
+      "breadcrumb": false
+    }
+  },
+  "tasks": {
+    "title": "Tasks",
     "type": "page",
     "theme": {
       "breadcrumb": false

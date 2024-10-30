@@ -1,0 +1,37 @@
+import { Callout, RemoteContent } from 'nextra/components'
+import { buildDynamicMDX, buildDynamicMeta } from 'nextra/remote'
+
+export const filePaths = ['text/sentiment/azureai_sentiment']
+
+export async function getStaticProps({ params }) {
+  const path = params.slug?.join('/')
+  const url = `https://addins.boardflare.com/functions/preview/notebooks/${path}.ipynb`
+  const response = await fetch(url)
+  const notebook = await response.json()
+
+  // Extract markdown data from the first cell
+  const firstMarkdownCell = notebook.cells.find(
+    (cell) => cell.cell_type === 'markdown'
+  )
+  const markdownData = firstMarkdownCell ? firstMarkdownCell.source.join('') : ''
+
+  //const { __nextra_pageMap } = await buildDynamicMeta()
+  const dynamicMdx = await buildDynamicMDX(markdownData, {
+    defaultShowCopyCode: true,
+  })
+  return {
+    props: {
+      //__nextra_pageMap,
+      ...dynamicMdx,
+    },
+  }
+}
+
+export const getStaticPaths = () => ({
+  fallback: false,
+  paths: filePaths.map((filePath) => ({
+    params: { slug: filePath.split('/') },
+  })),
+})
+
+<RemoteContent components={{ Callout }} />
