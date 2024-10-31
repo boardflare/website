@@ -5,7 +5,7 @@ export const filePaths = ['text/sentiment/azureai_sentiment']
 
 export async function getStaticProps({ params }) {
   const path = params.slug?.join('/')
-  const url = `https://addins.boardflare.com/functions/preview/notebooks/${path}.ipynb`
+  const url = `https://addins.boardflare.com/functions/prod/notebooks/${path}.ipynb`
   const response = await fetch(url)
   const notebook = await response.json()
 
