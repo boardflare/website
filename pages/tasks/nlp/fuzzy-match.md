@@ -4,39 +4,30 @@ title: Fuzzy Matching
 
 # Fuzzy Matching
 
-Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/Approximate_string_matching), refers to process of finding strings that are similar but may contain typos, misspellings, or other small differences. Fuzzy matching algorithms are designed to handle these variations and find the best matches for a given search string in a dataset of strings along with their edit distance or similarity.  One of the most common applications of fuzzy matching is entity resolution, and that is the focus of this task. 
+Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/Approximate_string_matching), refers to process of finding strings that are similar but may contain typos, misspellings, or other small differences. Fuzzy matching algorithms are designed to handle these variations and find the best matches for a given search string in a dataset of strings along with their edit distance or similarity.
 
-See this [workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) for demos of all fuzzy matching functions.
-
-## Fuzzy Matching in Excel
+## Excel Add-ins
 
 There are several ways to perform fuzzy matching in Excel:
 
 - [Fuzzy Match for Excel](/apps/excel/fuzzy-match) add-in provides a fuzzy matching version of XLOOKUP and XMATCH functions.
 - [Python for Excel](/apps/excel/python) provides access to the [Fuzzy Matching Python Functions](#fuzzy-matching-python-functions) below.
 
-## Fuzzy Matching Python Functions
+## Python Functions
 
 | Name | Description | Boardflare RUNPY() | Excel PY() |
 |:----:|:------------|:-------:|:----------:|
-| [text_distance](/functions/text/fuzzy/text_distance) | Uses [`textdistance`](https://github.com/life4/textdistance) library. Supports the widest range of algorithms. | ✅ | - |
+| [text_distance](/functions/text/fuzzy-match/text_distance) | Uses [`textdistance`](https://github.com/life4/textdistance) library. Supports the widest range of algorithms. | ✅ | - |
 | [nltk_distance](/functions/text/fuzzy-match/nltk_distance) | Uses [`nltk`](https://github.com/nltk/nltk) library. Supports `jaccard`, `jaro`, and `levenshtein`. | ✅ | ✅ |
-| [thefuzz_distance](/functions/text/fuzzy/thefuzz_distance) | Uses [`thefuzz`](https://github.com/seatgeek/thefuzz) library. Only supports `levenshtein`, but uses algorithm which is 10x faster than others. | - | ✅ |
+| [thefuzz_distance](/functions/text/fuzzy-match/thefuzz_distance) | Uses [`thefuzz`](https://github.com/seatgeek/thefuzz) library. Only supports `levenshtein`, but uses algorithm which is 10x faster than others. | - | ✅ |
 
+See this [workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) for demos of all fuzzy matching functions.
 
 ## Similarity Algorithms
 
-The problem of approximate string matching can be defined as given a search string $P = p_1p_2...p_m$ and a text string $T = t_1t_2…t_n$, the objective is to identify a substring $T_{j',j} = t_{j'}…t_j$ in $T$ that has the least edit distance to the search string $P$ among all substrings of $T$. A straightforward method would be to calculate the edit distance to $P$ for all substrings of $T$, and then choose the substring with the smallest distance. However, this method would have a time complexity of $O(n^3 m)$.
+Below are some of the common similarity algorithms used in fuzzy matching tasks.  This [article](https://medium.com/@m.nath/fuzzy-matching-algorithms-81914b1bc498) provides an overview of the different types of similarity algorithms and how they can be used to compare strings and identify similar patterns.
 
-To improve efficiency, several approximate string matching algorithms have been developed, such as the Bitap algorithm, the Levenshtein distance, the Jaccard index, the Jaro-Winkler similarity, and Soundex.
-
-### Edit Distance
-
-#### Bitap
-
-The [Bitap algorithm](https://en.wikipedia.org/wiki/Bitap_algorithm), also known as the shift-or, shift-and, or Baeza-Yates-Gonnet algorithm, is a string-searching algorithm that allows for approximate matching of a pattern in a text. It is based on bitwise operations and dynamic programming, and it can be used to find the best approximate match for a given pattern in a text.
-
-#### Levenshtein
+### Levenshtein
 
 The Levenshtein distance is a string metric for measuring the difference between two sequences. It calculates the minimum number of single-character edits (insertions, deletions or substitutions) required to change one word into the other.
 
@@ -50,7 +41,9 @@ For example, the Levenshtein distance between "Microsoft" and "Microsoft, Inc" i
 
 The Levenshtein distance can be used to calculate the similarity between two strings by normalizing the distance based on the number of changes and the length of the longest string. A lower distance indicates a higher similarity between the strings. In the example above, the similarity would be 1 - (5 / 14) = 0.64.
 
-#### Damerau-Levenshtein
+The [Bitap algorithm](https://en.wikipedia.org/wiki/Bitap_algorithm), also known as the shift-or, shift-and, or Baeza-Yates-Gonnet algorithm, is a string-searching algorithm that uses Levenstein distance and can be significantly faster. It is used in the [Fuse.js](https://fusejs.io/) library for fuzzy matching.
+
+### Damerau-Levenshtein
 
 The [Damerau-Levenshtein distance](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance) is similar to Levenshtein but considers transpositions as a single edit. It calculates the minimum number of operations (insertions, deletions, substitutions, or transpositions) required to change one word into the other.
 
@@ -59,7 +52,7 @@ For example, the Damerau-Levenshtein distance between "ca" and "abc" is 2, since
 1. ca -> ac (transpose 'c' and 'a')
 2. ac -> abc (insert 'b' after 'a')
 
-#### Hamming
+### Hamming
 
 The [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) measures the number of positions at which the corresponding symbols are different. It is only applicable to strings of the same length.
 
@@ -72,7 +65,7 @@ For example, the Hamming distance between "karolin" and "kathrin" is 3, since th
 5. karol**i**n -> kathr**i**n (no change)
 6. karoli**n** -> kathri**n** (no change)
 
-#### Jaro-Winkler
+### Jaro-Winkler
 
 The [Jaro-Winkler similarity](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) measure is a type of edit distance that rewards strings that have the same prefix. It is a variant of the Jaro distance metric and mainly used in the area of record linkage (duplicate detection). The higher the Jaro-Winkler similarity score, the more similar the strings are.
 
@@ -85,9 +78,7 @@ Where:
 - $l$ is the length of the common prefix at the start of the string up to a maximum of 4 characters.
 - $p$ is a constant scaling factor for how much the score is adjusted upwards for having common prefixes (usually 0.1).
 
-### Token-Based
-
-#### Jaccard Index
+### Jaccard Index
 
 The Jaccard index, also known as the Jaccard similarity coefficient, is a measure of similarity between two sets. It is defined as the size of the intersection divided by the size of the union of the two sets. In the context of fuzzy matching, it can be used to compare the similarity between two strings by treating them as sets of characters.
 
@@ -115,7 +106,7 @@ $$ J(A, B) = \frac{9}{14} \approx 0.64 $$
 
 So, the Jaccard index between "Microsoft" and "Microsoft, Inc." is approximately 0.64.
 
-#### Cosine Similarity
+### Cosine Similarity
 
 The [Cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) measures the cosine of the angle between two non-zero vectors. It is useful for comparing the similarity of two vectors.
 
@@ -132,7 +123,7 @@ For example, the Cosine similarity between the vectors [1, 0, -1] and [0, 1, 1] 
 
 $$ \cos(\theta) = \frac{(1 \cdot 0) + (0 \cdot 1) + (-1 \cdot 1)}{\sqrt{1^2 + 0^2 + (-1)^2} \sqrt{0^2 + 1^2 + 1^2}} = \frac{0 + 0 - 1}{\sqrt{2} \sqrt{2}} = -0.5 $$
 
-#### Overlap Coefficient
+### Overlap Coefficient
 
 The [Overlap coefficient](https://en.wikipedia.org/wiki/Overlap_coefficient) measures the overlap between two sets. It is useful for comparing the similarity of two sets.
 
@@ -149,7 +140,7 @@ For example, the Overlap coefficient between the sets {1, 2, 3} and {2, 3, 4} is
 
 $$ O(A, B) = \frac{2}{3} \approx 0.67 $$
 
-#### Sorensen-Dice Coefficient
+### Sorensen-Dice Coefficient
 
 The [Sorensen-Dice coefficient](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient) measures the similarity between two sets. It is useful for comparing the similarity of two sets.
 
@@ -166,7 +157,7 @@ For example, the Sorensen-Dice coefficient between the sets {1, 2, 3} and {2, 3,
 
 $$ S(A, B) = \frac{2 \cdot 2}{3 + 3} = \frac{4}{6} \approx 0.67 $$
 
-#### Tversky Index
+### Tversky Index
 
 The [Tversky index](https://en.wikipedia.org/wiki/Tversky_index) is a generalization of the Jaccard index. It is useful for comparing the similarity of two sets with different weights.
 
@@ -185,15 +176,13 @@ For example, the Tversky index between the sets {1, 2, 3} and {2, 3, 4} with $\a
 
 $$ T(A, B) = \frac{2}{2 + 0.5 \cdot 1 + 0.5 \cdot 1} = \frac{2}{3} \approx 0.67 $$
 
-#### Bag Similarity
+### Bag Similarity
 
 The [Bag similarity](https://github.com/Yomguithereal/talisman/blob/master/src/metrics/bag.js) measures the similarity between two sequences by comparing the bags of their elements. It is useful for comparing sequences where the order of elements does not matter.
 
 For example, the Bag similarity between the sequences "abc" and "bca" is 1, since they contain the same elements.
 
-### Phonetic
-
-#### Soundex
+### Soundex
 
 [Soundex](https://en.wikipedia.org/wiki/Soundex) is a phonetic algorithm for indexing names by sound, as pronounced in English. The goal is for homophones to be encoded to the same representation so that they can be matched despite minor differences in spelling. This algorithm is useful in situations where two strings might sound the same, but are spelled differently.
 
@@ -210,7 +199,7 @@ The Soundex algorithm works as follows:
 4. If two or more letters with the same number are adjacent in the original name (before step 1), only retain the first letter; also, two letters with the same number separated by 'h' or 'w' are coded as a single number.
 5. Return the first four characters, right-padded with zeros if there are fewer than four.
 
-#### Editex
+### Editex
 
 The Editex algorithm is a phonetic matching algorithm designed to measure the similarity between names. It is particularly useful for comparing names that may have different spellings but sound similar. The algorithm is an extension of the edit distance algorithm, incorporating phonetic information to improve accuracy.
 
@@ -253,7 +242,7 @@ To compare the names "John" and "Jon":
 
 For more detailed information, you can refer to the [Editex documentation](https://anhaidgroup.github.io/py_stringmatching/v0.3.x/Editex.html).
 
-#### Match Rating Approach (MRA)
+### Match Rating Approach (MRA)
 
 The Match Rating Approach (MRA) is a phonetic algorithm designed to measure the similarity between names. It is particularly useful for comparing names that may have different spellings but sound similar. The algorithm simplifies the comparison process by focusing on the phonetic characteristics of the names.
 
@@ -308,9 +297,8 @@ To compare the names "John" and "Jon":
 
 For more detailed information, you can refer to the [Match Rating Approach documentation](https://en.wikipedia.org/wiki/Match_rating_approach).
 
-### Other
 
-#### Mongue-Elkan Method
+### Mongue-Elkan Method
 
 The [Mongue-Elkan](https://www.gelbukh.com/CV/Publications/2009/Generalized%20Mongue-Elkan%20Method%20for%20Approximate%20Text%20String.pdf) method is a hybrid algorithm combining multiple similarity measures. It is useful for comparing sequences with different lengths.
 
@@ -408,15 +396,6 @@ Vertical-specific entities are specific to a particular domain or industry. For 
 - [MatchBench](https://huggingface.co/matchbench) is a collection of datasets for entity matching and deduplication tasks. It includes datasets for company matching, product matching, and person matching, among others.
 
 - [Rotom](https://github.com/megagonlabs/rotom) is a technique for expanding entity matching datasets by generating synthetic data. It can be used to create larger datasets for training and evaluating entity matching models.
-
-## JavaScript Libraries
-
-JavaScript libraries that implement similarity algorithms are as follows:
-
-- [Fuse.js](https://fusejs.io/) implements Bitap is currently used in our [Fuzzy Match for Excel](/apps/excel/fuzzy-match) add-in.
-- [Talisman](https://www.npmjs.com/package/talisman) implements various string similarity algorithms, including Levenshtein distance, Jaccard index, Jaro-Winkler similarity, and Soundex.
-
-These functions are not yet available in format like our Python functions, but we plan to offer this in the future, and are here for reference in case you wish to implement them yourself.
 
 ## Cloud Services
 
