@@ -11,7 +11,7 @@ Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/A
 There are several ways to perform fuzzy matching in Excel:
 
 - [Fuzzy Match for Excel](/apps/excel/fuzzy-match) add-in provides a fuzzy matching version of XLOOKUP and XMATCH functions.
-- [Python for Excel](/apps/excel/python) provides access to the [Fuzzy Matching Python Functions](#fuzzy-matching-python-functions) below.
+- [Python for Excel](/apps/excel/python) provides access to the fuzzy matching Python functions below.
 
 ## Python Functions
 
