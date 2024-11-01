@@ -35,67 +35,7 @@ For example, to calculate the similarity between the string `"example"` and an a
 =BOARDFLARE.RUNPY("text/fuzzy/nltk_distance.ipynb", "example", {"samples", "exemplar", "sample", "examples"}, "jaccard")
 ```
 
-### Excel PY
 
-Define the function in a cell at the beginning of your workbook by pasting the following code into a `PY` cell:
-
-```python
-import pandas as pd
-import nltk
-from nltk.metrics.distance import edit_distance, jaccard_distance, jaro_similarity
-from nltk.util import ngrams
-
-def nltk_distance(needle, haystack_df, algorithm):
-    """
-    Calculate the similarity between a needle and a haystack using various distance algorithms.
-
-    Parameters:
-    needle (str or pd.DataFrame): The string or DataFrame to search for.
-    haystack_df (pd.DataFrame): The DataFrame to search within.
-    algorithm (str): The algorithm to use for calculating similarity. Options are 'levenshtein', 'jaccard', and 'jaro'. Default is 'jaccard'.
-
-    Returns:
-    list: A list of lists where each sublist contains the index (1-based) and the similarity score of the most similar item in the haystack.
-    """
-    # Define a dictionary to map algorithm names to functions
-    algo_funcs = {
-        'levenshtein': lambda x, y: 1 - edit_distance(x, y) / max(len(x), len(y)),
-        'jaccard': lambda x, y: 1 - jaccard_distance(set(ngrams(x, 2)), set(ngrams(y, 2))),
-        'jaro': jaro_similarity
-    }
-    
-    # Get the algorithm function from the dictionary
-    algo_func = algo_funcs.get(algorithm)
-    if algo_func is None:
-        raise ValueError(f"Unsupported algorithm: {algorithm}")
-    
-    # Flatten the DataFrame to a list
-    haystack = haystack_df.values.flatten().tolist()
-    
-    # Check if needle is a DataFrame
-    if isinstance(needle, pd.DataFrame):
-        needle_list = needle.values.flatten().tolist()
-    else:
-        needle_list = [needle]
-    
-    results = [] 
-    for needle_item in needle_list:
-        # Calculate similarity scores and round to 2 decimal places
-        scores = [(index + 1, round(algo_func(needle_item, item), 2)) for index, item in enumerate(haystack)]
-        
-        # Sort based on scores in descending order
-        scores.sort(key=lambda x: x[1], reverse=True)
-        # Append the top index and score to results as a list
-        results.append(list(scores[0]))
-
-    # results is 2D list, e.g. [[1, 0.75], [2, 0.85]]
-    return results
-```
-You can then use the function in your workbook as many times as you need to with another `PY` cell that passes the arguments to the function:
-
-```python
-nltk_distance(xl("A1"), xl("B1:B20"), "jaro")
-```
 
 ## LAMBDAs
 

@@ -1,4 +1,4 @@
 export default {
-  "functions": "Functions",
-  "nlp": "Text Analysis",
+  "python": "Python Functions",
+  "nlp": "Text",
 }

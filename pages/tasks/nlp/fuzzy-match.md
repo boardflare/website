@@ -8,18 +8,21 @@ Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/A
 
 See this [workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) for demos of all fuzzy matching functions.
 
-## Excel Apps
+## Fuzzy Matching in Excel
 
-- [Fuzzy Match for Excel](/apps/excel/fuzzy-match) is our Excel add-in that provides a fuzzy matching version of XLOOKUP and XMATCH functions.
-- [Python for Excel](/apps/excel/python) provides access to the Python functions listed below, along with the ability to customize the functions to your specific needs.
+There are several ways to perform fuzzy matching in Excel:
 
-## Python Functions
+- [Fuzzy Match for Excel](/apps/excel/fuzzy-match) add-in provides a fuzzy matching version of XLOOKUP and XMATCH functions.
+- [Python for Excel](/apps/excel/python) provides access to the [Fuzzy Matching Python Functions](#fuzzy-matching-python-functions) below.
 
-| Function                                                                 | BOARDFLARE RUNPY | Excel PY | Description                                                                                                   |
-|--------------------------------------------------------------------------|:----------------:|:--------:|---------------------------------------------------------------------------------------------------------------|
-| [text_distance](/tasks/nlp/fuzzy-match/text_distance)                    |    <center>✅</center>    |          | Uses [`textdistance`](https://github.com/life4/textdistance) library to calculate the normalized similarity of strings using various algorithms.       |
-| [nltk_distance](/tasks/nlp/fuzzy-match/nltk_distance)                    |    <center>✅</center>    |  <center>✅</center>  | Uses [`nltk`](https://github.com/nltk/nltk) library which has fewer algorithms than `textdistance` but demonstrates compatibility across runtimes. |
-| [thefuzz_distance](/tasks/nlp/fuzzy-match/thefuzz_distance)              |                  |  <center>✅</center>  | Uses [`thefuzz`](https://github.com/seatgeek/thefuzz) library which has a higher performance implementation of the levenshtein algorithm, ideal for large datasets. |
+## Fuzzy Matching Python Functions
+
+| Name | Description | Boardflare RUNPY() | Excel PY() |
+|:----:|:------------|:-------:|:----------:|
+| [text_distance](/functions/text/fuzzy/text_distance) | Uses [`textdistance`](https://github.com/life4/textdistance) library. Supports the widest range of algorithms. | ✅ | - |
+| [nltk_distance](/functions/text/fuzzy-match/nltk_distance) | Uses [`nltk`](https://github.com/nltk/nltk) library. Supports `jaccard`, `jaro`, and `levenshtein`. | ✅ | ✅ |
+| [thefuzz_distance](/functions/text/fuzzy/thefuzz_distance) | Uses [`thefuzz`](https://github.com/seatgeek/thefuzz) library. Only supports `levenshtein`, but uses algorithm which is 10x faster than others. | - | ✅ |
+
 
 ## Similarity Algorithms
 

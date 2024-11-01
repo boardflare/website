@@ -9,6 +9,13 @@ export default {
       "toc": false
     }
   },
+  "apps": {
+    "title": "Apps",
+    "type": "page",
+    "theme": {
+      "breadcrumb": false
+    }
+  },
   "functions": {
     "title": "Functions",
     "type": "page",
@@ -18,13 +25,6 @@ export default {
   },
   "tasks": {
     "title": "Tasks",
-    "type": "page",
-    "theme": {
-      "breadcrumb": false
-    }
-  },
-  "apps": {
-    "title": "Apps",
     "type": "page",
     "theme": {
       "breadcrumb": false

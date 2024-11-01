@@ -1,12 +1,16 @@
-# Functions
+# Python Functions for Excel
 
-Our functions for Excel are grouped by task categories (e.g. Text Analysis > Fuzzy Matching).  Each Python function (e.g. `text_distance`) has one or more example Excel LAMBDA functions based on this function (e.g. `FUZZYMATCH.TD`), as explained further below.  This gives you the best of both worlds: the power of Python, and the ease of customization and simplicity of Excel LAMBDAs.
+## Overview
 
-## Python
+We are in the process of building a repository of Python functions for common Excel tasks.  You can find a directory of available functions by task in the left navigation (e.g. [Fuzzy Match](/tasks/nlp/fuzzy-match#python-functions)).  The Python functions can be run in Excel using either the [BOARDFLARE.RUNPY()](/apps/excel/python) add-in function or the native [Excel PY()](https://support.microsoft.com/en-us/office/introduction-to-python-in-excel-55643c2e-ff56-4168-b1ce-9428c8308545) feature as noted.  See [Run Python Functions in Excel](#run-python-functions-in-excel) below for more details.
 
-Python functions can be run in Excel using either [Boardflare's Python for Excel](/apps/excel/python) add-in or [Microsoft's Python in Excel](https://support.microsoft.com/en-us/office/introduction-to-python-in-excel-55643c2e-ff56-4168-b1ce-9428c8308545).  The main differences between the two are outlined in the table below:
+## Run Python in Excel
 
-| Feature            | `BOARDFLARE.RUNPY`                                      | Excel `PY`                                                                |
+### Runtime Options
+
+Python functions can be run directly in Excel using either [Boardflare's Python for Excel](/apps/excel/python) add-in or [Microsoft's Python in Excel](https://support.microsoft.com/en-us/office/introduction-to-python-in-excel-55643c2e-ff56-4168-b1ce-9428c8308545).  The main differences between the two are outlined in the table below:
+
+| Feature            | `BOARDFLARE.RUNPY()`                                      | Excel `PY()`                                                                |
 |--------------------|---------------------------------------------------------|---------------------------------------------------------------------------|
 | Integration        | Excel function                                          | Special cell feature                                                      |
 | Usage              | Can be used in Excel formulas, such as LAMBDA functions | Interactive use, similar to Jupyter notebook.                             |
@@ -24,7 +28,7 @@ Due to differences in packages supported in each Python enviroment, not all func
 
 One of the key features of `BOARDFLARE.RUNPY` is its ability to be used in Excel formulas, such as a LAMBDA function, as discussed below.
 
-## LAMBDA
+### Use in LAMBDA Functions
 
 For each Python functions that can be used in `BOARDFLARE.RUNPY`, we typically provide several [Excel LAMBDA](https://support.microsoft.com/en-us/office/lambda-function-bd212d27-1cd1-4321-a34a-ccbf254b8b67) functions which extend the Python function to provide additional convenience features,  address specialized use-cases, or just simplify use for end-users.
 
