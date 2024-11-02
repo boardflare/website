@@ -6,10 +6,6 @@ import { Callout } from 'nextra/components'
 
 # Python for Excel
 
-<Callout type="warning" emoji="🧪">
-  **EXPERIMENTAL**:  Expect breaking changes.
-</Callout>
-
 <a href="https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview">
     <img 
         src="/images/MS_AppSource.png" 
@@ -18,7 +14,7 @@ import { Callout } from 'nextra/components'
     />
 </a>
 
-## Python as a Function
+## Overview
 
 Run Python code as a function to power your formulas and LAMBDA functions, which is not possible with Excel's native `PY` feature.  It is as simple as the following:
     
@@ -257,12 +253,13 @@ Some key use-cases we see are as follows:
 
 ## Changelog
 
-1.0.6 - 2024-10-28
+1.0.6 - 2024-11-01
+- Removed `PY` and `PY.ARR` functions.
 - No longer throws error if you pass None as an argument to `RUNPY`, so you need to handle this in your code (e.g. if you pass an empty cell). See [Arguments](#arguments) for more details.
 
 1.0.5 - 2024-10-22
 - `RUNPY` is a new function which handles both arrays and scalars similar to the Excel's `PY`.
-- `PY` and `PY.ARR` functions have been deprecated and will be removed on Dec 1, 2024 to avoid confusion.
+- `PY` and `PY.ARR` functions have been deprecated and will be removed on Nov 1, 2024 to avoid confusion.
 
 1.0.4 - 2024-09-25
 - Added ability to load code from URL to `PY` and `PY.ARR` functions.  `PY.BETA` now has no new features, but will be where new features are tested before moving to `PY` and `PY.ARR`.
