@@ -8,20 +8,18 @@ Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/A
 
 ## Excel Add-ins
 
-There are several ways to perform fuzzy matching in Excel:
+There are two options to perform fuzzy matching in Excel:
 
-- [Fuzzy Match for Excel](/apps/excel/fuzzy-match) add-in provides a fuzzy matching version of XLOOKUP and XMATCH functions.
+- [Fuzzy Match for Excel](/apps/excel/fuzzy-match) add-in currently provides Bitap implementation of Levenshtein.
 - [Python for Excel](/apps/excel/python) provides access to the fuzzy matching Python functions below.
 
 ## Python Functions
 
-| Name | Description | Boardflare RUNPY() | Excel PY() | Edit in Jupyter |
-|:----:|:------------|:-------:|:----------:|:-------:|
-| [text_distance](/functions/text/fuzzy-match/text_distance) | Uses [`textdistance`](https://github.com/life4/textdistance) library. Supports the widest range of algorithms. | ✅ | - | [Open](https://addins.boardflare.com/functions/prod/jupyterlite/lab/index.html?path=text/fuzzy-match/text_distance.ipynb) |
-| [nltk_distance](/functions/text/fuzzy-match/nltk_distance) | Uses [`nltk`](https://github.com/nltk/nltk) library. Supports `jaccard`, `jaro`, and `levenshtein`. | ✅ | ✅ | [Open](https://addins.boardflare.com/functions/prod/jupyterlite/lab/index.html?path=text/fuzzy-match/nltk_distance.ipynb) |
-| [thefuzz_distance](/functions/text/fuzzy-match/thefuzz_distance) | Uses [`thefuzz`](https://github.com/seatgeek/thefuzz) library. Only supports `levenshtein`, but uses algorithm which is 10x faster than others. | - | ✅ | [Open](https://addins.boardflare.com/functions/prod/jupyterlite/lab/index.html?path=text/fuzzy-match/thefuzz_distance.ipynb) |
-
-See this [workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) for demos of all fuzzy matching functions.
+| Name | Description | Boardflare RUNPY() | Excel PY() | Edit in Jupyter | Demo Workbook |
+|:----:|:------------|:-------:|:----------:|:-------:|:-------:|
+| [text_distance](/functions/text/fuzzy-match/text_distance) | Uses [`textdistance`](https://github.com/life4/textdistance) library. Supports the widest range of algorithms. | ✅ | - | [Open](https://addins.boardflare.com/functions/prod/jupyterlite/lab/index.html?path=text/fuzzy-match/text_distance.ipynb) | [Open](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) |
+| [nltk_distance](/functions/text/fuzzy-match/nltk_distance) | Uses [`nltk`](https://github.com/nltk/nltk) library. Supports `jaccard`, `jaro`, and `levenshtein`. | ✅ | ✅ | [Open](https://addins.boardflare.com/functions/prod/jupyterlite/lab/index.html?path=text/fuzzy-match/nltk_distance.ipynb) | [Open](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) |
+| [thefuzz_distance](/functions/text/fuzzy-match/thefuzz_distance) | Uses [`thefuzz`](https://github.com/seatgeek/thefuzz) library. Only supports `levenshtein`, but uses algorithm which is 10x faster than others. | - | ✅ | [Open](https://addins.boardflare.com/functions/prod/jupyterlite/lab/index.html?path=text/fuzzy-match/thefuzz_distance.ipynb) | [Open](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) |
 
 ## Similarity Algorithms
 
