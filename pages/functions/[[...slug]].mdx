@@ -4,7 +4,7 @@ import { buildDynamicMDX, buildDynamicMeta } from 'nextra/remote'
 export const getBaseUrl = () => {
   return process.env.NODE_ENV === 'development'
     ? 'https://localhost:4000'
-    : 'https://addins.boardflare.com/functions/prod'
+    : 'https://functions.boardflare.com/'
 }
 
 export async function getStaticProps({ params }) {
