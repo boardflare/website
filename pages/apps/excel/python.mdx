@@ -6,8 +6,8 @@ import { Callout } from 'nextra/components'
 
 # Python for Excel
 
-<Callout type="warning" emoji="🧪">
-  **EXPERIMENTAL**:  Expect breaking changes.
+<Callout type="info" emoji="🚧">
+  **PREVIEW**:  Expect changes.  Please provide [feedback](/company/support).
 </Callout>
 
 <a href="https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview">
@@ -18,7 +18,7 @@ import { Callout } from 'nextra/components'
     />
 </a>
 
-## Python as a Function
+## Overview
 
 Run Python code as a function to power your formulas and LAMBDA functions, which is not possible with Excel's native `PY` feature.  It is as simple as the following:
     
@@ -162,9 +162,8 @@ If the last expression returns another Python type such as numpy array, pandas D
 
 ### Workbooks
 
-Here are some example workbooks, which also include a demo of using Excel's `PY` feature for comparison:
-- [Simple Examples](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EZ3eKR1wcltImmG2OA4sX-kB8RSA2cvJFM-hPoQGGdwMmA?e=m0eFdd)
-- [Fuzzy Matching](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ)
+- [Simple Examples](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EZ3eKR1wcltImmG2OA4sX-kB8RSA2cvJFM-hPoQGGdwMmA?e=m0eFdd) shows basic usage and also demonstrates how the same code can also be used in Excel PY().
+- [Fuzzy Matching with text_distance](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EZGMy4IzfYhEsB4Vvi72r-YBIsneUMXilM8_Cv2T-WTvvQ?e=jVv6Bq) is a more advanced example using an imported Python package and loads code from our functions repository.  Click on the documentation link in the workbook for more details.
 
 ### Code
 
@@ -257,12 +256,15 @@ Some key use-cases we see are as follows:
 
 ## Changelog
 
+1.0.7 - 2024-11-01
+- Removed deprecated `PY` and `PY.ARR` functions.
+
 1.0.6 - 2024-10-28
 - No longer throws error if you pass None as an argument to `RUNPY`, so you need to handle this in your code (e.g. if you pass an empty cell). See [Arguments](#arguments) for more details.
 
 1.0.5 - 2024-10-22
 - `RUNPY` is a new function which handles both arrays and scalars similar to the Excel's `PY`.
-- `PY` and `PY.ARR` functions have been deprecated and will be removed on Dec 1, 2024 to avoid confusion.
+- `PY` and `PY.ARR` functions have been deprecated and will be removed on Nov 1, 2024 to avoid confusion.
 
 1.0.4 - 2024-09-25
 - Added ability to load code from URL to `PY` and `PY.ARR` functions.  `PY.BETA` now has no new features, but will be where new features are tested before moving to `PY` and `PY.ARR`.

@@ -8,10 +8,14 @@ title: Sentiment Analysis
 
 [Sentiment analysis](https://paperswithcode.com/task/sentiment-analysis) classifies text as having positive or negative overall sentiment, and is commonly used in customer support, market research, finance, etc.  Click on a buttons below to get started with the Excel or Sheets extension.
 
-## Apps
+### Spreadsheet Apps
 
 - [Sentiment Analysis for Excel](/apps/excel/sentiment-analysis)
 - [Sentiment Analysis for Sheets](/apps/sheets/sentiment-analysis)
+
+### Python Functions
+
+- [azure_sentiment](/functions/text/sentiment-analysis/azure_sentiment).  Uses the [Azure AI Language](https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/overview?tabs=prebuilt) service to analyze sentiment and opinions in the provided documents. It returns an array containing the sentiment analysis results with sentiment polarity at the document, sentence, and aspect levels. It also provides the opinions used at the aspect level.
 
 ## Models
 
