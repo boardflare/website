@@ -4,22 +4,18 @@ title: Fuzzy Matching
 
 # Fuzzy Matching
 
+## Overview
+
 Fuzzy matching, or [approximate string matching](https://en.wikipedia.org/wiki/Approximate_string_matching), refers to process of finding strings that are similar but may contain typos, misspellings, or other small differences. Fuzzy matching algorithms are designed to handle these variations and find the best matches for a given search string in a dataset of strings along with their edit distance or similarity.
 
-## Excel Add-ins
+### Spreadsheet Apps
 
-There are two options to perform fuzzy matching in Excel:
+- [Fuzzy Match for Excel](/apps/excel/fuzzy-match).  Add-in uses Bitap algorithm to provide fuzzy matching versions of `XLOOKUP`, `XLOOKUP`.  
+- [Python for Excel](/apps/excel/python).  Provides access to Python functions below.
 
-- [Fuzzy Match for Excel](/apps/excel/fuzzy-match) add-in currently provides Bitap implementation of Levenshtein.
-- [Python for Excel](/apps/excel/python) provides access to the fuzzy matching Python functions below.
+### Python Functions
 
-## Python Functions
-
-| Name | Description | Boardflare RUNPY() | Excel PY() | Source Code | Demo Workbook |
-|:----:|:------------|:-------:|:----------:|:-------:|:-------:|
-| [text_distance](/functions/text/fuzzy-match/text_distance) | Uses [`textdistance`](https://github.com/life4/textdistance) library. Supports the widest range of algorithms. | ✅ | - | [Download](https://functions.boardflare.com/notebooks/text/fuzzy-match/text_distance.ipynb) | [Open](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) |
-| [nltk_distance](/functions/text/fuzzy-match/nltk_distance) | Uses [`nltk`](https://github.com/nltk/nltk) library. Supports `jaccard`, `jaro`, and `levenshtein`. | ✅ | ✅ | [Download](https://functions.boardflare.com/notebooks/text/fuzzy-match/nltk_distance.ipynb) | [Open](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) |
-| [thefuzz_distance](/functions/text/fuzzy-match/thefuzz_distance) | Uses [`thefuzz`](https://github.com/seatgeek/thefuzz) library. Only supports `levenshtein`, but uses algorithm which is 10x faster than others. | - | ✅ | [Download](https://functions.boardflare.com/notebooks/text/fuzzy-match/thefuzz_distance.ipynb) | [Open](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Eb_nCI4mR6tImGx_S1hPVs8B4UYmrJRrkk0_Grai6A4adg?e=xfUuNQ) |
+- [text_distance](/functions/text/fuzzy-match/text_distance).  Implements a wide range of [similarity algorithms](#similarity-algorithms) as outlined below.
 
 ## Similarity Algorithms
 

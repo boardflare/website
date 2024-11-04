@@ -18,6 +18,7 @@ export default {
   },
   "functions": {
     "title": "Functions",
+    "display": "hidden",
     "type": "page",
     "theme": {
       "breadcrumb": false
