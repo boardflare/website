@@ -86,6 +86,38 @@ def azure_sentiment(documents, language_key, language_endpoint):
 azure_sentiment(arg1, arg2, arg3)
 ```
 
+## Output
+
+The figure below illustrates an example of the results returned by the Azure Sentiment Analysis service for a single document that contains two sentences as follows: `The food and service were unacceptable. The concierge was nice, however..`.
+
+```mermaid
+flowchart TD
+    Doc["Document: 'The **food** and **service** were **unacceptable**. The **concierge** was **nice**, however.'<br>Sentiment: mixed<br>pos:0.3 neu:0.17 neg:0.52"]
+    
+    Doc --> S1[Sentence: 'The **food** and **service** were **unacceptable**.'<br>Sentiment: negative<br>pos:0.0 neu:0.0 neg:1.0]
+    Doc --> S2[Sentence: 'The **concierge** was **nice**, however.'<br>Sentiment: positive<br>pos:0.61 neu:0.35 neg:0.05]
+    
+    S1 --> A1[Aspect: **food**<br>Sentiment: negative<br>pos:0.01 neg:0.99]
+    S1 --> A2[Aspect: **service**<br>Sentiment: negative<br>pos:0.01 neg:0.99]
+    S2 --> A3[Aspect: **concierge**<br>Sentiment: positive<br>pos:1.0 neg:0.0]
+    
+    A1 --> O1[Opinion: **unacceptable**<br>Sentiment: negative<br>pos:0.01 neg:0.99]
+    A2 --> O2[Opinion: **unacceptable**<br>Sentiment: negative<br>pos:0.01 neg:0.99]
+    A3 --> O3[Opinion: **nice**<br>Sentiment: positive<br>pos:1.0 neg:0.0]
+
+    style Doc fill:#f9f,stroke:#333,stroke-width:2px
+    style S1 fill:#bbf,stroke:#333,stroke-width:2px
+    style S2 fill:#bbf,stroke:#333,stroke-width:2px
+    style A1 fill:#bfb,stroke:#333,stroke-width:2px
+    style A2 fill:#bfb,stroke:#333,stroke-width:2px
+    style A3 fill:#bfb,stroke:#333,stroke-width:2px
+    style O1 fill:#fbf,stroke:#333,stroke-width:2px
+    style O2 fill:#fbf,stroke:#333,stroke-width:2px
+    style O3 fill:#fbf,stroke:#333,stroke-width:2px
+```
+
+The results are then flattened or denormalized into a tabular format where each row contains the sentiment analysis results for a single aspect and duplicates the parent sentence and document.  The columns in the output include the document index, document sentiment, document confidence scores, sentence text, sentence sentiment, sentence confidence scores, aspect text, aspect sentiment, aspect confidence scores, opinion text, opinion sentiment, and opinion confidence scores.
+
 ## Excel Integration
 
 To run this function from Excel we need to use the `BOARDFLARE.RUNPY` function which is available in the [Boardflare Python for Excel add-in](/apps/excel/python).  This function allows you to run Python code from Excel and return the results in a tabular format.  The `BOARDFLARE.RUNPY` function takes a path to the Python code as the first argument, followed by the arguments to pass to the Python function.
