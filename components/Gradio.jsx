@@ -4,7 +4,7 @@ export function Gradio({ notebookPath }) {
   useEffect(() => {
     async function fetchNotebook() {
       try {
-        const baseUrl = 'https://addins.boardflare.com/python/preview/notebooks/';
+        const baseUrl = 'https://functions.boardflare.com/notebooks/';
         const response = await fetch(baseUrl + notebookPath);
         const notebook = await response.json();
 
