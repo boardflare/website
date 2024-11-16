@@ -1,4 +1,5 @@
 import { useConfig } from 'nextra-theme-docs'
+import { useRouter } from 'next/router'
 
 const logo = (
     <span style={{ display: "flex", alignItems: "center" }}>
@@ -30,19 +31,27 @@ export default {
             </span>
         )
     },
-    useNextSeoProps() {
-        return {
-            titleTemplate: '%s – Boardflare'
-        }
+    head() {
+        const { asPath } = useRouter()
+        const { frontMatter } = useConfig()
+        const url =
+            'https://www.boardflare.com' + asPath
+
+        return (
+            <>
+                <title>{frontMatter.title ? `${frontMatter.title} – Boardflare` : 'Boardflare'}</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+                <meta property="og:url" content={url} />
+                <link rel="canonical" href={url} />
+                <meta property="og:title" content={frontMatter.title || 'Boardflare'} />
+                <meta
+                    property="og:description"
+                    content={frontMatter.description || 'AI as a Function'}
+                />
+            </>
+        )
     },
-    head: (
-        <>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <meta property="og:title" content="Boardflare" />
-            <meta property="og:description" content="Text analysis" />
-            <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        </>
-    ),
     search: {
         placeholder: 'Search...',
     },
