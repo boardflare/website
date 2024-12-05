@@ -2,7 +2,21 @@
 title: Home
 ---
 import Image from 'next/image'
-import Link from 'next/link';
+import Link from 'next/link'
+import Head from 'next/head'
+
+<Head>
+  <script type="application/ld+json">
+    {`
+      {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "name": "Boardflare",
+        "url": "https://www.boardflare.com"
+      }
+    `}
+  </script>
+</Head>
 
 <div>
     <div className="text-8xl font-bold text-center tracking-tight text-blue-900 mt-16 mb-12">
