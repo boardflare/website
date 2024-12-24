@@ -75,6 +75,63 @@ response.json()
 
 The Pyodide runtime runs in a [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API), which is a separate thread from the main Excel add-in thread, and does not, as far as we know, have direct access to any Excel APIs or your workbook other than the data you pass to it as arg1, arg2, etc.  However, hackers are creative and tend to find security loopholes, so just like with VBA, you should never run code from an untrusted source.
 
+## Code Editor 🆕
+
+The add-in now includes a built-in Monaco code editor (same as VS Code) that enables you to quickly build a Python function and turn it into a named LAMBDA function in Excel.  Let's consider the following Python function as an example:
+
+```python
+def hello(firstname, lastname):
+    """ Returns a greeting. """
+    greeting = f"Hello {firstname, lastname}!"
+    return greeting
+    
+# Example arguments.
+examples = [["Nancy", "Morgan"], ["Ming", "Lee"]]
+```
+
+When you save this function, the name `hello` and arguments `firstname, lastname` will be used to create a named LAMBDA `HELLO (firstname, lastname)`.  The code is saved to a public url for now, so don't put anything sensitive in it.  We plan to add the option to save code to OneDrive or SharePoint in the future so you can secure it.  Under the hood, the LAMBDA function will be of the following form:
+
+```excel
+=LAMBDA(firstname, lastname, BOARDFLARE.RUNPY("https://getcode.boardflare.workers.dev/?uid=ANON:dffad5eb-604c-438b-9c44-fb81af2e3be3&timestamp=2024-12-23T22:30:28.041Z&name=HELLO&return=code", firstname, lastname))
+```
+
+Our original plan was to embed the code directly in the LAMBDA, but Excel on the web has a 255 character limit for formulas in the name manager, so we decided to put it in the cloud for now.  While the url is publicly accessible, it is practically impossible to guess as a large random uuid is used. This may not be ideal for everyone, so we are open to feedback on this, and it may change in the future.
+
+If you follow the [code url](https://getcode.boardflare.workers.dev/?uid=ANON:dffad5eb-604c-438b-9c44-fb81af2e3be3&timestamp=2024-12-23T22:30:28.041Z&name=HELLO&return=code) above, you will notice that the line `result = hello(arg1)` has been added to the code automatically when you save the function, so the actual code being used by RUNPY is as follows:
+
+```python
+def hello(firstname, lastname):
+    """ Returns a greeting. """
+    greeting = f"Hello {firstname, lastname}!"
+    return greeting
+
+result = hello(arg1, arg2)
+```
+
+The docstring of the function is also used to create a comment in the LAMBDA function, so users can understand what it does.  
+
+![Hello Function](/images/hello-function.png)
+
+The `examples` list is used to test your function, so you can see the output in the console area of the add-in task pane.
+
+### Using the Editor
+
+1. When you first open the add-in, you'll see a sample function in the editor that you can modify or use as a template.
+
+2. Write your Python function following these guidelines:
+   - Define a function that takes the arguments you need
+   - Include a docstring to document your function
+   - Add example arguments in an `examples` list for testing
+   - The function name will become your Excel function name
+
+3. Click "Save" to:
+   - Create an Excel named function
+   - Store your code securely
+   - Make the function immediately available
+
+4. You can load existing functions using the dropdown menu at the top of the editor.
+
+
 ## RUNPY Function
 
 The `RUNPY` function executes Python code and returns the result.  Optional positional arguments `arg1, arg2, ...` (similar to Python *args) are set as globals to pass as arguments of your Python function.
