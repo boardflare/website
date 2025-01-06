@@ -2,187 +2,72 @@
 title: Python for Excel
 ---
 
-import { Callout } from 'nextra/components'
-
 # Python for Excel
 
-<Callout type="info" emoji="🚧">
-  **PREVIEW**:  Expect changes.  Please provide [feedback](/company/support).
-</Callout>
-
 <a href="https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview">
-    <img 
-        src="/images/MS_AppSource.png" 
-        alt="AppSource"
-        style={{ paddingTop: '10px', width: '150px' }}
-    />
+    <img className="mt-2 w-40" src="/images/MS_AppSource.png" />
 </a>
 
 ## Overview
 
-Run Python code as a function to power your formulas and LAMBDA functions, which is not possible with Excel's native `PY` feature.  It is as simple as the following:
+The `BOARDFLARE.RUNPY` function enables you to run Python code in formulas and LAMBDA functions, which is not possible with Excel's native `PY` feature.  It is as simple as the following:
     
 ```excel
 =LAMBDA(x, BOARDFLARE.RUNPY("arg1 + 2", x))
 =MYFUNC(5) = 7
 ```
-This enables you to build custom functions using Python without building a custom Excel add-in.  This was originally conceived as an internal tool for prototyping custom functions based on Python.  We realized that others could benefit from the same capability, so we decided to publish it as a free add-in.
-
-## Benefits
+This enables you to build custom functions using Python without building a custom Excel add-in.  This was originally conceived as an internal tool for prototyping custom functions based on Python, and we decided to publish it as a free add-in.
 
 This is a minimalist tool which is not designed to compete with the native [Python in Excel](https://support.microsoft.com/en-us/office/get-started-with-python-in-excel-a33fbcbe-065b-41d3-82cf-23d05397f53d), but it does offer some unique benefits as follows:
 
-✅ Use Python as a function in formulas and LAMBDAs.<br/>
+✅ Use Python in formulas and named LAMBDA functions.<br/>
 🆓 Free add-in, no Office 365 license required.<br/>
 🌐 Works in Excel for web as well as desktop.<br/>
 ☁️ Runtime has network access for API calls (need CORS).<br/>
 📦 Import custom packages (pure Python only).<br/>
-🔒 Runs locally, so no data is shared outside Excel.<br/>
-➡️ Code can be loaded from a URL (e.g. GitHub).<br/>
-🚀 Performance is only limited by your CPU.<br/>
+🔒 Code is stored in your workbook and runs locally.<br/>
 
-## Python Runtime
+## Python Packages
 
-[Pyodide](https://pyodide.org/en/stable/index.html) is the Python runtime used by the add-in, which is based on [WebAssembly](https://webassembly.org/) running in the browser used by Excel desktop and web to host add-ins.  This is currently running Python 3.12, but has limitations as discussed in the [Pyodide documentation](https://pyodide.org/en/stable/usage/wasm-constraints.html).
+[Pyodide](https://pyodide.org/en/stable/index.html) is the Python runtime used by the add-in, and includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, and depend on any packages that are either built into pyodide or also pure Python.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work.
 
-### Packages
-
-Pyodide includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, which means there is a Python wheel that ends with `-py3-none-any.whl`, e.g. `beautifulsoup4-4.12.3-py3-none-any.whl`.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work, but double-check the wheel.
-
-You do not need to install packages, just import them in your code. Your code will be scanned for imports and any found will be handled for you using `micropip` in the background and the package will be downloaded if needed from PyPI. If you try to import an external package (not part of the Python standard library or one of the built-in packages) for which there is not a pure Python wheel available on PyPI, an error will be thrown.
-
-However, specific imports (e.g., `from azure.core.credentials import AzureKeyCredential`) will not automatically install the relevant package. You need to handle these manually using `await micropip.install(['package1', 'package2'])`. `micropip` has already been imported for you.  For example:
+Your code will be scanned for imports and any found will be handled for you using `micropip` in the background and the package will be downloaded if needed from PyPI. If you try to import an external package (not part of the Python standard library or one of the built-in packages) for which there is not a pure Python wheel available on PyPI, an error will be thrown.  However, specific imports (e.g., `from azure.core.credentials import AzureKeyCredential`) will not automatically install the relevant package. You need to handle these manually using `await micropip.install(['package1', 'package2'])`. `micropip` has already been imported for you.  For example:
 
 ```python
 await micropip.install(['azure-ai-textanalytics'])
-
-from azure.core.credentials import AzureKeyCredential
 from azure.ai.textanalytics import TextAnalyticsClient
 ```
 
-### Network Access
-
-Network access is available to the Pyodide runtime via JavaScript. You should be able to access any public API that supports [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).  For example, you can use the `requests` package to access APIs that support CORS. For example, the following code fetches the GitHub API:
-  
-  ```python
-import requests
-
-response = requests.get('https://api.github.com')
-response.json()
-```
-
-### Security
-
-The Pyodide runtime runs in a [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API), which is a separate thread from the main Excel add-in thread, and does not, as far as we know, have direct access to any Excel APIs or your workbook other than the data you pass to it as arg1, arg2, etc.  However, hackers are creative and tend to find security loopholes, so just like with VBA, you should never run code from an untrusted source.
-
 ## Code Editor 🆕
 
-The add-in now includes a built-in Monaco code editor (same as VS Code) that enables you to quickly build a Python function and turn it into a named LAMBDA function in Excel.  Let's consider the following Python function as an example:
+The simplest way to create a named LAMBDA function using Python is to click on the `Editor` tab, write a Python function, click `Save` and a named LAMBDA will be created automatically.  Let's say you write the following Python function:
 
 ```python
-def hello(firstname, lastname):
+def hello(first, last):
     """ Returns a greeting. """
-    greeting = f"Hello {firstname, lastname}!"
+    greeting = f"Hello {first, last}!"
     return greeting
     
 # Example arguments.
 examples = [["Nancy", "Morgan"], ["Ming", "Lee"]]
 ```
 
-When you save this function, the name `hello` and arguments `firstname, lastname` will be used to create a named LAMBDA `HELLO (firstname, lastname)`.  The code is saved to a public url for now, so don't put anything sensitive in it.  We plan to add the option to save code to OneDrive or SharePoint in the future so you can secure it.  Under the hood, the LAMBDA function will be of the following form:
+When you save this function, the function name `hello` and arguments `first, last` will be used to create a named LAMBDA `HELLO (first, last)`.  The Python code is saved to the workbook settings, and the LAMBDA function will be of the following form:
 
 ```excel
-=LAMBDA(firstname, lastname, BOARDFLARE.RUNPY("https://getcode.boardflare.workers.dev/?uid=ANON:dffad5eb-604c-438b-9c44-fb81af2e3be3&timestamp=2024-12-23T22:30:28.041Z&name=HELLO&return=code", firstname, lastname))
+=LAMBDA(first, last, BOARDFLARE.RUNPY("workbook-settings:hello", first, last))
 ```
-
-Our original plan was to embed the code directly in the LAMBDA, but Excel on the web has a 255 character limit for formulas in the name manager, so we decided to put it in the cloud for now.  While the url is publicly accessible, it is practically impossible to guess as a large random uuid is used. This may not be ideal for everyone, so we are open to feedback on this, and it may change in the future.
-
-If you follow the [code url](https://getcode.boardflare.workers.dev/?uid=ANON:dffad5eb-604c-438b-9c44-fb81af2e3be3&timestamp=2024-12-23T22:30:28.041Z&name=HELLO&return=code) above, you will notice that the line `result = hello(arg1)` has been added to the code automatically when you save the function, so the actual code being used by RUNPY is as follows:
-
-```python
-def hello(firstname, lastname):
-    """ Returns a greeting. """
-    greeting = f"Hello {firstname, lastname}!"
-    return greeting
-
-result = hello(arg1, arg2)
-```
-
-The docstring of the function is also used to create a comment in the LAMBDA function, so users can understand what it does.  
+The docstring of the Python function is also used to create a description for the named LAMBDA function.  
 
 ![Hello Function](/images/hello-function.png)
 
-The `examples` list is used to test your function, so you can see the output in the console area of the add-in task pane.
+Each time the function is run, BOARDFLARE.RUNPY loads the code from the workbook settings and runs it.  Since the code and named LAMBDA are both stored in the workbook, anyone who opens the workbook can use the function.  If you want to copy the function to another workbook, for now you need to copy the code from the `Editor` tab and paste it into the `Editor` tab of the other workbook.
 
-### Using the Editor
-
-1. When you first open the add-in, you'll see a sample function in the editor that you can modify or use as a template.
-
-2. Write your Python function following these guidelines:
-   - Define a function that takes the arguments you need
-   - Include a docstring to document your function
-   - Add example arguments in an `examples` list for testing
-   - The function name will become your Excel function name
-
-3. Click "Save" to:
-   - Create an Excel named function
-   - Store your code securely
-   - Make the function immediately available
-
-4. You can load existing functions using the dropdown menu at the top of the editor.
-
-
-## RUNPY Function
-
-The `RUNPY` function executes Python code and returns the result.  Optional positional arguments `arg1, arg2, ...` (similar to Python *args) are set as globals to pass as arguments of your Python function.
-
-```excel
-=BOARDFLARE.RUNPY(code, [arg1],[arg2],...)
-```
-
-```excel
-=BOARDFLARE.RUNPY("2 + arg1", 3)
-=5
-```
-
-Here is a [brief video](https://youtu.be/ngxM7VRkkgk) showing how to use the `RUNPY` function.
-
-### Code
-
-`code` must be a string containing Python code, which can be a simple expression or a block of code.  `code` can also be a URL, e.g. `https://gist.github.com...code.py`, which must return code in plain text.  Note that the URL must be `https` and return an `Access-Control-Allow-Origin` [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) header.
-
-Your Python code can import any of the built-in packages in Pyodide, as well as any pure Python package from PyPI, as per the [Python Packages](#python-packages) section above.
-
-The value of the last expression in your Python code is returned, similar to a Jupyter notebook cell, or Excel `PY`.  A good practice is to wrap your code in a function, and then call that function on the last line.  For example, the following code returns the sum of the arguments:
-
-```python
-def add(a, b):
-  return a + b
-
-add(arg1,arg2)
-```
-Or, the same thing using numpy would be as follows:
-
-```python
-import numpy as np
-
-def add(a, b):
-    return np.add(a, b).item()
-
-result = add(arg1, arg2)
-```
-Note that the last expression must return one of [these types](#return-types): int, float, str, bool, or list.
-
-Any output to `stdout` or `stderr` is displayed in the Console area of the add-in task pane, but it is only returned at the completion of the execution of your code, so you can't use use `print` statements to view progress of long-running operations.
+The `examples` variable contains a list of arguments you can use to test your function.  When you click `Test` in the editor you will be taken to the `Logs` tab where you view the output from executing the function with the example arguments.  When you click `Save`, a demo sheet is created which invokes the function with the examples. 
 
 ### Arguments
 
-| Argument | Type            | Optional | Description                                                                |
-|----------|-----------------|----------|----------------------------------------------------------------------------|
-| code     | string          | No       | Python code text, or URL as per [above](#code).  |
-| arg1     | scalar or array | Yes      | Repeating argument that sets global variables `arg1, arg2, ..` which you can then use in your code to pass in data.                             |
-
-The table below shows how argument values for `arg1, arg2, ..` are converted from Excel to Python types:
+The arguments of your Excel function will be converted to the following Python types before they are passed to your Python function:
 
 | Excel Type | Example                        | Python Type |
 |------------|--------------------------------|-------------|
@@ -196,14 +81,9 @@ The table below shows how argument values for `arg1, arg2, ..` are converted fro
 | Null       | Unset optional LAMBDA argument | None        |
 | Null       | Arg skipped with `,`           | None        |
 
-- Argument values are cleared after each function invocation.
-- Arrays are converted to a pandas DataFrame without headers.
-- Skipping an arg with a comma, sets that arg to None. e.g. `=BOARDFLARE.RUNPY("some code",,3)` sets `arg1 = None` and `arg2 = 3`.
-- Unset optional args in a LAMBDA also become `None`. e.g. `=LAMBDA([x], BOARDFLARE.RUNPY("3 + arg1", x))()` will set `arg1 = None` and throw an error in this example because `None` is not a valid Python type for the `+` operator, so you would need to handle this case in your Python code.
-
 ### Returns
 
-The last expression will be converted to the corresponding Excel type as follows:
+The value returned by your Python function will be converted to the corresponding Excel type as follows:
 
 | Python Type             | Example            | Excel Type |
 |-------------------------|--------------------|------------|
@@ -215,7 +95,36 @@ The last expression will be converted to the corresponding Excel type as follows
 | 2D list (Column Vector) | [[1], [2], [3]]    | Array      |
 | 2D list (Row Vector)    | [[1, 2, 3]]        | Array      |
 
-If the last expression returns another Python type such as numpy array, pandas DataFrame, dict, tuple, etc., it will throw an error.  If you need to return a more complex data structure, you can convert it to a JSON string first.
+If your function returns another Python type such as numpy array, pandas DataFrame, dict, tuple, etc., an error will be thrown.
+
+## BOARDFLARE.RUNPY Function
+
+You may also use the `RUNPY` function directly if you need more control over where the code is stored, or want to write your own LAMBDA wrapper around it.  `RUNPY` executes Python code and returns the result.  Optional positional arguments `arg1, arg2, ...` (similar to Python *args) are set as globals to pass as arguments of your Python function.
+
+```excel
+=BOARDFLARE.RUNPY(code, [arg1],[arg2],...)
+```
+A simple example is as follows:
+
+```excel
+=BOARDFLARE.RUNPY("2 + arg1", 3)
+=5
+```
+
+Here is a [brief video](https://youtu.be/ngxM7VRkkgk) showing how to use the `RUNPY` function.
+
+`code` must be a string containing Python code, which can be a simple expression or a block of code.  `code` can also be a URL, e.g. `https://gist.github.com...code.py`, which must return code in plain text.  Note that the URL must be `https` and return an `Access-Control-Allow-Origin` [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) header.
+
+The value of the last expression in your Python code is returned, or if you define a variable `result`, that will be used instead.  For example:
+
+```python
+import numpy as np
+
+def add(a, b):
+    return np.add(a, b).item()
+
+result = add(arg1, arg2)
+```
 
 ## Examples
 
@@ -279,6 +188,11 @@ Unfortunately, the custom function capability of Excel can be a bit buggy and wi
 </details>
 
 <details>
+  <summary>Can Python code access the network?</summary>
+  You should be able to access any public API that supports [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+</details>
+
+<details>
   <summary>Can I use a GitHub Gist or raw link to a file in a public GitHub repo?</summary>
   Yes. Both apply CORS. Note that GitHub Gist raw links change each time you edit the file and create a new version.
 </details>
@@ -303,6 +217,16 @@ add(arg1,arg2)
 ```
 </details>
 
+<details>
+  <summary>Is running Python in Excel secure?</summary>
+  The Pyodide runtime runs in a [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API), which is a separate thread from the main Excel add-in thread, and does not have direct access to your workbook other than the data you pass to it as arg1, arg2, etc.  However, hackers are creative and tend to find security loopholes, so just like with VBA, you should never run code from an untrusted source.
+</details>
+
+<details>
+  <summary>Where is `stdout` or `stderr` is displayed?</summary>
+  Any output to `stdout` or `stderr` is displayed in the Logs tab of the add-in task pane, but it is only returned at the completion of the execution of your code, so you can't use use `print` statements to view progress of long-running operations.  
+</details>
+
 ## Use Cases
 
 Some key use-cases we see are as follows:
@@ -314,6 +238,9 @@ Some key use-cases we see are as follows:
 3. **Accessing APIs**:  e.g. using LLM from OpenAI, loading or pushing data where Power Query is not suitable, etc.
 
 ## Changelog
+
+1.1.0 - 2025-01-05
+- Added `Editor` tab to create named LAMBDA functions from Python code.
 
 1.0.7 - 2024-11-01
 - Removed deprecated `PY` and `PY.ARR` functions.
