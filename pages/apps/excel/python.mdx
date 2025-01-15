@@ -82,9 +82,9 @@ The `Functions` tab displays a list of all the Python functions saved in the wor
 
 ![Functions Tab](/images/functions-tab.png)
 
-The bottom portion of the tab enables you to load pre-built example functions from Jupyter notebooks we have created.  This enables you to see example functions and use them as a starting point for your own functions.  Or simply use them as-is.  First select the notebook with the functions you want to import, then click `Import Noteboook Functions`.  This will load the functions into the workbook and create a demo sheet in Excel which invokes each function with an example argument.
+You can load a notebook of example functions into your workbook.  First, select the notebook with the functions you want to import, then click `Import Noteboook Functions`.  This will load the functions into the workbook and create a demo sheet in Excel which invokes each function with an example argument so you can see how it works.  Right now there are only a couple of notebookes to choose from, but we will be adding more in the future.  If there is a specific function you would like to see, please [let us know](/company/support).  You can then edit these examples to create your own functions, just make sure to remember to rename them so they are saved as new functions.  Otherwise they will be overwritten if you import the notebook again because they have the same name.
 
-You may also import functions from a notebook stored in a GitHub Gist such as the [following example](https://gist.github.com/bolleman/c2d1e1bf47680f8e5d699a2ae1be8c82).  Paste the URL of the Gist into the `Enter notebook URL` form and click the `Add` button.  The notebook will now be available in the `Select a notebook...` dropdown to import into the workbook.  If you update the code in the Gist, you can click the `Import Notebook Functions` button to update the functions in the workbook.  This is the workflow we use when building functions using VS Code.  If you add a `boardflare` object in the notebook metadata as follows, this metadata will be used in the Functions tab:
+You may also import functions from a notebook you create that is stored in a GitHub Gist such as [this example](https://gist.github.com/bolleman/c2d1e1bf47680f8e5d699a2ae1be8c82).  Paste the URL of the Gist, e.g. `https://gist.github.com/bolleman/c2d1e1bf47680f8e5d699a2ae1be8c82` into the `Enter notebook URL` form and click the `Add` button.  The notebook will now be available in the `Select a notebook...` dropdown to import into the workbook.  The link to the notebook is stored on your local machine (in browser storage), so this notebook will be available to import into any workbook.  If you update the code in the Gist, you can select the notebook and click the `Import Notebook Functions` button to update the functions in the workbook.  This is the workflow we use when building functions using VS Code.  If you add a `boardflare` object in the notebook metadata as follows, this metadata will be used in the Functions tab to display the title and description of the notebook:
 
 ```json
 {
@@ -94,8 +94,7 @@ You may also import functions from a notebook stored in a GitHub Gist such as th
   }
 }
 ```
-
-To get an example invocation of each function in the demo sheet, you need to add a comment to each function in the notebook as follows:
+To get an example invocation of each function in the demo worksheet, you need to add a `# Excel usage:` comment to each function in the notebook as follows:
 
 ```python
 def add_num(a, b):
