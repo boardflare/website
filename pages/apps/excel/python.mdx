@@ -23,12 +23,12 @@ def inches_to_mm(inches):
 ```
  
 ### Save to create LAMBDA
-Python code is stored in workbook settings.  A LAMBDA function is added to the name manager:
+Python code is stored in workbook settings, and the LAMBDA function is added to the name manager:
 ```excel
-=LAMBDA(inches, BOARDFLARE.RUNPY("workbook-settings:inches_to_mm", inches))
+=LAMBDA(inches, BOARDFLARE.EXEC("workbook-settings:inches_to_mm", inches))
 ```
 
-A named function is now available for use in the workbook:
+The LAMBDA function is now available for use in the workbook:
 ```excel
 =INCHES_TO_MM(inches)
 ```
@@ -43,11 +43,13 @@ def hello(first, last):
     return greeting
 ```
 
-When you save this code, the Python function name `hello` and arguments `first, last` are parsed to create a LAMBDA function `=LAMBDA(first, last, BOARDFLARE.RUNPY("workbook-settings:hello", first, last))` which is saved to the name manager with the name `HELLO`.  The Python code is saved to the [workbook settings](https://learn.microsoft.com/en-us/office/dev/add-ins/excel/excel-add-ins-workbooks#access-document-settings) so it is embedded in the workbook.  The first line of the Python function docstring is also added as a comment to the name manager to provide a description users can see when they use the function.
+When you save this code, the Python function name `hello` and arguments `first, last` are parsed to create a LAMBDA function `=LAMBDA(first, last, BOARDFLARE.EXEC("workbook-settings:hello", first, last))` which is saved to the name manager with the name `HELLO`.  The Python code is saved to the [workbook settings](https://learn.microsoft.com/en-us/office/dev/add-ins/excel/excel-add-ins-workbooks#access-document-settings) so it is embedded in the workbook.  The first line of the Python function docstring is also added as a comment to the name manager to provide a description users can see when they use the function.
 
 ![Hello Function](/images/hello-function.png)
 
-Each time the function is invoked, `BOARDFLARE.RUNPY` loads the code from the workbook settings and runs it with the arguments.  Since the code and LAMBDA are both stored in the workbook, anyone who uses the workbook can use the function.  If they don't have the add-in installed, Excel will automatically prompt them to do so.
+Each time the function is invoked, `BOARDFLARE.EXEC` loads the code from the workbook settings and runs it with the arguments.  Since the code and LAMBDA are both stored in the workbook, anyone who uses the workbook can use the function.  If they don't have the add-in installed, Excel will automatically prompt them to do so.
+
+`BOARDFLARE.EXEC` is currently intended for internal use only.  If you wish to use a lower-level API, you can use the `BOARDFLARE.RUNPY` function directly, which is similar.  See the [BOARDFLARE.RUNPY](#boardflarerunpy) section for more details.
 
 ## Features
 
@@ -72,37 +74,19 @@ The bottom bar of the editor tab contains the following controls:
 - `Select a function...`:  Enables you to load a different function in the workbook into the editor.  Make sure you save any changes before switching functions.
 - `Reset`:  Returns the editor to its initial default function.
 - `Test`:  Runs the [test cases](#test-cases) defined in the Python code.  You will be taken to the `Output` tab to view the results.
-- `Save`:  Saves the code in the editor to workbook settings and create a LAMBDA function.  If an existing function of the same name exists, it will be updated.
+- `Save`:  Saves the code in the editor to workbook settings and create a LAMBDA function.  If an existing function of the same name exists, it will be updated.  There is **NO AUTO-SAVE**.
 
 ![Code Editor Controls](/images/code-editor-controls.png)
 
 ### Functions Tab
 
-The `Functions` tab displays a list of all the Python functions saved in the workbook.  Clicking edit on a function returns you to the editor tab with that function loaded, the same as if you loaded it from the functions dropdown in the code editor.  You can also delete functions from the workbook.  If you want to edit the name, arguments, or description of a function, you can do so directly in the code editor. 
+The `Functions` tab displays a list of all the Python functions saved in the workbook.  Clicking edit 🖊️ on a function returns you to the editor tab with that function loaded, the same as if you loaded it from the functions dropdown in the code editor.  You can run tests on a function by clicking the ▶️ icon.  You can also delete functions from the workbook by clicking ❌.
 
 ![Functions Tab](/images/functions-tab.png)
 
-You can load a notebook of example functions into your workbook.  First, select the notebook with the functions you want to import, then click `Import Noteboook Functions`.  This will load the functions into the workbook and create a demo sheet in Excel which invokes each function with an example argument so you can see how it works.  Right now there are only a couple of notebookes to choose from, but we will be adding more in the future.  If there is a specific function you would like to see, please [let us know](/company/support).  You can then edit these examples to create your own functions, just make sure to remember to rename them so they are saved as new functions.  Otherwise they will be overwritten if you import the notebook again because they have the same name.
+You can load a Jupyter notebook of example functions into your workbook by selecting the notebook with the functions you want to import, then clicking `Import Noteboook Functions`.  You can then edit these functions as you wish. Just make sure to remember to rename them so they are saved as a new function.  Otherwise they will be overwritten if you import the notebook again because they have the same name.  If there is a specific type of example function you would like to see, please [let us know](/company/support).
 
-You may also import functions from a notebook you create that is stored in a GitHub Gist such as [this example](https://gist.github.com/bolleman/c2d1e1bf47680f8e5d699a2ae1be8c82).  Paste the URL of the Gist, e.g. `https://gist.github.com/bolleman/c2d1e1bf47680f8e5d699a2ae1be8c82` into the `Enter notebook URL` form and click the `Add` button.  The notebook will now be available in the `Select a notebook...` dropdown to import into the workbook.  The link to the notebook is stored on your local machine (in browser storage), so this notebook will be available to import into any workbook.  If you update the code in the Gist, you can select the notebook and click the `Import Notebook Functions` button to update the functions in the workbook.  This is the workflow we use when building functions using VS Code.  If you add a `boardflare` object in the notebook metadata as follows, this metadata will be used in the Functions tab to display the title and description of the notebook:
-
-```json
-{
-  "boardflare": {
-    "title": "Example Functions",
-    "description": "A collection of example functions."
-  }
-}
-```
-To get an example invocation of each function in the demo worksheet, you need to add a `# Excel usage:` comment to each function in the notebook as follows:
-
-```python
-def add_num(a, b):
-    """ Returns the sum of two numbers. """
-    return a + b
-
-# Excel usage: =ADD_NUM(1, 2)
-```
+You may also import functions from a notebook that is stored in a GitHub Gist such as [this example](https://gist.github.com/bolleman/c2d1e1bf47680f8e5d699a2ae1be8c82).  Paste the URL of the Gist, e.g. `https://gist.github.com/bolleman/c2d1e1bf47680f8e5d699a2ae1be8c82` into the `Enter GitHub Gist URL` form and click the `Add` button.  The notebook will now be available in the `Select a notebook...` dropdown to import into the workbook.  The link to the notebook is stored in your browser storage, so it is available to import into any workbook.  If you update the code in the Gist, you can select the notebook and click the `Import Notebook Functions` button again to update the functions in the workbook, which will overwrite any changes you made in the editor.  This is the workflow we use when building functions using VS Code.
 
 ## Writing Code
 
@@ -110,33 +94,41 @@ Some things to be aware of when writing your Python code are outlined in the fol
 
 ### Importing Packages
 
-[Pyodide](https://pyodide.org/en/stable/index.html) is the Python runtime used by the add-in, and includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, and depend on any packages that are either built into pyodide or also pure Python.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work.
+[Pyodide](https://pyodide.org/en/stable/index.html) is the Python runtime used by the add-in, and includes a number of [built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). You can import any of these packages as well as those from the Python standard library. Any imports for external Python packages will be loaded from [PyPI](https://pypi.org/), but only if they are pure Python, and depend on any packages that are either built into pyodide or also pure Python.  Packages tagged as [OS-independent](https://pypi.org/search/?q=&o=&c=Operating+System+%3A%3A+OS+Independent) on PyPI should work.  If you try to import an external package (not part of the Python standard library or one of the built-in packages) for which there is not a pure Python wheel available on PyPI, an error will be thrown
 
-Your code will be scanned for imports and any found will be handled for you using `micropip` in the background and the package will be downloaded if needed from PyPI. If you try to import an external package (not part of the Python standard library or one of the built-in packages) for which there is not a pure Python wheel available on PyPI, an error will be thrown.  However, specific imports (e.g., `from azure.core.credentials import AzureKeyCredential`) will not automatically install the relevant package. You need to handle these manually using `await micropip.install(['package1', 'package2'])`. `micropip` has already been imported for you, and since the Python code is executed async, you can use a top-level await as follows:
+Your code will be scanned for imports and any packages needed will be installed for you using `micropip`.  However, specific imports (e.g., `from azure.core.credentials import AzureKeyCredential`) will not be handled automatically, so you need to install these manually using `await micropip.install(['package1', 'package2'])`. `micropip` has already been imported for you, and since the Python code is executed async, you can use a top-level await as follows:
 
 ```python
 await micropip.install(['azure-ai-textanalytics'])
 from azure.core.credentials import AzureKeyCredential
+# Continue with your code...
 ```
 
 ### Type Conversion
 
 The following type conversions will take place on the arguments passed to your function from Excel:
 
-| Excel Type | Excel Example                  | Python Type | Python Example |
-|------------|--------------------------------|-------------|----------------|
-| Number     | 42                             | int         | 42             |
-| Number     | 3.14                           | float       | 3.14           |
-| String     | "hello"                        | str         | "hello"        |
-| Boolean    | TRUE                           | bool        | True           |
-| Array      | `{1, 2, 3}`                    | List or DataFrame* | [[1, 2, 3]] or pd.DataFrame([[1, 2, 3]]) |
-| Array      | A1:B2                          | List or DataFrame* | [[1, 2], [3, 4]] or pd.DataFrame([[1, 2], [3, 4]]) |
-| Null       | Reference to an empty cell     | None        | None           |
-| Null       | Unset optional LAMBDA argument | None        | None           |
-| Null       | Arg skipped with `,`           | None        | None           |
-| Date       | 45678 (serial format)          | int         | 45678 - not converted to datetime   |
+| Excel Type | Excel Example                  | Python Type | Python Example          |
+|------------|--------------------------------|-------------|-------------------------|
+| Number     | 42                             | int         | 42                      |
+| Number     | 3.14                           | float       | 3.14                    |
+| String     | "hello"                        | str         | "hello"                 |
+| Boolean    | TRUE                           | bool        | True                    |
+| Array      | `{1, 2, 3}`                    | 2D List     | [[1, 2, 3]]             |
+| Array      | A1:B2                          | 2D List     | [[1, 2], [3, 4]]        |
+| Null       | Reference to an empty cell     | None        | None                    |
+| Null       | Unset optional LAMBDA argument | None        | None                    |
+| Null       | Arg skipped with `,`           | None        | None                    |
+| Date       | 45678 (serial format)          | int         | 45678 - not converted*  |
 
-*Conversion to a DataFrame only occurs if the code contains a pandas import.
+*Excel stores dates as numbers in serial format, and since we have no way to distinguish these from non-date numbers, they are not converted to datetime objects, and simply become a Python int.  If you want to convert an Excel serial to a Python `datetime`, you can use the following code:
+
+```python
+from datetime import datetime, timedelta
+
+def excel_date_to_datetime(serial):
+    return datetime(1899, 12, 30) + timedelta(days=serial)
+```
 
 The value returned by your Python function will similarly be converted to the corresponding Excel type as follows:
 
@@ -146,20 +138,20 @@ The value returned by your Python function will similarly be converted to the co
 | float                   | 3.14                        | Number     | 3.14                         |
 | str                     | "hello"                     | String     | "hello"                      |
 | bool                    | True                        | Boolean    | TRUE                         |
-| 2D list (Matrix)        | [[1, 2], [3, 4]]            | Array      | A1:B2**                       |
-| 2D list (Column Vector) | [[1], [2], [3]]             | Array      | A1:A3**                       |
-| 2D list (Row Vector)    | [[1, 2, 3]]                 | Array      | A1:C1**                       |
-| pandas DataFrame*        | pd.DataFrame([[1, 2, 3]])   | Array      | A1:C1**                       |
-| None                    | None                        | Null       | Reference to an empty cell   |
+| 2D list (Matrix)        | [[1, 2], [3, 4]]            | Array      | A1:B2*                       |
+| 2D list (Column Vector) | [[1], [2], [3]]             | Array      | A1:A3*                       |
+| 2D list (Row Vector)    | [[1, 2, 3]]                 | Array      | A1:C1*                       |
+| None                    | None                        | Null       | Empty cell                   |
 
-*Conversion of a DataFrame to an array only occurs if code contains a pandas import.
-**Assumes formula is in cell A1.
+*Assumes formula is in cell A1.
 
-If your function returns another Python type such as numpy, dict, tuple, etc., an error will be thrown.
+If your function returns another Python type such as a dict, tuple, etc., an error will be thrown.  We have support for converting numpy and pandas types to help reduce errors, but recommend you not rely on these.
 
 ### Test Cases
 
 If you define a `test_cases` variable in your code with a list of arguments, these will be used to test your function when you click `Test` in the editor.  You will be taken to the `Output` tab where you view the output from executing the function with the arguments provided in the `test_cases`.  Note that the arguments need to be in the same order as the function arguments and are the Python type expected by the function.  These `test_cases` run entirely in the Python environment so the Excel-to-Python type conversions noted above do not apply.
+
+If you include a comment line in your code with an example invocation of your function in Excel, e.g. `# Excel usage: =HELLO("Nancy", "Morgan")`, a demo sheet will be created when you test your function which includes this invocation.  This demo sheet will be overwritten each time you run your function and currently only one comment line is supported.
 
 For examnple:
 
@@ -171,9 +163,11 @@ def hello(first, last):
     
 # Test cases for the function.
 test_cases = [["Nancy", "Morgan"], ["Ming", "Lee"]]
+
+# Excel usage: =HELLO("Nancy", "Morgan")
 ```
 
-If your function only has one argument, you can omit the inner list:
+If your function only has one argument, you must still wrap it in a list as follows:
 
 ```python
 def square(x):
@@ -181,7 +175,9 @@ def square(x):
     return x ** 2
 
 # Test cases for the function.
-test_cases = [2, 3, 4]
+test_cases = [[2], [3], [4]]
+
+# Excel usage: =SQUARE(2)
 ```
 If you have a function that takes an array as an argument, you can define the test cases as follows:
 
@@ -200,17 +196,21 @@ def sum_array(arr):
 
 # Test cases for the function.
 test_cases = [[[1, 2, 3]], [[4, 5, 6]]]
+
+# Excel usage: =SUM_ARRAY({1, 2, 3})
 ```
-As mentioned above in the [Type Conversion](#type-conversion) section, Excel arrays will always be converted to 2D lists (unless pandas is imported, then DataFrames), so construct your function and test_cases accordingly.
+As mentioned above in the [Type Conversion](#type-conversion) section, Excel arrays will always be converted to 2D lists, so construct your function and test_cases accordingly.
 
 ### Limitations
 
-- Default arguments are not supported, e.g., `def add(a=1, b=2):`.  If the user omits an argument in the LAMBDA, it will be passed as `None`, which you can handle to set the default in your Python code.  e.g. `if a is None: a = 1`.
-- `*args` and `**kwargs` are not supported.
+- Optional arguments are not supported, e.g., `def add(a, b=2):` or `ADD(a,[b])` in Excel.  This will be fixed soon.
+- `*args` and `**kwargs` are not supported because LAMBDA functions do not support repeating arguments.
 
 ## BOARDFLARE.RUNPY
 
-The `RUNPY` function can be used directly instead of using the [code editor](#code-editor) to build a LAMBDA function if you want to work with a lower-level API.  `RUNPY` takes a Python code string and a repeating positional argument `arg1, arg2, ...` (similar to Python *args) and returns the result.  The syntax is as follows:
+`BOARDFLARE.RUNPY` is a legacy function that can still be used, but is not recommended for most use-cases.  The code editor and automatically generated LAMBDA functions are the preferred way to work with Python code in Excel.
+
+`RUNPY` takes a Python code string and a repeating positional argument `arg1, arg2, ...` (similar to Python *args) and returns the result.  The syntax is as follows:
 
 ```excel
 =BOARDFLARE.RUNPY(code, [arg1],[arg2],...)
@@ -220,7 +220,7 @@ The `RUNPY` function can be used directly instead of using the [code editor](#co
 =BOARDFLARE.RUNPY("2 + arg1", 3) = 5
 ```
 
-The value of the last expression is returned, and undergoes the [type conversion](#type-conversion) noted earlier. For example:
+The value of the last expression is returned.  For example:
 
 ```python
 import numpy as np
@@ -230,6 +230,8 @@ def add(a, b):
 
 add(arg1, arg2)  # This value of this expression will be returned.
 ```
+The arguments and return values undergo the [type conversion](#type-conversion) noted earlier, with a key difference that array arguments are converted to pandas DataFrames first.
+
 See this [brief video](https://youtu.be/ngxM7VRkkgk) and [example workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EZ3eKR1wcltImmG2OA4sX-kB8RSA2cvJFM-hPoQGGdwMmA?e=m0eFdd) for more examples.
 
 ## FAQ
@@ -254,12 +256,12 @@ See this [brief video](https://youtu.be/ngxM7VRkkgk) and [example workbook](http
 </details>
 
 <details>
-  <summary>Can I build a LAMBDA function using the native Excel PY instead of RUNPY?</summary>
-  Unfortuantely, no, that is the original reason we built this add-in.  At this time the Excel PY function does not allow you to call it from a formula.
+  <summary>Can I build a LAMBDA function using the native Excel PY?</summary>
+  No, that is the original reason we built this add-in.  At this time the Excel PY function does not allow you to call it from a formula.
 </details>
 
 <details>
-  <summary>How can I access local files on my machine?</summary>
+  <summary>Can I access local files on my machine?</summary>
   No. The Pyodide runtime runs in a [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) in the browser which does not have access to your local machine.  This is a browser security feature.
 </details>
 
@@ -271,7 +273,7 @@ See this [brief video](https://youtu.be/ngxM7VRkkgk) and [example workbook](http
 ## Changelog
 
 <details>
-  <summary>1.1.0 - 2025-01-14</summary>
+  <summary>1.1.0 - 2025-01-17</summary>
   - Added `Code Editor` to create LAMBDA functions automatically from Python code.
   - Ability to import multiple functions from a Jupyter notebook.
   - DataFrame type conversion only occurs if code contains a pandas import.
