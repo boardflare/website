@@ -1,0 +1,98 @@
+---
+title: Python for Excel Code Editor
+date: 2025-01-18
+---
+    
+# Python for Excel Code Editor
+January 18, 2025
+
+## Overview
+
+We're excited to announce a major update to our Python for Excel add-in that makes it easier than ever to create Excel LAMBDA functions from Python code. The new code editor provides a familiar VS Code-like experience right inside Excel, with features like syntax highlighting, function management, and integrated testing.
+
+## Key Features
+
+### Monaco Editor Integration
+The add-in now includes the same editor ([Monaco](https://github.com/microsoft/monaco-editor)) used in VS Code, providing:
+- Syntax highlighting for Python
+- Code completion and formatting
+- Error detection
+
+### Function Management
+A new Functions tab lets you:
+- View all Python functions in your workbook
+- Edit existing functions
+- Delete unused functions
+- Import functions from Jupyter notebooks
+
+![Functions Tab](/images/functions-tab.png)
+
+### Testing Integration
+Write test cases directly in your Python code:
+
+```python
+def hello(first, last):
+    """ Returns a greeting. """
+    greeting = f"Hello {first, last}!"
+    return greeting
+    
+# Test cases for the function
+test_cases = [["Nancy", "Morgan"], ["Ming", "Lee"]]
+
+# Excel usage: =HELLO("Nancy", "Morgan")
+```
+
+Click "Test" to run your cases and see results in the Output tab.
+
+## How It Works
+
+Creating a Python-powered LAMBDA function is now a two-step process:
+
+1. Write your Python function in the editor
+2. Click Save to create the LAMBDA
+
+The Python code is stored in workbook settings and a corresponding LAMBDA function is automatically created in Excel's name manager. For example, this Python function:
+
+```python
+def inches_to_mm(inches):
+    """ Converts inches to millimeters. """
+    return inches * 25.4
+```
+
+Creates this LAMBDA in Excel:
+
+```excel
+=LAMBDA(inches, BOARDFLARE.EXEC("workbook-settings:inches_to_mm", inches))
+```
+
+## Jupyter Notebook Integration
+
+A particularly exciting feature is the ability to import functions from Jupyter notebooks. You can:
+- Import from our example notebooks
+- Load notebooks from GitHub Gists
+- Use the notebooks as templates for your own functions
+
+This makes it easy to maintain a library of functions in notebooks and import them into Excel as needed.
+
+## Try It Out
+
+To get started with the new code editor:
+
+1. Install the [Python for Excel add-in](https://appsource.microsoft.com/en-us/product/office/WA200007447?tab=Overview)
+2. Open the task pane and go to the Editor tab
+3. Try writing a simple function or import one of our examples
+4. Click Save to create your LAMBDA function
+
+The code editor is available now in version 1.1.0 of the add-in. For more details, check out our [updated documentation](/apps/excel/python).
+
+## What's Next?
+
+We're continuing to improve the editor experience. Coming soon:
+- Support for optional arguments
+- More example notebooks
+- Enhanced type conversion options
+
+Let us know what features you'd like to see next!
+
+
+
