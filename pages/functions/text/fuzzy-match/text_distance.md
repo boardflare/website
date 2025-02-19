@@ -8,7 +8,7 @@ title: text_distance
 
 | Task | Description | Boardflare RUNPY() | Excel PY() | Source Code | Demo Workbook |
 |:----:|:------------|:-------:|:----------:|:-------:|:-------:|
-| [Fuzzy Matching](https://www.boardflare.com/tasks/nlp/fuzzy-match) | Uses Python [textdistance](https://github.com/life4/textdistance) library which implements edit distance, token, sequence, and phonetic algorithms to calculate the similarity between strings. | âœ… | - | [Download](https://functions.boardflare.com/notebooks/text/fuzzy-match/nltk_distance.ipynb) | [Open](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EZGMy4IzfYhEsB4Vvi72r-YBIsneUMXilM8_Cv2T-WTvvQ?e=jVv6Bq) |
+| [Fuzzy Matching](https://www.boardflare.com/tasks/nlp/fuzzy-match) | Uses Python [textdistance](https://github.com/life4/textdistance) library which implements edit distance, token, sequence, and phonetic algorithms to calculate the similarity between strings. | âœ… | - | [Download](https://functions.boardflare.com/notebooks/text/fuzzy-match/nltk_distance.ipynb) | [Open](https://boardflare.sharepoint.com/:x:/g/EQ0Hv5J08J9LkKQeMD-_BG8BF6iZgIYCWrqnNOuE3d_m6g?e=5fDSf4) |
 
 ## Usage
 

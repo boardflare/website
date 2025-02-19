@@ -9,7 +9,7 @@ Uses the [Azure AI Language](https://learn.microsoft.com/en-us/azure/ai-services
 
 - General information on [Sentiment Analysis](https://www.boardflare.com/tasks/nlp/sentiment).
 - Function [Source Code](https://functions.boardflare.com/notebooks/text/sentiment-analysis/azure_sentiment.ipynb) in Jupyter Notebook format.
-- Excel [Demo Workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/EdCeYAvBM19Dk56HGq4cHiAB8nYx6fONT5Qj9XQx1y9IKQ?e=bV5Ks6) with examples.
+- Excel [Demo Workbook](https://boardflare.sharepoint.com/:x:/g/EWrpNlA7uP1Ip1Kb1D4RW5IBQT3x1IXBjBiy4eFymsOaXw?e=SynNrC) with examples.
 
 ## Usage
 

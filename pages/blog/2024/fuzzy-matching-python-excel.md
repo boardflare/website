@@ -101,8 +101,6 @@ The function returns a list of lists, where each sublist contains the index (1-b
 
 ## Use in Excel
 
-Two options for running this code in Excel are outlined below.  See this [demo workbook](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Ef_eyKV0npNBhKEJJwt5QfUB3qhMgeSBAbTA1wfUCtKF0A?e=S4CoUs) for an example of both.
-
 ### EXCEL PY()
 
 In an Excel PY() cell, start by assigning the values of the function arguments `arg1, arg2, arg3` to the appropriate data in the workbook, then paste the function code below it. For example, if the range `A6:A10` contains the lookup values, the range `B6:B27` contains the lookup array, and the cell `C6` contains the algorithm name, we get the following in the Excel PY() cell:

@@ -9,7 +9,7 @@ The `nltk_distance` Python function uses the [NLTK library](https://www.nltk.org
 
 | Task | Description | Boardflare RUNPY() | Excel PY() | Source Code | Demo Workbook |
 |:----:|:------------|:-------:|:----------:|:-------:|:-------:|
-| [Fuzzy Matching](https://www.boardflare.com/tasks/nlp/fuzzy-match) | Uses [`nltk`](https://github.com/nltk/nltk) library for similarity scoring with `jaccard`, `jaro`, and `levenshtein`. | âœ… | âœ… | [Download](https://functions.boardflare.com/notebooks/text/fuzzy-match/nltk_distance.ipynb) | [Open](https://whistlernetworks.sharepoint.com/:x:/s/Boardflare/Ef_eyKV0npNBhKEJJwt5QfUB3qhMgeSBAbTA1wfUCtKF0A?e=S4CoUs) |
+| [Fuzzy Matching](https://www.boardflare.com/tasks/nlp/fuzzy-match) | Uses [`nltk`](https://github.com/nltk/nltk) library for similarity scoring with `jaccard`, `jaro`, and `levenshtein`. | âœ… | âœ… | [Download](https://functions.boardflare.com/notebooks/text/fuzzy-match/nltk_distance.ipynb) | [Open](https://boardflare.sharepoint.com/:x:/g/Eex47-3aoRlAjA23TOjQl0gB7RebmHahHklUzp6monsC7Q?e=x7EutP) |
 
 ## Usage
 
