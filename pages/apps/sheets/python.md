@@ -26,6 +26,10 @@ If you want to use data from the sheet, select the range you wish to use in the 
 
 The value of the last expression in the code will be displayed in the output area.
 
+## Privacy
+
+See our [privacy policy](https://www.boardflare.com/company/privacy).
+
 ## Changelog
 
 <details>
