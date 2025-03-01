@@ -1,17 +1,14 @@
 ---
 title: Python for Excel
 ---
-import { Steps } from 'nextra/components'
-import { Callout } from 'nextra/components'
 
 # Python for Excel
 
 ## Overview
 
-Install the [add-in](https://go.microsoft.com/fwlink/?linkid=2261819&templateid=WA200007447&templatetitle=Python%20for%20Excel), then create an Excel [LAMBDA function](https://support.microsoft.com/en-us/office/lambda-function-bd212d27-1cd1-4321-a34a-ccbf254b8b67) from a Python function in two easy steps as follows:
+Install the [add-in](https://go.microsoft.com/fwlink/?linkid=2261819&templateid=WA200007447&templatetitle=Python%20for%20Excel).  Create an Excel custom function from a Python function in two easy steps as follows:
  
-<Steps>
-### Write a Python function
+### 1. Write a Python function
 Using the add-in code editor, write or paste your function code, e.g.:
 ```python
 def inches_to_mm(inches):
@@ -19,17 +16,16 @@ def inches_to_mm(inches):
     return inches * 25.4
 ```
  
-### Save to create LAMBDA
-Python code is stored in workbook settings, and the LAMBDA function is added to the name manager:
+### 2. Run as an Excel function
+Python code is stored in workbook settings, and the custom function is added to the name manager:
 ```excel
 =LAMBDA(inches, BOARDFLARE.EXEC("workbook-settings:inches_to_mm", inches))
 ```
-
-The LAMBDA function is now available for use in the workbook:
+  
+The custom function is now available for use in the workbook:
 ```excel
 =INCHES_TO_MM(inches)
 ```
-</Steps>
 
 Let's use another example to explain the process in more detail.  Suppose you have the following Python function:
 
@@ -274,10 +270,19 @@ See this [brief video](https://youtu.be/ngxM7VRkkgk) and [example workbook](http
 ## Changelog
 
 <details>
+  <summary>1.2.2 - 2025-03-02</summary>
+- Support for default arguments in Python functions with optional parameters in Excel.
+- Use a shared folder in SharePoint or OneDrive to share functions with your team.
+- Ability to configure Microsoft permissions so your functions can use Graph APIs.
+- Example functions can be added to sheet separately.
+- Notice for Excel for web users that it does not support function autocomplete.
+- Implemented cors proxy to resolve issues with some APIs.
+</details>
+
+<details>
   <summary>1.2.1 - 2025-02-23</summary>
 - AI prompts that are not suitable for a function display an error message instead of garbage code.
 - Added tooltip to login to let users know purpose of login is for OneDrive access.
-- AI prompts that are not suitable for a function display an error message instead of garbage code.
 - Improved logging to better isolate name manager errors some users are experiencing.
 - Clicking AI button in Editor now displays prompt used to create function, if any, instead of confirmation dialog.
 - Prompts now saved to settings.
